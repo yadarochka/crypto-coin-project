@@ -3,18 +3,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import Search from "../../components/Search";
+import styles from "./CoinListPage.module.scss";
 import { Card } from "./components/CoinCard/Card";
+
+type Coin = {
+  id: number;
+  name: string;
+  symbol: string;
+  image: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+};
 
 const CoinListPage = () => {
   const [coins, setCoins] = useState([]);
 
   const [search, setSearch] = useState("");
 
-  const handleInput = (e: any) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  const searchedCoins = coins.filter((coin: any) => {
+  const searchedCoins = coins.filter((coin: Coin) => {
     return coin.name.toLowerCase().includes(search.toLowerCase());
   });
 
@@ -30,18 +40,21 @@ const CoinListPage = () => {
   return (
     <div>
       <Search type="text" onChange={handleInput}></Search>
-      {searchedCoins.map((coin: any) => {
-        return (
-          <Card
-            key={coin.id}
-            name={coin.name}
-            subtitle={coin.symbol}
-            image={coin.image}
-            price={coin.current_price}
-            priceChange={coin.price_change_percentage_24h}
-          ></Card>
-        );
-      })}
+      <div className={styles["coin-list"]}>
+        {searchedCoins.map((coin: Coin) => {
+          return (
+            <Card
+              key={coin.id}
+              name={coin.name}
+              subtitle={coin.symbol}
+              image={coin.image}
+              price={coin.current_price}
+              priceChange={coin.price_change_percentage_24h}
+              className={styles["coin-list__item"]}
+            ></Card>
+          );
+        })}
+      </div>
     </div>
   );
 };
