@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import Loader from "@components/Loader";
 import { Card } from "@pages/CoinListPage/components/CoinCard/Card";
+import { rounding } from "@utils/rounding";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -22,7 +23,7 @@ const CoinPage = () => {
         setCoin(res.data[0]);
       })
       .catch((error) => alert(error));
-  }, []);
+  });
   return (
     <div>
       {typeof coin != "undefined" ? (
@@ -51,14 +52,18 @@ const CoinPage = () => {
                 <span
                   className={`${styles["coin-page__header__price-info__price-change"]} ${styles["success"]}`}
                 >
-                  {`+ ${coin.price_change_24h} (${coin.price_change_percentage_24h}%)`}
+                  {`+ ${rounding(coin.price_change_24h, 6)} (${rounding(
+                    coin.price_change_percentage_24h
+                  )}%)`}
                 </span>
               )}
               {coin.price_change_percentage_24h < 0 && (
                 <span
                   className={`${styles["coin-page__header__price-info__price-change"]} ${styles["danger"]}`}
                 >
-                  {`${coin.price_change_24h} (${coin.price_change_percentage_24h}%)`}
+                  {`${rounding(coin.price_change_24h, 6)} (${rounding(
+                    coin.price_change_percentage_24h
+                  )}%)`}
                 </span>
               )}
             </div>
@@ -73,6 +78,7 @@ const CoinPage = () => {
             priceChange={coin.price_change_percentage_24h}
             className={""}
             withChart={false}
+            userType={true}
           ></Card>
         </>
       ) : (

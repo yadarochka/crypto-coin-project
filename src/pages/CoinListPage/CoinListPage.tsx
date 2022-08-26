@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Loader from "@components/Loader";
 import Search from "@components/Search";
+import { rounding } from "@utils/rounding";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -57,9 +58,10 @@ const CoinListPage = () => {
                   name={coin.name}
                   subtitle={coin.symbol}
                   image={coin.image}
-                  price={coin.current_price}
-                  priceChange={coin.price_change_percentage_24h}
+                  price={rounding(coin.current_price, 5)}
+                  priceChange={rounding(coin.price_change_percentage_24h, 5)}
                   className={styles["coin-list__item"]}
+                  priceType={true}
                 ></Card>
               </Link>
             );
