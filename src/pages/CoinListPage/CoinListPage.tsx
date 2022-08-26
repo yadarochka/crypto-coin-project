@@ -17,14 +17,6 @@ const CoinListPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
-  const searchedCoins = coins.filter((coin: Coin) => {
-    return coin.name.toLowerCase().includes(search.toLowerCase());
-  });
-
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -38,14 +30,28 @@ const CoinListPage = () => {
       .catch((error) => alert(error));
   }, []);
 
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const handlerSearchButton: () => void = () => {
+    setSearch("");
+  };
+
+  const searchedCoins = coins.filter((coin: Coin) => {
+    return coin.name.toLowerCase().includes(search.toLowerCase());
+  });
+
   return (
     <div>
       <Search
+        value={search}
         type="text"
         className={styles["coin-list-search"]}
         onChange={handleInput}
         buttonText="Cancel"
         placeholder="Search Cryptocurrency"
+        buttonOnClick={handlerSearchButton}
       ></Search>
       <div className={styles["coin-list"]}>
         {!isLoading ? (

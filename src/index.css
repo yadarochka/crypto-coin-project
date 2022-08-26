@@ -8,7 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1200px;
+  width: 375px;
   margin: 0 auto;
   padding: 15px 0;
   font-family: 'Circular Std';
