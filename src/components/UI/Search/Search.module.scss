@@ -1,4 +1,4 @@
-@import "../../style/variables.scss";
+@import "@styles/variables.scss";
 
 .search {
     display: inline-flex;
@@ -9,6 +9,7 @@
     line-height: 15px;
     width: 244px;
     color: $gray-color;
+    margin-right: 15px;
 
     &__icon {
       width: 16px;
@@ -26,19 +27,3 @@
       outline: none;
     }
   }
-  
-  
-  
-
-  .button{
-    border-style: none;
-    border-color: none;
-    border-image: none;
-    background-color: transparent;
-    margin-left: 15px;
-    padding: 0;
-    font-size: 12px;
-    line-height: 15px;
-    color: $black-color;
-    cursor: pointer;
-  };

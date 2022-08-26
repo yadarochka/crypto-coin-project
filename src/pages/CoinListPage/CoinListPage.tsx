@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import Loader from "@components/Loader";
-import Search from "@components/Search";
+import Loader from "@components/UI/Loader";
+import Search from "@components/UI/Search";
 import { rounding } from "@utils/rounding";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -41,8 +41,11 @@ const CoinListPage = () => {
   return (
     <div>
       <Search
+        type="text"
         className={styles["coin-list-search"]}
         onChange={handleInput}
+        buttonText="Cancel"
+        placeholder="Search Cryptocurrency"
       ></Search>
       <div className={styles["coin-list"]}>
         {!isLoading ? (
