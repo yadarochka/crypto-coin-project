@@ -2,7 +2,7 @@
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "typeRoots": [
-      "src/types"
+      "src/type"
     ],
     "target": "es5",
     "lib": [

@@ -1,13 +1,13 @@
 @import '../../../../style/variables.scss';
 
 .card {
+    position: relative;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    max-width: 343px;
+    width: 343px;
     height: 72px;
-    padding: 0px 16px;
     background: #FFFFFF;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
@@ -20,9 +20,9 @@
     }
     
     &__img-box {
-        display: flex;
-        height: 80%;
-        margin-right: 12px;
+        position: absolute;
+        left: 16px;
+        top: 16px;
     }
     
     &__img {
@@ -32,20 +32,43 @@
         height: 40px;
     
     }
+
+    &__name{
+        position: absolute;
+        left: 68px;
+        top: 16px;
+    }
     
     &__title {
+        font-size: 16px;
         margin: 0;
         padding: 0;
     }
     
     &__subtitle {
+        font-size: 12px;
+        color: $gray-color;
         margin: 0;
         padding: 0;
     }
     
-    &__content {
-        justify-self: end;
+    &__chart {
+        position: absolute;
+        right: 112px;
+        top:16px;
     }    
+
+    &__price-box{
+        position: absolute;
+        top:16px;
+        right: 16px;
+        text-align: end;
+    }
+    
+    &__price-change{
+        margin-top: 5px;
+        font-size: 10px;
+    }
 
 }
 

@@ -1,7 +1,22 @@
-.coin-list{
-    
-}
+@import '../../style/variables.scss';
 
-.coin-list__item{
-    margin-bottom: 8px;
+.coin-list{
+
+    &-search{
+        margin-bottom: 34px;
+    }
+    
+    &__item{
+        margin-bottom: 8px;
+    }
+
+
+
+    &__link{
+        color: $black-color;
+        :visited{
+            color: $black-color;
+        }
+        
+    }
 }

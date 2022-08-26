@@ -1,4 +1,6 @@
 /* @ts-ignore */
+import { rounding } from "@utils/rounding";
+
 import styles from "./Card.module.scss";
 interface CardProps {
   /** URL изображения */
@@ -17,6 +19,8 @@ interface CardProps {
   priceChange: number;
 
   className: string;
+
+  withChart?: boolean;
 }
 
 export const Card = ({
@@ -26,11 +30,8 @@ export const Card = ({
   price,
   priceChange,
   className,
+  withChart = true,
 }: CardProps) => {
-  const floor = (number: number): number => {
-    return Math.round(number * Math.pow(10, 2)) / Math.pow(10, 2);
-  };
-
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles["card__img-box"]}>
@@ -40,22 +41,32 @@ export const Card = ({
           className={styles["card__img"]}
         />
       </div>
-      <div>
+      <div className={styles["card__name"]}>
         <h3 className={styles["card__title"]}>{name}</h3>
         <span className={styles["card__subtitle"]}>
           {subtitle.toUpperCase()}
         </span>
       </div>
-      <div className={styles["card__content"]}>
-        <div>График</div>
-      </div>
-      <div>
-        <div>${price}</div>
+      {withChart && (
+        <div className={styles["card__chart"]}>
+          <div>График</div>
+        </div>
+      )}
+      <div className={styles["card__price-box"]}>
+        <div className={styles["card__price"]}>${price}</div>
         {priceChange > 0 && (
-          <div className={styles["success"]}>+{floor(priceChange)}%</div>
+          <div
+            className={`${styles["card__price-change"]} ${styles["success"]}`}
+          >
+            +{priceChange}%
+          </div>
         )}
         {priceChange < 0 && (
-          <div className={styles["danger"]}>{priceChange}%</div>
+          <div
+            className={`${styles["card__price-change"]} ${styles["danger"]}`}
+          >
+            {priceChange}%
+          </div>
         )}
       </div>
     </div>

@@ -1,0 +1,44 @@
+@import "../../style/variables.scss";
+
+.search {
+    display: inline-flex;
+    border: 1px solid #DFE2E4;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 12px;
+    line-height: 15px;
+    width: 244px;
+    color: $gray-color;
+
+    &__icon {
+      width: 16px;
+      height: 15px;
+      margin-right: 10px;
+      order: -1;
+    }
+    
+    &__field {
+  
+      border: 0; 
+    }
+    
+    &__field:focus {
+      outline: none;
+    }
+  }
+  
+  
+  
+
+  .button{
+    border-style: none;
+    border-color: none;
+    border-image: none;
+    background-color: transparent;
+    margin-left: 15px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 15px;
+    color: $black-color;
+    cursor: pointer;
+  };

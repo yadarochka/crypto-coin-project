@@ -1,0 +1,43 @@
+@import '../../style/variables.scss';
+
+
+.coin-page__header{
+    &__name-box{
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        &__name{
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 8px;
+            margin-right: 4px;
+        }
+
+        &__symbol{
+            display: inline-block;
+            font-size: 10px;
+        }
+    }
+    &__price-info{
+
+        &__price{
+            font-size: 24px;
+            margin-right: 12px;
+        }
+        &__price-change{
+            font-size: 16px;
+        }
+    }
+    &__img{
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.coin-page__chart{
+    height: 400px;
+    background-color: dodgerblue;
+    margin: 15px 0;
+}
+
