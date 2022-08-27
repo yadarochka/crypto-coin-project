@@ -16,6 +16,8 @@ type LoaderProps = {
    * Дополнительные CSS-классы.
    */
   className?: string;
+
+  children?: React.ReactNode;
 };
 
 enum LoaderSize {
@@ -28,8 +30,14 @@ export const Loader = ({
   loading = true,
   size = LoaderSize.l,
   className,
+  children,
 }: LoaderProps) => {
   if (!loading) return null;
-  else return <div className={`loader loader_size-${size} ${className}`} />;
+  else
+    return (
+      <div className={`loader loader_size-${size} ${className}`}>
+        {children}
+      </div>
+    );
 };
 export default Loader;

@@ -89,15 +89,17 @@ const CoinListPage = () => {
       ></Search>
       <div className={styles["coin-list-page__items-list"]}>
         {!isLoading ? (
-          <CoinList
-            searchedCoins={searchedCoins}
-            currency={DropdownValue.key}
-          />
+          <>
+            <CoinList
+              searchedCoins={searchedCoins}
+              currency={DropdownValue.key}
+            />
+            {searchedCoins.length === 0 && (
+              <div style={{ textAlign: "center" }}>Такой монеты нет</div>
+            )}
+          </>
         ) : (
           <Loader></Loader>
-        )}
-        {searchedCoins.length === 0 && (
-          <div style={{ textAlign: "center" }}>Такой монеты нет</div>
         )}
       </div>
     </div>
