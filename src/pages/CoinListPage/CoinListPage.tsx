@@ -91,6 +91,7 @@ const CoinListPage = () => {
         {!isLoading ? (
           <>
             <CoinList
+              paginationHide={search === ""}
               searchedCoins={searchedCoins}
               currency={DropdownValue.key}
             />

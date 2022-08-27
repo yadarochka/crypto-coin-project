@@ -10,9 +10,14 @@ import styles from "./CoinList.module.scss";
 type CoinListProps = {
   searchedCoins: Coin[];
   currency: string;
+  paginationHide?: boolean;
 };
 
-const CoinList = ({ searchedCoins, currency }: CoinListProps) => {
+const CoinList = ({
+  searchedCoins,
+  currency,
+  paginationHide = false,
+}: CoinListProps) => {
   const {
     firstContentIndex,
     lastContentIndex,
@@ -51,13 +56,15 @@ const CoinList = ({ searchedCoins, currency }: CoinListProps) => {
             </Link>
           );
         })}
-      <Pagination
-        page={page}
-        nextPage={nextPage}
-        prevPage={prevPage}
-        pageCount={totalPages}
-        setPage={setPage}
-      ></Pagination>
+      {paginationHide && (
+        <Pagination
+          page={page}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          pageCount={totalPages}
+          setPage={setPage}
+        ></Pagination>
+      )}
     </div>
   );
 };
