@@ -1,0 +1,42 @@
+@import "../../../styles/variables.scss";
+
+$dropdown-border-color : #DFE2E4;
+
+.dropdown{
+    cursor: pointer;
+    overflow: auto;
+    border: 0.5px solid $dropdown-border-color;
+    border-radius: 12px;
+    max-height: 112px;
+    width: 100%;
+    
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    &__item{
+        border-top: 0.5px solid $dropdown-border-color;
+        padding: 5px 8px;
+
+        &:hover{
+            background-color: gainsboro;
+        }
+        
+    }
+
+    &__value{
+        padding: 5px 8px;
+        position: relative;
+
+        &::after{
+            content: ''; 
+            position: absolute;
+            right: 10px; top: 10px;
+            border: 5px solid transparent; border-top: 5px solid $gray-color;
+        }
+    }
+
+
+}
+

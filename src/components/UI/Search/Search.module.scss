@@ -1,5 +1,10 @@
 @import "@styles/variables.scss";
 
+.wrapper{
+  width: 100%;
+}
+
+
 .search {
     display: inline-flex;
     border: 1px solid #DFE2E4;
@@ -7,7 +12,7 @@
     padding: 12px;
     font-size: 12px;
     line-height: 15px;
-    width: 244px;
+    width: 265px;
     color: $gray-color;
     margin-right: 15px;
 

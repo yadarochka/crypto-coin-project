@@ -1,4 +1,5 @@
-@import '../../../../styles/variables.scss';
+@import "../../../../src/styles/variables.scss";
+
 
 .card {
     position: relative;
@@ -12,11 +13,8 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
     border-radius: 8px;
 
-    &:hover {
-        background: gray;
-    
-    
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.075);
+    &:hover{
+        background-color: gainsboro;
     }
     
     &__img-box {

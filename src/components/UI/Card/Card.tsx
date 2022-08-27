@@ -1,4 +1,5 @@
 import styles from "./Card.module.scss";
+
 interface CardProps {
   /** URL изображения */
   image: string;
@@ -59,7 +60,7 @@ export const Card = ({
       )}
       {priceType && (
         <div className={styles["card__price-box"]}>
-          <div className={styles["card__price"]}>${price}</div>
+          <div className={styles["card__price"]}>{price}</div>
           {priceChange > 0 && (
             <div
               className={`${styles["card__price-change"]} ${styles["success"]}`}
@@ -98,3 +99,5 @@ export const Card = ({
     </div>
   );
 };
+
+export default Card;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
+import Card from "@components/UI/Card";
 import Loader from "@components/UI/Loader";
-import { Card } from "@pages/CoinListPage/components/CoinCard/Card";
 import { rounding } from "@utils/rounding";
 import axios from "axios";
 import { useParams } from "react-router-dom";
