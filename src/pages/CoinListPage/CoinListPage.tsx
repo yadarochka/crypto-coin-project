@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import Dropdown from "@components/UI/Dropdown";
-import { Options } from "@components/UI/Dropdown/Dropdown";
 import Loader from "@components/UI/Loader";
 import Search from "@components/UI/Search";
 import { Coin } from "@type/CoinType";
 import axios from "axios";
 
+import useDropdown from "../../hooks/useDropdown";
 import useSearchInput from "../../hooks/useSearchInput";
 import styles from "./CoinListPage.module.scss";
 import CoinList from "./components/CoinList";
@@ -18,11 +18,12 @@ const CoinListPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [options, setOptions] = useState<Options[]>([]);
-
-  const [DropdownValue, setDropdownValue] = useState<Options>({
-    key: "usd",
-    value: "Market- USD",
+  const { options, setOptions, DropdownValue, handlerDropdown } = useDropdown({
+    option: [],
+    value: {
+      key: "usd",
+      value: "Market- USD",
+    },
   });
 
   useEffect(() => {
@@ -54,10 +55,6 @@ const CoinListPage = () => {
       })
       .catch((error) => alert(error));
   }, [DropdownValue]);
-
-  function handlerDropdown() {
-    setDropdownValue(arguments[0]);
-  }
 
   const searchedCoins: Coin[] = coins.filter((coin: Coin) => {
     return coin.name.toLowerCase().includes(search.toLowerCase());
