@@ -15,6 +15,8 @@ interface CardProps {
   price: number;
   /** Изменение цены*/
   priceChange: number;
+  /** Валюта */
+  currency: string;
   /** Стили */
   className: string;
   /** Наличие графика в карточке */
@@ -36,6 +38,7 @@ export const Card = ({
   withChart = true,
   priceType,
   userType,
+  currency,
 }: CardProps) => {
   return (
     <div className={`${styles.card} ${className}`}>
@@ -60,7 +63,7 @@ export const Card = ({
       )}
       {priceType && (
         <div className={styles["card__price-box"]}>
-          <div className={styles["card__price"]}>{price}</div>
+          <div className={styles["card__price"]}>{currency + " " + price}</div>
           {priceChange > 0 && (
             <div
               className={`${styles["card__price-change"]} ${styles["success"]}`}

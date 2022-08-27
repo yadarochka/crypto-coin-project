@@ -1,6 +1,6 @@
 .loader {
     display: inline-block;
-    background-image: url("../../../../public/Loader.svg");
+    background-image: url("@images/Loader.svg");
     background-repeat: no-repeat;
     background-size: contain;
     -webkit-transform-origin: 50% 50%;

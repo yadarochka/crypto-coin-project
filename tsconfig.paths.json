@@ -7,8 +7,8 @@
         "@styles/*": ["src/styles/*"],
         "@utils/*": ["src/utils/*"],
         "@pages/*":["src/pages/*"],
-        "@type/*":["src/type"],
-        "@images/*":["src/images"]
+        "@type/*":["src/type/*"],
+        "@images/*":["src/images/*"]
       }
     }
   }

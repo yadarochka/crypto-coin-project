@@ -2,14 +2,19 @@ import { useState } from "react";
 
 import styles from "./Dropdown.module.scss";
 
+export type Options = {
+  key: string;
+  value: string;
+};
+
 /** Пропсы, которые принимает компонент Dropdown */
 export type MultiDropdownProps = {
   /** Массив возможных вариантов для выбора */
-  options?: string[];
+  options?: Options[];
   /** Текущие выбранные значения поля, массив может быть пустым */
-  value?: string;
+  value?: Options;
   /** Callback, вызываемый при выборе варианта */
-  onChange: (value: string) => void;
+  onChange: (value: Options) => void;
   /** Заблокирован ли дропдаун */
   disabled?: boolean;
   /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */
@@ -19,28 +24,32 @@ export type MultiDropdownProps = {
 };
 
 export const Dropdown = ({
-  options = ["item 1", "item 2", "item 3"],
+  options = [
+    { key: "1", value: "item 1" },
+    { key: "2", value: "item 2" },
+    { key: "3", value: "item 3" },
+  ],
   onChange,
-  value = "item 1",
+  value = { key: "1", value: "item 1" },
   disabled,
   pluralizeOptions = () => `${value}`,
   className,
 }: MultiDropdownProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  const itemOnClick = (el: string) => {
+  const itemOnClick = (el: Options) => {
     onChange(el);
     toggleList();
   };
 
-  const items = options.map((el) => {
+  const items = Object.values(options).map((el) => {
     return (
       <div
-        key={el}
+        key={el.key}
         className={styles["dropdown__item"]}
         onClick={() => itemOnClick(el)}
       >
-        {el}
+        {el.value}
       </div>
     );
   });
@@ -52,7 +61,7 @@ export const Dropdown = ({
   return (
     <div className={`${styles["dropdown"]} ${className}`}>
       <div className={styles["dropdown__value"]} onClick={toggleList}>
-        {pluralizeOptions(value)}
+        {value.value}
       </div>
       {isVisible && !disabled && items}
     </div>

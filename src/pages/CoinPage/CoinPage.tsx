@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 import Card from "@components/UI/Card";
 import Loader from "@components/UI/Loader";
+import { Coin } from "@type/CoinType";
 import { rounding } from "@utils/rounding";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-import { Coin } from "../../type/CoinType";
 import styles from "./CoinPage.module.scss";
 
 const CoinPage = () => {
@@ -70,6 +70,7 @@ const CoinPage = () => {
           </div>
           <div className={styles["coin-page__chart"]}>Здесь график</div>
           <Card
+            currency={"USD"}
             key={coin.id}
             name={coin.name}
             subtitle={coin.symbol}
