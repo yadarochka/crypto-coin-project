@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import { Card } from "@components/UI/Card/Card";
 import Dropdown from "@components/UI/Dropdown";
 import Loader from "@components/UI/Loader";
 import Search from "@components/UI/Search";
-import { rounding } from "@utils/rounding";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 import { Coin } from "../../type/CoinType";
 import styles from "./CoinListPage.module.scss";
+import CoinList from "./components/CoinList";
 
 const CoinListPage = () => {
   const [coins, setCoins] = useState([]);
@@ -55,7 +53,7 @@ const CoinListPage = () => {
     setDropdownValue(arguments[0]);
   }
 
-  const searchedCoins = coins.filter((coin: Coin) => {
+  const searchedCoins: Coin[] = coins.filter((coin: Coin) => {
     return coin.name.toLowerCase().includes(search.toLowerCase());
   });
 
@@ -78,26 +76,7 @@ const CoinListPage = () => {
       ></Search>
       <div className={styles["coin-list-page__items-list"]}>
         {!isLoading ? (
-          searchedCoins.map((coin: Coin) => {
-            return (
-              <Link
-                className={styles["coin-list-page__items-list__link"]}
-                key={`link_${coin.id}`}
-                to={`/coins/${coin.id}`}
-              >
-                <Card
-                  key={coin.id}
-                  name={coin.name}
-                  subtitle={coin.symbol}
-                  image={coin.image}
-                  price={rounding(coin.current_price, 5)}
-                  priceChange={rounding(coin.price_change_percentage_24h, 5)}
-                  className={styles["coin-list-page__items-list__item"]}
-                  priceType={true}
-                ></Card>
-              </Link>
-            );
-          })
+          <CoinList searchedCoins={searchedCoins} />
         ) : (
           <Loader></Loader>
         )}
