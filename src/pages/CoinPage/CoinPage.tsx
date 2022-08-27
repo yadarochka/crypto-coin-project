@@ -46,7 +46,7 @@ const CoinPage = () => {
             </div>
             <div className={styles["coin-page__header__price-info"]}>
               <span className={styles["coin-page__header__price-info__price"]}>
-                {coin.current_price}
+                {`$${coin.current_price}`}
               </span>
               {coin.price_change_percentage_24h > 0 && (
                 <span
