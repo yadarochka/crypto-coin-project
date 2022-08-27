@@ -7,13 +7,14 @@ import Search from "@components/UI/Search";
 import { Coin } from "@type/CoinType";
 import axios from "axios";
 
+import useSearchInput from "../../hooks/useSearchInput";
 import styles from "./CoinListPage.module.scss";
 import CoinList from "./components/CoinList";
 
 const CoinListPage = () => {
-  const [coins, setCoins] = useState([]);
+  const { search, handleInput, handlerSearchButton } = useSearchInput();
 
-  const [search, setSearch] = useState("");
+  const [coins, setCoins] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,14 +54,6 @@ const CoinListPage = () => {
       })
       .catch((error) => alert(error));
   }, [DropdownValue]);
-
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
-  const handlerSearchButton: () => void = () => {
-    setSearch("");
-  };
 
   function handlerDropdown() {
     setDropdownValue(arguments[0]);
