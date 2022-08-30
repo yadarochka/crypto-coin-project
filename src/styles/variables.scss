@@ -1,0 +1,36 @@
+@import "./fonts";
+
+$green-color: #21bf73;
+$red-color: #d90429;
+$black-color: #212529;
+$gray-color: #6c757d;
+$dropdown-border-color: #dfe2e4;
+$spacer: 20px;
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-1 {
+  margin-bottom: $spacer * 0.25;
+}
+
+.mb-3 {
+  margin-bottom: $spacer;
+}
+
+.mb-auto {
+  margin: auto;
+}
+
+.success {
+  color: $green-color;
+}
+
+.danger {
+  color: $red-color;
+}
+
+.text-center {
+  text-align: center;
+}

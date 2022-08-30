@@ -1,0 +1,50 @@
+@import "@styles/variables";
+
+
+.coin_page {
+  &__chart {
+    margin-bottom: 20px;
+  }
+
+  &__card {
+    margin: 0 20px;
+  }
+}
+
+
+.coin-page__header {
+  &__name-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    &__name {
+      display: inline-block;
+      margin-right: 4px;
+      margin-left: 8px;
+      font-size: 16px;
+    }
+
+    &__symbol {
+      display: inline-block;
+      font-size: 10px;
+    }
+  }
+
+  &__price-info {
+    &__price {
+      margin-right: 12px;
+      font-size: 24px;
+    }
+
+    &__price-change {
+      font-size: 16px;
+    }
+  }
+
+  &__img {
+    width: 24px;
+    height: 24px;
+  }
+
+}

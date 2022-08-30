@@ -1,0 +1,19 @@
+@import "@styles/variables";
+
+.coin-list-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__dropdown {
+    position: absolute;
+    top: 8px;
+    right: -100px;
+    width: 100px;
+  }
+
+  &__search {
+    margin-bottom: 34px;
+  }
+}

@@ -1,0 +1,12 @@
+@import "@styles/variables";
+
+.button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: $black-color;
+  cursor: pointer;
+  font-family: "Circular Std", sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+}
