@@ -1,11 +1,12 @@
-@import "@styles/variables.scss";
+@import "@styles/variables";
 
-.button{
-    border: none;
-    background-color: transparent;
-    padding: 0;
-    font-size: 12px;
-    line-height: 15px;
-    color: $black-color;
-    cursor: pointer;
-  };
+.button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: $black-color;
+  cursor: pointer;
+  font-family: "Circular Std", sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+}

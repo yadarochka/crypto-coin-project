@@ -1,16 +1,15 @@
-@import "@styles/variables.scss";
+@import "@styles/variables";
 
-.coin-list{
+.coin-list {
+  &__item {
+    margin-bottom: 8px;
+  }
 
-    &__item{
-        margin-bottom: 8px;
+  &__link {
+    color: $black-color;
+
+    :visited {
+      color: $black-color;
     }
-
-    &__link{
-        color: $black-color;
-        :visited{
-            color: $black-color;
-        }
-        
-    }
+  }
 }

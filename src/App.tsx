@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./App.css";
+import "./App.scss";
 
 import CoinListPage from "@pages/CoinListPage";
 import CoinPage from "@pages/CoinPage";
@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/coins/" element={<CoinListPage />}></Route>
+          <Route path="/coins/" element={<CoinListPage />} />
           <Route path="/coins/:name" element={<CoinPage />} />
           <Route path="*" element={<Navigate to="/coins" replace />} />
         </Routes>

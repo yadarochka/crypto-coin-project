@@ -11,12 +11,18 @@ type CoinListProps = {
   searchedCoins: Coin[];
   currency: string;
   paginationHide?: boolean;
+  contentCount: number;
 };
 
 const CoinList = ({
+  /** Найденные в поиске монеты */
   searchedCoins,
+  /** Валюта */
   currency,
+  /** Показать/скрыть пагинацию */
   paginationHide = false,
+  /** Количество контента */
+  contentCount,
 }: CoinListProps) => {
   const {
     firstContentIndex,
@@ -28,8 +34,13 @@ const CoinList = ({
     totalPages,
   } = usePagination({
     contentPerPage: 10,
-    count: 100,
+    count: contentCount,
   });
+
+  const labels: string[] = [];
+  for (let i = 0; i < contentCount; i++) {
+    labels[i] = `${i}`;
+  }
 
   return (
     <div className={styles["coin-list"]}>
@@ -52,6 +63,9 @@ const CoinList = ({
                 priceChange={rounding(coin.price_change_percentage_24h, 5)}
                 className={styles["coin-list__item"]}
                 priceType={true}
+                coinData={coin.sparkline_in_7d.price}
+                coinLabels={labels}
+                onMouseEvent={false}
               ></Card>
             </Link>
           );

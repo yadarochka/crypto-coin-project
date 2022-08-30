@@ -1,34 +1,33 @@
-@import "@styles/variables.scss";
+@import "@styles/variables";
 
-.wrapper{
+.wrapper {
   width: 100%;
 }
 
-
 .search {
-    display: inline-flex;
-    border: 1px solid #DFE2E4;
-    border-radius: 4px;
-    padding: 12px;
+  display: inline-flex;
+  width: 265px;
+  padding: 12px;
+  border: 1px solid #dfe2e4;
+  margin-right: 15px;
+  border-radius: 4px;
+
+  &__icon {
+    width: 16px;
+    height: 15px;
+    order: -1;
+    margin-right: 10px;
+  }
+
+  &__field {
+    border: 0;
+    color: $gray-color;
+    font-family: "Circular Std", sans-serif;
     font-size: 12px;
     line-height: 15px;
-    width: 265px;
-    color: $gray-color;
-    margin-right: 15px;
-
-    &__icon {
-      width: 16px;
-      height: 15px;
-      margin-right: 10px;
-      order: -1;
-    }
-    
-    &__field {
-  
-      border: 0; 
-    }
-    
-    &__field:focus {
-      outline: none;
-    }
   }
+
+  &__field:focus {
+    outline: none;
+  }
+}

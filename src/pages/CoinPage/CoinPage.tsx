@@ -1,38 +1,57 @@
 import { useEffect, useState } from "react";
 
 import Card from "@components/UI/Card";
+import Chart from "@components/UI/Chart";
 import Loader from "@components/UI/Loader";
 import { Coin } from "@type/CoinType";
+import { convertTimestamp } from "@utils/convertTimestamp";
 import { rounding } from "@utils/rounding";
 import axios from "axios";
+import classNames from "classnames";
 import { useParams } from "react-router-dom";
 
 import styles from "./CoinPage.module.scss";
 
 const CoinPage = () => {
-  const [coin, setCoin] = useState<Coin | undefined>();
+  const [coin, setCoin] = useState<Coin>();
 
   const { name } = useParams();
+
+  const [chart, setChart] = useState<number[][]>();
 
   useEffect(() => {
     axios
       .get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${name}&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`
+        `https://api.coingecko.com/api/v3/coins/${name}?localization=false&tickers=false&market_data=true&community_data=false&develope`
       )
       .then((res) => {
-        setCoin(res.data[0]);
+        setCoin(res.data);
       })
       .catch((error) => alert(error));
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.coingecko.com/api/v3/coins/${name}/ohlc?vs_currency=usd&days=1`
+      )
+      .then((res) => {
+        setChart(res.data);
+      })
+      .catch((error) => alert(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
-      {typeof coin != "undefined" ? (
+      {coin ? (
         <>
           <div className={styles["coin-page__header"]}>
             <div className={styles["coin-page__header__name-box"]}>
               <img
                 className={styles["coin-page__header__img"]}
-                src={coin.image}
+                src={coin.image.thumb}
                 alt={`Изображение ${coin.name}`}
               ></img>
               <div>
@@ -46,45 +65,57 @@ const CoinPage = () => {
             </div>
             <div className={styles["coin-page__header__price-info"]}>
               <span className={styles["coin-page__header__price-info__price"]}>
-                {`$${coin.current_price}`}
+                {`$${coin.market_data.current_price.usd}`}
               </span>
-              {coin.price_change_percentage_24h > 0 && (
-                <span
-                  className={`${styles["coin-page__header__price-info__price-change"]} ${styles["success"]}`}
-                >
-                  {`+ ${rounding(coin.price_change_24h, 6)} (${rounding(
-                    coin.price_change_percentage_24h
-                  )}%)`}
-                </span>
-              )}
-              {coin.price_change_percentage_24h < 0 && (
-                <span
-                  className={`${styles["coin-page__header__price-info__price-change"]} ${styles["danger"]}`}
-                >
-                  {`${rounding(coin.price_change_24h, 6)} (${rounding(
-                    coin.price_change_percentage_24h
-                  )}%)`}
-                </span>
-              )}
+              <span
+                className={classNames(
+                  styles["coin-page__header__price-info__price-change"],
+                  {
+                    [styles.success]:
+                      coin.market_data.price_change_24h_in_currency.usd > 0,
+                    [styles.danger]:
+                      coin.market_data.price_change_24h_in_currency.usd < 0,
+                  }
+                )}
+              >
+                {`${rounding(
+                  coin.market_data.price_change_24h_in_currency.usd,
+                  6
+                )} (${rounding(
+                  coin.market_data.price_change_percentage_24h_in_currency.usd
+                )}%)`}
+              </span>
             </div>
           </div>
-          <div className={styles["coin-page__chart"]}>Здесь график</div>
+          <div className={classNames(styles["coin_page__chart"])}>
+            {chart ? (
+              <Chart
+                onMouseEvent={true}
+                coinData={chart.map((arr) => arr[2])}
+                coinLabels={chart.map((arr) => convertTimestamp(arr[0]))}
+              />
+            ) : (
+              <Loader />
+            )}
+          </div>
           <Card
             currency={"USD"}
             key={coin.id}
             name={coin.name}
             subtitle={coin.symbol}
-            image={coin.image}
-            price={coin.current_price}
-            priceChange={coin.price_change_percentage_24h}
-            className={""}
+            image={coin.image.thumb}
+            price={coin.market_data.current_price.usd}
+            priceChange={
+              coin.market_data.price_change_percentage_24h_in_currency.usd
+            }
+            className={classNames(styles["coin_page__card"])}
             withChart={false}
             userType={true}
-          ></Card>
+          />
         </>
       ) : (
         <>
-          <Loader></Loader>
+          <Loader />
         </>
       )}
     </div>

@@ -20,17 +20,19 @@ type SearchProps = {
   buttonText?: string;
   /** Функция OnClick у button */
   buttonOnClick?: () => void;
+  disabled: boolean;
 };
 
 const Search = memo(
   ({
     className,
     onChange,
-    placeholder = "Enter the text",
+    placeholder,
     type,
-    buttonText = "Input button",
+    buttonText,
     buttonOnClick,
     value,
+    disabled,
   }: SearchProps) => {
     return (
       <div className={className}>
@@ -41,10 +43,15 @@ const Search = memo(
             type={type}
             className={styles["search__field"]}
             placeholder={placeholder}
+            disabled={disabled}
           />
           <img src={searchIcon} alt="" className={styles["search__icon"]} />
         </div>
-        <Button onClick={buttonOnClick}>{buttonText}</Button>
+        <Button
+          disabled={disabled}
+          onClick={buttonOnClick}
+          value={buttonText}
+        ></Button>
       </div>
     );
   }

@@ -1,17 +1,18 @@
+import { FC } from "react";
+
 import styles from "./Button.module.scss";
 
 type ButtonProps = React.PropsWithChildren<{}> &
-  React.ButtonHTMLAttributes<HTMLButtonElement>;
+  React.InputHTMLAttributes<HTMLInputElement> & {};
 
-const Button = ({
-  children = "click me",
-  className,
-  ...otherProps
-}: ButtonProps) => {
+const Button: FC<ButtonProps> = ({ value, className, ...otherProps }) => {
   return (
-    <button {...otherProps} className={`${styles["button"]} ${className}`}>
-      {children}
-    </button>
+    <input
+      type="button"
+      {...otherProps}
+      value={value}
+      className={`${styles["button"]} ${className}`}
+    />
   );
 };
 

@@ -1,18 +1,19 @@
-@import '@styles/variables.scss';
+@import "@styles/variables";
 
-.coin-list-page{
-    align-items: center;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+.coin-list-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    &__dropdown{
-        position: absolute;
-        right: -100px; top:8px;
-        width: 100px;
-    }
+  &__dropdown {
+    position: absolute;
+    top: 8px;
+    right: -100px;
+    width: 100px;
+  }
 
-    &__search{
-        margin-bottom: 34px;
-    }
+  &__search {
+    margin-bottom: 34px;
+  }
 }

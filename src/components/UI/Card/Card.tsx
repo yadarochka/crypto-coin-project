@@ -1,3 +1,7 @@
+import { FC } from "react";
+
+import Chart from "@components/UI/Chart";
+
 import styles from "./Card.module.scss";
 
 interface CardProps {
@@ -26,12 +30,17 @@ interface CardProps {
   /** На карточке будет отображаться информация о наличии токена у конкретного пользователя */
   userType?: boolean;
   /** Нужно исправить (при передачи одинаковых значений priceType и userType будет сломано отображение) */
+  coinData?: number[];
+
+  coinLabels?: string[];
+
+  onMouseEvent?: boolean;
 }
 
-export const Card = ({
-  image = "https://avatars2.githubusercontent.com/u/9127594?v=3&s=60",
-  name = "Здесь заголовок",
-  subtitle = "Здесь описание",
+export const Card: FC<CardProps> = ({
+  image,
+  name,
+  subtitle,
   price,
   priceChange,
   className,
@@ -39,7 +48,10 @@ export const Card = ({
   priceType,
   userType,
   currency,
-}: CardProps) => {
+  coinData = [],
+  coinLabels = [],
+  onMouseEvent,
+}) => {
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles["card__img-box"]}>
@@ -57,13 +69,20 @@ export const Card = ({
         </span>
       </div>
       {withChart && (
-        <div className={styles["card__chart"]}>
-          <div>График</div>
+        <div className={styles["card__chart-box"]}>
+          <Chart
+            coinData={coinData}
+            coinLabels={coinLabels}
+            onMouseEvent={false}
+            className={styles["card__chart"]}
+          />
         </div>
       )}
       {priceType && (
         <div className={styles["card__price-box"]}>
-          <div className={styles["card__price"]}>{currency + " " + price}</div>
+          <div className={styles["card__price"]}>
+            {currency} {price}
+          </div>
           {priceChange > 0 && (
             <div
               className={`${styles["card__price-change"]} ${styles["success"]}`}

@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 import styles from "./Pagination.module.scss";
 
 type PaginationProps = {
@@ -8,13 +10,13 @@ type PaginationProps = {
   nextPage: () => void;
 };
 
-const Pagination = ({
+const Pagination: FC<PaginationProps> = ({
   page,
   pageCount,
   setPage,
   prevPage,
   nextPage,
-}: PaginationProps) => {
+}) => {
   let content = [];
   for (let i = 1; i <= pageCount; i++) {
     content.push(

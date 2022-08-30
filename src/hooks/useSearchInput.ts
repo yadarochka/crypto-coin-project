@@ -1,8 +1,11 @@
 import { useState } from "react";
 
 interface UseSearchInputReturn {
+  /** Содержимое инпута */
   search: string;
+  /** Функция изменения содержимого инпута */
   handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  /** Функция, вызываемая при клике на кнопку */
   handlerSearchButton: () => void;
 }
 

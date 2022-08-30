@@ -1,17 +1,26 @@
 import { useState } from "react";
 
 interface UsePaginationProps {
+  /** Количество контента на странице */
   contentPerPage: number;
+  /** Количество контента */
   count: number;
 }
 
 interface UsePaginationReturn {
+  /** Текущая страница */
   page: number;
+  /** Всего страниц */
   totalPages: number;
+  /** Первый индекс для метода slice */
   firstContentIndex: number;
+  /** Первый индекс для метода slice */
   lastContentIndex: number;
+  /** Функция перехода на страницу вперёд */
   nextPage: () => void;
+  /** Функция перехода на страницу назад */
   prevPage: () => void;
+  /** Функция перехода на определенную страницу */
   setPage: (page: number) => void;
 }
 

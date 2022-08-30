@@ -1,80 +1,81 @@
-@import "@styles/variables.scss";
-
+@import "@styles/variables";
 
 .card {
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 343px;
-    height: 72px;
-    background: #FFFFFF;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
+  position: relative;
+  display: flex;
+  width: 343px;
+  height: 72px;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
+  cursor: pointer;
 
-    &:hover{
-        background-color: gainsboro;
-    }
-    
-    &__img-box {
-        position: absolute;
-        left: 16px;
-        top: 16px;
-    }
-    
-    &__img {
-        align-self: center;
-        object-fit: cover;
-        width: 40px;
-        height: 40px;
-    
-    }
+  &:hover {
+    background-color: gainsboro;
+  }
 
-    &__name{
-        position: absolute;
-        left: 68px;
-        top: 16px;
-    }
-    
-    &__title {
-        font-size: 16px;
-        margin: 0;
-        padding: 0;
-    }
-    
-    &__subtitle {
-        font-size: 12px;
-        color: $gray-color;
-        margin: 0;
-        padding: 0;
-    }
-    
-    &__chart {
-        position: absolute;
-        right: 112px;
-        top:16px;
-    }    
+  &__img-box {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+  }
 
-    &__price-box{
-        position: absolute;
-        top:16px;
-        right: 16px;
-        text-align: end;
-    }
-    
-    &__price-change{
-        margin-top: 5px;
-        font-size: 10px;
-    }
+  &__img {
+    width: 40px;
+    height: 40px;
+    align-self: center;
+    object-fit: cover;
+  }
 
+  &__name {
+    position: absolute;
+    top: 16px;
+    left: 68px;
+  }
+
+  &__title {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+  }
+
+  &__subtitle {
+    padding: 0;
+    margin: 0;
+    color: $gray-color;
+    font-size: 12px;
+  }
+
+  &__chart-box {
+    position: absolute;
+    top: 16px;
+    right: 112px;
+  }
+
+  &__chart {
+    width: 50px;
+    height: 25px;
+  }
+
+  &__price-box {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    text-align: end;
+  }
+
+  &__price-change {
+    margin-top: 5px;
+    font-size: 10px;
+  }
 }
 
-
-.success{
-    color: $green-color;
+.success {
+  color: $green-color;
 }
 
 .danger {
-    color: $red-color;
+  color: $red-color;
 }

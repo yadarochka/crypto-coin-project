@@ -3,12 +3,12 @@
       "baseUrl": ".",
       "paths": {
         "@components/*": ["src/components/*"],
+        "@images/*":["src/images/*"],
         "@config/*": ["src/config/*"],
         "@styles/*": ["src/styles/*"],
         "@utils/*": ["src/utils/*"],
         "@pages/*":["src/pages/*"],
         "@type/*":["src/type/*"],
-        "@images/*":["src/images/*"],
         "@hooks/*":["src/hooks/*"]
       }
     }

@@ -1,18 +1,17 @@
-@import "@styles/variables.scss";
+@import "@styles/variables";
 
-.pagination{
-    display: flex;
+.pagination {
+  display: flex;
+  border: 0.5px solid $dropdown-border-color;
+
+  &__page {
+    flex: auto;
+    padding: 5px;
     border: 0.5px solid $dropdown-border-color;
-
-    &__page{
-        flex: auto;
-        cursor: pointer;
-        padding: 5px;
-        border: 0.5px solid $dropdown-border-color;
-    }
+    cursor: pointer;
+  }
 }
 
-.active{
-    background-color: $gray-color;
+.active {
+  background-color: $gray-color;
 }
-

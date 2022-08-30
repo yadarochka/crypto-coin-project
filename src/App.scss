@@ -1,0 +1,15 @@
+@import "./styles/fonts";
+
+body {
+  width: 375px;
+  padding: 15px 0;
+  margin: 0 auto;
+  font-family: "Circular Std", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 500;
+}
+
+html {
+  overflow-y: scroll;
+}
