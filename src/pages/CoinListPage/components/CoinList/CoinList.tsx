@@ -1,17 +1,18 @@
 import Card from "@components/UI/Card";
 import Pagination from "@components/UI/Pagination";
-import { Coin } from "@type/CoinType";
+import { CoinListModel } from "@store/models";
+import paginationStore from "@store/paginationStore";
 import { rounding } from "@utils/rounding";
 import { Link } from "react-router-dom";
 
-import usePagination from "../../../../hooks/usePagination";
 import styles from "./CoinList.module.scss";
 
 type CoinListProps = {
-  searchedCoins: Coin[];
+  searchedCoins: CoinListModel[];
   currency: string;
   paginationHide?: boolean;
   contentCount: number;
+  paginationStore: paginationStore;
 };
 
 const CoinList = ({
@@ -23,35 +24,26 @@ const CoinList = ({
   paginationHide = false,
   /** Количество контента */
   contentCount,
+  /**  */
+  paginationStore,
 }: CoinListProps) => {
-  const {
-    firstContentIndex,
-    lastContentIndex,
-    nextPage,
-    prevPage,
-    page,
-    setPage,
-    totalPages,
-  } = usePagination({
-    contentPerPage: 10,
-    count: contentCount,
-  });
-
   const labels: string[] = [];
   for (let i = 0; i < contentCount; i++) {
     labels[i] = `${i}`;
   }
-
   return (
     <div className={styles["coin-list"]}>
       {searchedCoins
-        .slice(firstContentIndex, lastContentIndex)
-        .map((coin: Coin) => {
+        .slice(
+          paginationStore.firstContentIndex,
+          paginationStore.lastContentIndex
+        )
+        .map((coin: CoinListModel) => {
           return (
             <Link
               className={styles["coin-list__link"]}
               key={`link_${coin.id}`}
-              to={`/coins/${coin.id}`}
+              to={`/${coin.id}`}
             >
               <Card
                 currency={currency.toUpperCase()}
@@ -59,28 +51,27 @@ const CoinList = ({
                 name={coin.name}
                 subtitle={coin.symbol}
                 image={coin.image}
-                price={rounding(coin.current_price, 5)}
-                priceChange={rounding(coin.price_change_percentage_24h, 5)}
+                price={rounding(coin.currentPrice, 5)}
+                priceChange={rounding(coin.priceChangePercentage24h, 5)}
                 className={styles["coin-list__item"]}
                 priceType={true}
-                coinData={coin.sparkline_in_7d.price}
+                coinData={coin.sparkline7d.price}
                 coinLabels={labels}
                 onMouseEvent={false}
               ></Card>
             </Link>
           );
         })}
-      {paginationHide && (
+      {!paginationHide && (
         <Pagination
-          page={page}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          pageCount={totalPages}
-          setPage={setPage}
+          page={paginationStore.page}
+          nextPage={paginationStore.nextPage}
+          prevPage={paginationStore.prevPage}
+          pageCount={paginationStore.pageCount}
+          setPage={paginationStore.setPage}
         ></Pagination>
       )}
     </div>
   );
 };
-
 export default CoinList;

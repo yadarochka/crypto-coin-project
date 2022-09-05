@@ -8,14 +8,13 @@
   top: 50%;
   left: 50%;
   display: inline-block;
+  width: 40px;
+  height: 40px;
   animation: loader 1.2s linear infinite;
   background-image: url("../../../images/Loader.svg");
   background-repeat: no-repeat;
   background-size: contain;
   transform-origin: 50% 50%;
-  width: 40px;
-  height: 40px;
-
 }
 
 @keyframes loader {

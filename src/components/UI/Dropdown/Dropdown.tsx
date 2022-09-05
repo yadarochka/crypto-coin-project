@@ -4,13 +4,9 @@ import styles from "./Dropdown.module.scss";
 import { MultiDropdownProps, Options } from "./types";
 
 export const Dropdown: FC<MultiDropdownProps> = ({
-  options = [
-    { key: "1", value: "item 1" },
-    { key: "2", value: "item 2" },
-    { key: "3", value: "item 3" },
-  ],
+  options = [],
   onChange,
-  value = { key: "1", value: "item 1" },
+  value = { key: "", value: "" },
   disabled,
   className,
 }) => {
