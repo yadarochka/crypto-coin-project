@@ -32,6 +32,7 @@ const Chart = ({
   onMouseEvent = true,
   className,
 }: ChartProps) => {
+  // console.warn("Chart render")
   const data = {
     labels: coinLabels,
     datasets: [

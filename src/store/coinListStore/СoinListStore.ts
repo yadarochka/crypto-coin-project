@@ -8,7 +8,6 @@ import {
   computed,
   reaction,
   makeAutoObservable,
-  observable,
   runInAction,
 } from "mobx";
 

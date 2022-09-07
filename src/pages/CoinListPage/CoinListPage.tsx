@@ -7,7 +7,6 @@ import coinListStore from "@store/coinListStore";
 import { Meta } from "@utils/meta";
 import { useAsync } from "@utils/useAsync";
 import { useLocalStore } from "@utils/useLocalStore";
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
@@ -17,8 +16,6 @@ import CoinList from "./components/CoinList";
 const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
   useAsync(store.fetch, [store.dropdownStore.dropdownValues]);
-
-  console.log(toJS(store.paginationStore));
 
   const handlerDropdown = useCallback(
     (args: any) => {

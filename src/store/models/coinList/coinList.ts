@@ -19,7 +19,7 @@ export type CoinListApiModel = {
   current_price: number;
   price_change_24h: number;
   price_change_percentage_24h: number;
-  sparkline_7d: {
+  sparkline_in_7d: {
     price: number[];
   };
 };
@@ -34,5 +34,7 @@ export const normalizeCoinListApiModel = (
   currentPrice: raw.current_price,
   priceChange24h: raw.price_change_24h,
   priceChangePercentage24h: raw.price_change_percentage_24h,
-  sparkline7d: { ...raw.sparkline_7d },
+  sparkline7d: {
+    price: raw.sparkline_in_7d.price,
+  },
 });

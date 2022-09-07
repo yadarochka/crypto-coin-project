@@ -10,6 +10,7 @@ export const Dropdown: FC<MultiDropdownProps> = ({
   disabled,
   className,
 }) => {
+  // console.warn("Dropdown render")
   const [isVisible, setIsVisible] = useState(false);
 
   const itemOnClick = (el: Options) => {
