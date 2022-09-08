@@ -3,7 +3,6 @@ import Pagination from "@components/UI/Pagination";
 import { CoinListModel } from "@store/models";
 import paginationStore from "@store/paginationStore";
 import { rounding } from "@utils/rounding";
-import { toJS } from "mobx";
 import { Link } from "react-router-dom";
 
 import styles from "./CoinList.module.scss";
