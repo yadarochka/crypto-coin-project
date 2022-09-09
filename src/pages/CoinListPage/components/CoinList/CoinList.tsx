@@ -1,12 +1,14 @@
-import Card from "components/UI/Card";
-import Pagination from "components/UI/Pagination";
+import React from "react";
+import { Link } from "react-router-dom";
+
 import { CoinListModel } from "store/models";
 import paginationStore from "store/paginationStore";
 import { rounding } from "utils/rounding";
-import { Link } from "react-router-dom";
+
+import Card from "components/UI/Card";
+import Pagination from "components/UI/Pagination";
 
 import styles from "./CoinList.module.scss";
-import React from "react";
 
 type CoinListProps = {
   searchedCoins: CoinListModel[];
@@ -28,7 +30,6 @@ const CoinList = ({
   /**  */
   paginationStore,
 }: CoinListProps) => {
-
   const labels = React.useMemo(
     () => Array.from({ length: contentCount }, (_, index) => String(index)),
     [contentCount]
@@ -61,7 +62,7 @@ const CoinList = ({
                 coinData={coin.sparkline7d.price}
                 coinLabels={labels}
                 onMouseEvent={false}
-              ></Card>
+              />
             </Link>
           );
         })}
@@ -72,7 +73,7 @@ const CoinList = ({
           prevPage={paginationStore.prevPage}
           pageCount={paginationStore.pageCount}
           setPage={paginationStore.setPage}
-        ></Pagination>
+        />
       )}
     </div>
   );

@@ -1,18 +1,19 @@
-import { useCallback, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 
-import Dropdown, { Option } from "components/UI/Dropdown";
-import Loader from "components/UI/Loader";
-import Search from "components/UI/Search";
+import React, { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import coinListStore from "store/coinListStore";
 import { Meta } from "utils/meta";
 import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
-import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+
+import CoinList from "./components/CoinList";
+import Dropdown, { Option } from "components/UI/Dropdown";
+import Loader from "components/UI/Loader";
+import Search from "components/UI/Search";
 
 import styles from "./CoinListPage.module.scss";
-import CoinList from "./components/CoinList";
-import React from "react";
 
 const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
@@ -47,7 +48,7 @@ const CoinListPage = () => {
     }
     if (store.paginationStore.page !== 1) {
       params.append("page", String(store.paginationStore.page));
-    } 
+    }
     navigate({ search: params.toString() });
   }, [
     store.searchStore._search,

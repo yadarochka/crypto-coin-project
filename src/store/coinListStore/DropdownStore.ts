@@ -1,7 +1,9 @@
-import { Option } from "components/UI/Dropdown";
+import { makeAutoObservable, runInAction } from "mobx";
+
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
-import { makeAutoObservable, runInAction } from "mobx";
+
+import { Option } from "components/UI/Dropdown";
 
 import { requestCoinListCurrency } from "./requestCoinList";
 
@@ -29,7 +31,7 @@ export default class DropdownStore implements ILocalStore {
     return this._meta;
   }
 
-  set meta(newMeta:Meta){
+  set meta(newMeta: Meta) {
     this._meta = newMeta;
   }
 
@@ -55,8 +57,8 @@ export default class DropdownStore implements ILocalStore {
 
   async fetch(): Promise<void> {
     if (this.meta === Meta.loading) {
-      return
-    };
+      return;
+    }
 
     this.meta = Meta.loading;
 

@@ -1,56 +1,24 @@
 {
-    "extends": [ 
-      "prettier",
-      "eslint:recommended",
-      "plugin:react/recommended"
-  ],
-    "plugins": [
-      "react", 
-      "prettier",
-      "import"
-  ],
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "parser": "@babel/eslint-parser",
-    "rules": {
-      "no-console": "error",
-      "sort-imports": ["error", 
-        { 
-          "ignoreCase": true, 
-          "ignoreDeclarationSort": true 
-        }
-      ], 
-      "react/self-closing-comp": ["error", {
+  "extends": ["prettier"],
+  "plugins": ["react", "prettier"],
+  "parser": "@babel/eslint-parser",
+  "settings": {
+    "version": "detect"
+  },
+  "rules": {
+    "no-console": "error",
+    "react/self-closing-comp": [
+      "error",
+      {
         "component": true,
         "html": true
-      }],
-      "prettier/prettier": ["error",
+      }
+    ],
+    "prettier/prettier": [
+      "error",
       {
         "endOfLine": "auto"
-      }],
-      "import/order": [
-        "error",
-        {
-          "groups": ["builtin", "external", "internal"],
-          "pathGroups": [
-            {
-              "pattern": "react",
-              "group": "external",
-              "position": "before"
-            }
-          ],
-          "pathGroupsExcludedImportTypes": ["react"],
-          "newlines-between": "always",
-          "alphabetize": {
-            "order": "asc",
-            "caseInsensitive": true
-          }
-        }
-      ]
-      
-    }
-    
+      }
+    ]
   }
+}

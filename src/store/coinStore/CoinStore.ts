@@ -1,6 +1,3 @@
-import { CoinModel } from "store/models/coin";
-import { Meta } from "utils/meta";
-import { ILocalStore } from "utils/useLocalStore";
 import {
   action,
   computed,
@@ -8,6 +5,10 @@ import {
   observable,
   runInAction,
 } from "mobx";
+
+import { CoinModel } from "store/models/coin";
+import { Meta } from "utils/meta";
+import { ILocalStore } from "utils/useLocalStore";
 
 import { requestChart } from "./requestChart";
 import { requestCoin } from "./requestCoin";

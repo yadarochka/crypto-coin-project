@@ -1,5 +1,6 @@
-import { ILocalStore } from "utils/useLocalStore";
 import { computed, makeAutoObservable, observable } from "mobx";
+
+import { ILocalStore } from "utils/useLocalStore";
 
 export default class Search implements ILocalStore {
   _search: string | undefined = "";

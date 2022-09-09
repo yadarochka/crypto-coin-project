@@ -1,6 +1,8 @@
-import Button from "components/UI/Button";
-import searchIcon from "images/search-icon.svg";
 import React from "react";
+
+import Button from "components/UI/Button";
+
+import searchIcon from "images/search-icon.svg";
 
 import styles from "./Search.module.scss";
 
@@ -45,11 +47,7 @@ const Search = ({
         />
         <img src={searchIcon} alt="" className={styles["search__icon"]} />
       </div>
-      <Button
-        disabled={disabled}
-        onClick={buttonOnClick}
-        value={buttonText}
-      />
+      <Button disabled={disabled} onClick={buttonOnClick} value={buttonText} />
     </div>
   );
 };

@@ -1,7 +1,8 @@
+import axios from "axios";
 import { apiUrls } from "config/apiUrls";
+
 import { CoinApiModel, CoinModel } from "store/models/coin/coin";
 import { ApiResp } from "utils/apiTypes";
-import axios from "axios";
 
 // из-за ошибки с импортами пока нормалайз полежит здесь
 

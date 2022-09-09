@@ -1,9 +1,11 @@
-import { Options } from "components/UI/Dropdown";
+import axios from "axios";
 import { apiUrls } from "config/apiUrls";
+
 import { CoinListModel, normalizeCurrency } from "store/models";
 import { normalizeCoinListApiModel } from "store/models";
 import { ApiResp } from "utils/apiTypes";
-import axios from "axios";
+
+import { Option } from "components/UI/Dropdown";
 
 export const requestCoinList = async (
   vs_currency: string
@@ -22,9 +24,7 @@ export const requestCoinList = async (
   }
 };
 
-export const requestCoinListCurrency = async (): Promise<
-  ApiResp<Options[]>
-> => {
+export const requestCoinListCurrency = async (): Promise<ApiResp<Option[]>> => {
   try {
     const response = await axios(apiUrls.coinGecko.getCurrency());
     return {

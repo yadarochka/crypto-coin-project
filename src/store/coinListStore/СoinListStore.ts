@@ -1,19 +1,20 @@
-import { CoinListModel } from "store/models";
-import PaginationStore from "store/paginationStore";
-import rootStore from "store/RootStore/instance";
-import { Meta } from "utils/meta";
-import { ILocalStore } from "utils/useLocalStore";
 import {
   action,
   computed,
-  reaction,
   makeAutoObservable,
+  reaction,
   runInAction,
 } from "mobx";
 
+import rootStore from "store/RootStore/instance";
+import { CoinListModel } from "store/models";
+import PaginationStore from "store/paginationStore";
+import { Meta } from "utils/meta";
+import { ILocalStore } from "utils/useLocalStore";
+
 import DropdownStore from "./DropdownStore";
-import { requestCoinList } from "./requestCoinList";
 import SearchStore from "./SearchStore";
+import { requestCoinList } from "./requestCoinList";
 
 export default class СoinListStore implements ILocalStore {
   _coins: CoinListModel[] = [];
@@ -43,12 +44,12 @@ export default class СoinListStore implements ILocalStore {
       serchedCoins: computed,
     });
   }
-  
+
   get meta() {
     return this._meta;
   }
 
-  set meta(newMeta:Meta){
+  set meta(newMeta: Meta) {
     this._meta = newMeta;
   }
 

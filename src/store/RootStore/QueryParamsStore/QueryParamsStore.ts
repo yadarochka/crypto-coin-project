@@ -1,5 +1,6 @@
-import { Params, parseQueryString } from "utils/parseQueryString";
 import { makeAutoObservable } from "mobx";
+
+import { Params, parseQueryString } from "utils/parseQueryString";
 
 export default class QueryParamsStore {
   _search = "";

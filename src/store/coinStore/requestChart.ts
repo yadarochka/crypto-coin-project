@@ -1,6 +1,7 @@
-import { apiUrls } from "config/apiUrls";
-import { ApiResp } from "utils/apiTypes";
 import axios from "axios";
+import { apiUrls } from "config/apiUrls";
+
+import { ApiResp } from "utils/apiTypes";
 
 export const requestChart = async (
   name: string,

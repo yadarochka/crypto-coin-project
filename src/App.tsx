@@ -1,9 +1,9 @@
 import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import CoinListPage from "pages/CoinListPage";
 import CoinPage from "pages/CoinPage";
 import { useQueryParamsStoreInit } from "store/RootStore/hooks/useQueryParamsStoreInit";
-import { Navigate, Route, Routes } from "react-router-dom"
 
 import styles from "./App.module.scss";
 
@@ -12,8 +12,8 @@ function App() {
   return (
     <div className={styles.app}>
       <Routes>
-        <Route path="/" element={<CoinListPage />}/>
-        <Route path=":name" element={<CoinPage />}/>
+        <Route path="/" element={<CoinListPage />} />
+        <Route path=":name" element={<CoinPage />} />
       </Routes>
     </div>
   );

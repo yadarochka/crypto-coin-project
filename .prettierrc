@@ -1,14 +1,24 @@
 {
-    "rules": {
-      "prettier/prettier": [true, {
+  "importOrder": [
+    "^(react.*)$",
+    "^(hooks.*|store.*|pages.*|utils.*)$",
+    "^(./)?components/(.*)$",
+    "^images/.*$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "rules": {
+    "prettier/prettier": [
+      true,
+      {
         "singleQuote": true,
         "jsxSingleQuote": true,
         "arrowParens": "always",
         "max-len": ["error", 140, 2],
         "tabWidth": 4,
         "useTabs": false
-        }]
-    }
+      }
+    ]
   }
-
-    
+}
