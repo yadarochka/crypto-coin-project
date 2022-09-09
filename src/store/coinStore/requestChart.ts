@@ -1,5 +1,5 @@
-import { apiUrls } from "@config/apiUrls";
-import { ApiResp } from "@utils/apiTypes";
+import { apiUrls } from "config/apiUrls";
+import { ApiResp } from "utils/apiTypes";
 import axios from "axios";
 
 export const requestChart = async (

@@ -1,8 +1,8 @@
-import { CoinListModel } from "@store/models";
-import PaginationStore from "@store/paginationStore";
-import rootStore from "@store/RootStore/instance";
-import { Meta } from "@utils/meta";
-import { ILocalStore } from "@utils/useLocalStore";
+import { CoinListModel } from "store/models";
+import PaginationStore from "store/paginationStore";
+import rootStore from "store/RootStore/instance";
+import { Meta } from "utils/meta";
+import { ILocalStore } from "utils/useLocalStore";
 import {
   action,
   computed,
@@ -17,13 +17,13 @@ import SearchStore from "./SearchStore";
 
 export default class СoinListStore implements ILocalStore {
   _coins: CoinListModel[] = [];
-  meta: Meta;
+  _meta: Meta;
   searchStore;
   dropdownStore;
   paginationStore;
 
   constructor() {
-    this.meta = Meta.initial;
+    this._meta = Meta.initial;
     this.searchStore = new SearchStore();
     this.dropdownStore = new DropdownStore();
     this.paginationStore = new PaginationStore(10);
@@ -43,10 +43,30 @@ export default class СoinListStore implements ILocalStore {
       serchedCoins: computed,
     });
   }
+  
+  get meta() {
+    return this._meta;
+  }
 
-  destroy() {
-    // если диспоузить реакцию она перестает работать
-    // this._queryPaginationReaction();
+  set meta(newMeta:Meta){
+    this._meta = newMeta;
+  }
+
+  get serchedCoins() {
+    if (!this.searchStore.search) return this.coins;
+    return this.coins.filter((coin) =>
+      coin.name
+        .toLowerCase()
+        .includes(this.searchStore.search ? this.searchStore.search : "")
+    );
+  }
+
+  get coins() {
+    return this._coins;
+  }
+
+  set coins(newCoins) {
+    this._coins = newCoins;
   }
 
   _queryPaginationReaction = reaction(
@@ -80,21 +100,8 @@ export default class СoinListStore implements ILocalStore {
     });
   }
 
-  get serchedCoins() {
-    if (!this.searchStore.search) return this.coins;
-    else {
-      return this.coins.filter((coin) =>
-        coin.name
-          .toLowerCase()
-          .includes(this.searchStore.search ? this.searchStore.search : "")
-      );
-    }
-  }
-
-  get coins() {
-    return this._coins;
-  }
-  set coins(newCoins) {
-    this._coins = newCoins;
+  destroy() {
+    // если диспоузить реакцию она перестает работать
+    // this._queryPaginationReaction();
   }
 }

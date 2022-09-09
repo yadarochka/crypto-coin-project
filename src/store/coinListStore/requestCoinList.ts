@@ -1,9 +1,10 @@
-import { Options } from "@components/UI/Dropdown";
-import { apiUrls } from "@config/apiUrls";
-import { CoinListModel, normalizeCurrency } from "@store/models";
-import { normalizeCoinListApiModel } from "@store/models";
-import { ApiResp } from "@utils/apiTypes";
+import { Options } from "components/UI/Dropdown";
+import { apiUrls } from "config/apiUrls";
+import { CoinListModel, normalizeCurrency } from "store/models";
+import { normalizeCoinListApiModel } from "store/models";
+import { ApiResp } from "utils/apiTypes";
 import axios from "axios";
+
 export const requestCoinList = async (
   vs_currency: string
 ): Promise<ApiResp<CoinListModel[]>> => {

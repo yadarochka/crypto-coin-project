@@ -1,4 +1,4 @@
-import { ILocalStore } from "@utils/useLocalStore";
+import { ILocalStore } from "utils/useLocalStore";
 import { computed, makeAutoObservable, observable } from "mobx";
 
 export default class Search implements ILocalStore {

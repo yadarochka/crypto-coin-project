@@ -1,7 +1,8 @@
+import React from "react";
 import { FC, useState } from "react";
 
 import styles from "./Dropdown.module.scss";
-import { MultiDropdownProps, Options } from "./types";
+import { MultiDropdownProps, Option } from "./types";
 
 export const Dropdown: FC<MultiDropdownProps> = ({
   options = [],
@@ -10,10 +11,9 @@ export const Dropdown: FC<MultiDropdownProps> = ({
   disabled,
   className,
 }) => {
-  // console.warn("Dropdown render")
   const [isVisible, setIsVisible] = useState(false);
 
-  const itemOnClick = (el: Options) => {
+  const itemOnClick = (el: Option) => {
     onChange(el);
     toggleList();
   };

@@ -1,38 +1,39 @@
 import { useCallback, useEffect } from "react";
 
-import Dropdown from "@components/UI/Dropdown";
-import Loader from "@components/UI/Loader";
-import Search from "@components/UI/Search";
-import coinListStore from "@store/coinListStore";
-import { Meta } from "@utils/meta";
-import { useAsync } from "@utils/useAsync";
-import { useLocalStore } from "@utils/useLocalStore";
+import Dropdown, { Option } from "components/UI/Dropdown";
+import Loader from "components/UI/Loader";
+import Search from "components/UI/Search";
+import coinListStore from "store/coinListStore";
+import { Meta } from "utils/meta";
+import { useAsync } from "utils/useAsync";
+import { useLocalStore } from "utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./CoinListPage.module.scss";
 import CoinList from "./components/CoinList";
+import React from "react";
 
 const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
   useAsync(store.fetch, [store.dropdownStore.dropdownValues]);
 
-  const handlerDropdown = useCallback(
-    (args: any) => {
-      store.dropdownStore.dropdownValues = args;
+  const handlerDropdownChange = useCallback(
+    (value: Option) => {
+      store.dropdownStore.dropdownValues = value;
     },
-    [store.dropdownStore]
+    [store.dropdownStore.dropdownValues]
   );
 
-  const handleInput = useCallback(
-    (args: any) => {
-      store.searchStore.search = args.target.value;
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      store.searchStore.search = event.target.value;
     },
-    [store.searchStore]
+    [store.searchStore.search]
   );
-  const handleButton = useCallback(() => {
+  const handleButtonClick = useCallback(() => {
     store.searchStore.search = "";
-  }, [store.searchStore]);
+  }, [store.searchStore.search]);
 
   const navigate = useNavigate();
 
@@ -40,19 +41,13 @@ const CoinListPage = () => {
     const params = new URLSearchParams();
     if (store.searchStore._search) {
       params.append("search", store.searchStore._search);
-    } else {
-      params.delete("search");
     }
     if (store.dropdownStore.dropdownValues.key !== "usd") {
       params.append("currency", store.dropdownStore.dropdownValues.key);
-    } else {
-      params.delete("currency");
     }
     if (store.paginationStore.page !== 1) {
       params.append("page", String(store.paginationStore.page));
-    } else {
-      params.delete("page");
-    }
+    } 
     navigate({ search: params.toString() });
   }, [
     store.searchStore._search,
@@ -64,7 +59,7 @@ const CoinListPage = () => {
   return (
     <div className={styles["coin-list-page"]}>
       <Dropdown
-        onChange={handlerDropdown}
+        onChange={handlerDropdownChange}
         options={store.dropdownStore.dropdownOptions}
         value={store.dropdownStore.dropdownValues}
         className={styles["coin-list-page__dropdown"]}
@@ -74,10 +69,10 @@ const CoinListPage = () => {
         value={store.searchStore.search}
         type="text"
         className={styles["coin-list-page__search"]}
-        onChange={handleInput}
+        onChange={handleInputChange}
         buttonText="Cancel"
         placeholder="Search Cryptocurrency"
-        buttonOnClick={handleButton}
+        buttonOnClick={handleButtonClick}
       />
 
       {store.meta !== Meta.loading ? (

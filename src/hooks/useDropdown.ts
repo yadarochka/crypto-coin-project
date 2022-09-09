@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Options } from "@components/UI/Dropdown";
+import { Options } from "components/UI/Dropdown";
 
 interface UseDropdownProps {
   /** Варианты выбора */

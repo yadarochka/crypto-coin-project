@@ -1,26 +1,34 @@
-import Card from "@components/UI/Card";
-import Chart from "@components/UI/Chart";
-import Loader from "@components/UI/Loader";
-import CoinStore from "@store/coinStore/CoinStore";
-import { convertTimestamp } from "@utils/convertTimestamp";
-import { rounding } from "@utils/rounding";
-import { useAsync } from "@utils/useAsync";
-import { useLocalStore } from "@utils/useLocalStore";
+import Card from "components/UI/Card";
+import Chart from "components/UI/Chart";
+import Loader from "components/UI/Loader";
+import CoinStore from "store/coinStore/CoinStore";
+import { convertTimestamp } from "utils/convertTimestamp";
+import { rounding } from "utils/rounding";
+import { useAsync } from "utils/useAsync";
+import { useLocalStore } from "utils/useLocalStore";
 import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
 import styles from "./CoinPage.module.scss";
+import React from "react";
+import { Meta } from "utils/meta";
+import { NotFoundPage } from "pages/NotFoundPage";
+
 
 const CoinPage = () => {
+  console.log("Coinpage")
   const { name } = useParams();
 
   const store = useLocalStore(() => new CoinStore(name));
 
   useAsync(store.fetch, [store.coin]);
 
-  return (
+  if (store.meta === Meta.error){
+    return <NotFoundPage />
+  }
+  else return (
     <div>
       {store.coin ? (
         <>

@@ -1,11 +1,12 @@
-import Card from "@components/UI/Card";
-import Pagination from "@components/UI/Pagination";
-import { CoinListModel } from "@store/models";
-import paginationStore from "@store/paginationStore";
-import { rounding } from "@utils/rounding";
+import Card from "components/UI/Card";
+import Pagination from "components/UI/Pagination";
+import { CoinListModel } from "store/models";
+import paginationStore from "store/paginationStore";
+import { rounding } from "utils/rounding";
 import { Link } from "react-router-dom";
 
 import styles from "./CoinList.module.scss";
+import React from "react";
 
 type CoinListProps = {
   searchedCoins: CoinListModel[];
@@ -27,10 +28,12 @@ const CoinList = ({
   /**  */
   paginationStore,
 }: CoinListProps) => {
-  const labels: string[] = [];
-  for (let i = 0; i < contentCount; i++) {
-    labels[i] = `${i}`;
-  }
+
+  const labels = React.useMemo(
+    () => Array.from({ length: contentCount }, (_, index) => String(index)),
+    [contentCount]
+  );
+
   return (
     <div className={styles["coin-list"]}>
       {searchedCoins
@@ -43,7 +46,7 @@ const CoinList = ({
             <Link
               className={styles["coin-list__link"]}
               key={`link_${coin.id}`}
-              to={`/${coin.id}`}
+              to={`${coin.id}`}
             >
               <Card
                 currency={currency.toUpperCase()}

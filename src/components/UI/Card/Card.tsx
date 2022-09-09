@@ -1,8 +1,9 @@
 import { FC } from "react";
 
-import Chart from "@components/UI/Chart";
+import Chart from "components/UI/Chart";
 
 import styles from "./Card.module.scss";
+import React from "react";
 
 interface CardProps {
   /** URL изображения */

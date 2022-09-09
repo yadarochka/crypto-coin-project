@@ -1,6 +1,6 @@
-import { CoinModel } from "@store/models/coin";
-import { Meta } from "@utils/meta";
-import { ILocalStore } from "@utils/useLocalStore";
+import { CoinModel } from "store/models/coin";
+import { Meta } from "utils/meta";
+import { ILocalStore } from "utils/useLocalStore";
 import {
   action,
   computed,
@@ -33,20 +33,23 @@ export default class CoinStore implements ILocalStore {
     if (this._id) {
       const { isError, data } = await requestCoin(this._id);
       if (isError) {
+        this.meta = Meta.error;
         return;
       }
       runInAction(() => {
         this._coin = data;
       });
     }
-    if (this._coin) {
+    if (this.coin) {
       /* захардкодил */
-      const { isError, data } = await requestChart(this._coin.id, "usd");
+      const { isError, data } = await requestChart(this.coin.id, "usd");
       if (isError) {
+        this.meta = Meta.error;
         return;
       }
       runInAction(() => {
         this.chart = data;
+        this.meta = Meta.success;
       });
     }
   }

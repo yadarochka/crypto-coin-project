@@ -1,17 +1,17 @@
-import { Options } from "@components/UI/Dropdown";
-import { Meta } from "@utils/meta";
-import { ILocalStore } from "@utils/useLocalStore";
+import { Option } from "components/UI/Dropdown";
+import { Meta } from "utils/meta";
+import { ILocalStore } from "utils/useLocalStore";
 import { makeAutoObservable, runInAction } from "mobx";
 
 import { requestCoinListCurrency } from "./requestCoinList";
 
 type DropDownType = {
-  options: Options[];
-  value: Options;
+  options: Option[];
+  value: Option;
 };
 
 export default class DropdownStore implements ILocalStore {
-  meta: Meta = Meta.initial;
+  _meta: Meta = Meta.initial;
   _dropDown: DropDownType = {
     options: [],
     value: {
@@ -22,11 +22,41 @@ export default class DropdownStore implements ILocalStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.meta = Meta.initial;
+    this._meta = Meta.initial;
+  }
+
+  get meta() {
+    return this._meta;
+  }
+
+  set meta(newMeta:Meta){
+    this._meta = newMeta;
+  }
+
+  get dropdown() {
+    return this._dropDown;
+  }
+
+  get dropdownOptions() {
+    return this._dropDown.options;
+  }
+
+  get dropdownValues() {
+    return this._dropDown.value;
+  }
+
+  set dropdownValues(value: Option) {
+    this._dropDown.value = value;
+  }
+
+  set dropdownOptions(newOption: Option[]) {
+    this._dropDown.options = newOption;
   }
 
   async fetch(): Promise<void> {
-    if (this.meta === Meta.loading) return;
+    if (this.meta === Meta.loading) {
+      return
+    };
 
     this.meta = Meta.loading;
 
@@ -43,24 +73,4 @@ export default class DropdownStore implements ILocalStore {
   }
 
   destroy() {}
-
-  get dropdown() {
-    return this._dropDown;
-  }
-
-  get dropdownOptions() {
-    return this._dropDown.options;
-  }
-
-  get dropdownValues() {
-    return this._dropDown.value;
-  }
-
-  set dropdownValues({ key, value }: Options) {
-    this._dropDown.value = { key: key, value: value };
-  }
-
-  set dropdownOptions(newOption: Options[]) {
-    this._dropDown.options = newOption;
-  }
 }
