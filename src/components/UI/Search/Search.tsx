@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import Button from "@components/UI/Button";
 import searchIcon from "@images/search-icon.svg";
 
@@ -23,37 +21,35 @@ type SearchProps = {
   disabled: boolean;
 };
 
-const Search = memo(
-  ({
-    className,
-    onChange,
-    placeholder,
-    type,
-    buttonText,
-    buttonOnClick,
-    value,
-    disabled,
-  }: SearchProps) => {
-    return (
-      <div className={className}>
-        <div className={styles["search"]}>
-          <input
-            value={value}
-            onChange={onChange}
-            type={type}
-            className={styles["search__field"]}
-            placeholder={placeholder}
-            disabled={disabled}
-          />
-          <img src={searchIcon} alt="" className={styles["search__icon"]} />
-        </div>
-        <Button
+const Search = ({
+  className,
+  onChange,
+  placeholder,
+  type,
+  buttonText,
+  buttonOnClick,
+  value,
+  disabled,
+}: SearchProps) => {
+  return (
+    <div className={className}>
+      <div className={styles["search"]}>
+        <input
+          value={value}
+          onChange={onChange}
+          type={type}
+          className={styles["search__field"]}
+          placeholder={placeholder}
           disabled={disabled}
-          onClick={buttonOnClick}
-          value={buttonText}
-        ></Button>
+        />
+        <img src={searchIcon} alt="" className={styles["search__icon"]} />
       </div>
-    );
-  }
-);
+      <Button
+        disabled={disabled}
+        onClick={buttonOnClick}
+        value={buttonText}
+      ></Button>
+    </div>
+  );
+};
 export default Search;

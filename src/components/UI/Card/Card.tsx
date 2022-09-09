@@ -52,6 +52,7 @@ export const Card: FC<CardProps> = ({
   coinLabels = [],
   onMouseEvent,
 }) => {
+  // console.warn("Card render")
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles["card__img-box"]}>
