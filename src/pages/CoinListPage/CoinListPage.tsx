@@ -9,6 +9,7 @@ import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
 
 import CoinList from "./components/CoinList";
+import stylesCoinList from "./components/CoinList/CoinList.module.scss";
 import Dropdown, { Option } from "components/UI/Dropdown";
 import Loader from "components/UI/Loader";
 import Search from "components/UI/Search";
@@ -17,11 +18,29 @@ import styles from "./CoinListPage.module.scss";
 
 const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
+  const navigate = useNavigate();
+  console.log(store.page);
   useAsync(store.fetch, [store.dropdownStore.dropdownValues]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (store.searchStore._search) {
+      params.append("search", store.searchStore._search);
+    }
+    if (store.dropdownStore.dropdownValues.key !== "usd") {
+      params.append("currency", store.dropdownStore.dropdownValues.key);
+    }
+    navigate({ search: params.toString() });
+  }, [
+    store.searchStore._search,
+    navigate,
+    store.dropdownStore.dropdownValues.key,
+  ]);
 
   const handlerDropdownChange = useCallback(
     (value: Option) => {
       store.dropdownStore.dropdownValues = value;
+      store.coins = [];
     },
     [store.dropdownStore.dropdownValues]
   );
@@ -35,27 +54,6 @@ const CoinListPage = () => {
   const handleButtonClick = useCallback(() => {
     store.searchStore.search = "";
   }, [store.searchStore.search]);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (store.searchStore._search) {
-      params.append("search", store.searchStore._search);
-    }
-    if (store.dropdownStore.dropdownValues.key !== "usd") {
-      params.append("currency", store.dropdownStore.dropdownValues.key);
-    }
-    if (store.paginationStore.page !== 1) {
-      params.append("page", String(store.paginationStore.page));
-    }
-    navigate({ search: params.toString() });
-  }, [
-    store.searchStore._search,
-    navigate,
-    store.dropdownStore.dropdownValues.key,
-    store.paginationStore.page,
-  ]);
 
   return (
     <div className={styles["coin-list-page"]}>
@@ -75,20 +73,15 @@ const CoinListPage = () => {
         placeholder="Search Cryptocurrency"
         buttonOnClick={handleButtonClick}
       />
-
-      {store.meta !== Meta.loading ? (
-        <div className={styles["coin-list-page__items-list"]}>
-          <CoinList
-            paginationHide={!store.serchedCoins.length}
-            searchedCoins={store.serchedCoins}
-            currency={store.dropdownStore.dropdownValues.key}
-            contentCount={store.coins.length}
-            paginationStore={store.paginationStore}
-          />
-        </div>
-      ) : (
-        <Loader />
-      )}
+      <div className={styles["coin-list-page__items-list"]}>
+        <CoinList
+          slicer={store.contentPerPage}
+          searchedCoins={store.serchedCoins}
+          currency={store.dropdownStore.dropdownValues.key}
+        />
+      </div>
+      {store.meta === Meta.loading && <Loader />}
+      <div id="loader"></div>
     </div>
   );
 };

@@ -8,10 +8,14 @@ import { ApiResp } from "utils/apiTypes";
 import { Option } from "components/UI/Dropdown";
 
 export const requestCoinList = async (
-  vs_currency: string
+  vs_currency: string,
+  perPage: number,
+  page: number
 ): Promise<ApiResp<CoinListModel[]>> => {
   try {
-    const response = await axios(apiUrls.coinGecko.getAll(vs_currency));
+    const response = await axios(
+      apiUrls.coinGecko.getAll(vs_currency, perPage, page)
+    );
     return {
       isError: false,
       data: response.data.map(normalizeCoinListApiModel),

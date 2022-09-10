@@ -2,8 +2,10 @@ import {
   action,
   computed,
   makeAutoObservable,
+  observable,
   reaction,
   runInAction,
+  toJS,
 } from "mobx";
 
 import rootStore from "store/RootStore/instance";
@@ -18,17 +20,22 @@ import { requestCoinList } from "./requestCoinList";
 
 export default class СoinListStore implements ILocalStore {
   _coins: CoinListModel[] = [];
-  _meta: Meta;
+  _meta: Meta = Meta.initial;
   searchStore;
   dropdownStore;
-  paginationStore;
+  contentPerPage = 20;
+  page = 1;
+  observer = new IntersectionObserver(([entry], observer) => {
+    if (entry.isIntersecting) {
+      this.fetch();
+      observer.unobserve(entry.target);
+      this.page++;
+    }
+  }, {});
 
   constructor() {
-    this._meta = Meta.initial;
     this.searchStore = new SearchStore();
     this.dropdownStore = new DropdownStore();
-    this.paginationStore = new PaginationStore(10);
-    this.paginationStore.page = Number(rootStore.query.getParam("page")) || 1;
     this.searchStore._search = rootStore.query.getParam("search");
     this.dropdownStore.dropdownValues.key = rootStore.query.getParam("currency")
       ? rootStore.query.getParam("currency")
@@ -70,39 +77,37 @@ export default class СoinListStore implements ILocalStore {
     this._coins = newCoins;
   }
 
-  _queryPaginationReaction = reaction(
-    () => this.serchedCoins.length,
-    () => {
-      this.paginationStore.count = this.serchedCoins.length;
-      this.paginationStore.page = 1;
-    }
-  );
+  async dropdownFetch(): Promise<void> {}
 
   async fetch(): Promise<void> {
-    if (this.dropdownStore.meta === Meta.loading) return;
-    else {
+    console.log("запуск fetch");
+    if (
+      this.dropdownStore.meta !== Meta.loading &&
+      this.dropdownStore.meta !== Meta.success
+    ) {
       await this.dropdownStore.fetch();
     }
 
-    this.coins = [];
-    this.meta = Meta.loading;
+    if (this.meta !== Meta.loading) {
+      this.meta = Meta.loading;
 
-    const { isError, data } = await requestCoinList(
-      this.dropdownStore.dropdownValues.key
-    );
-    if (isError) {
-      this.meta = Meta.error;
-      return;
+      const { isError, data } = await requestCoinList(
+        this.dropdownStore.dropdownValues.key,
+        this.contentPerPage,
+        this.page
+      );
+      if (isError) {
+        this.meta = Meta.error;
+        return;
+      }
+      runInAction(() => {
+        this.meta = Meta.success;
+        this.coins = [...this.coins, ...data];
+        const contentLoadTrigger = document.getElementById("loader");
+        if (contentLoadTrigger) this.observer.observe(contentLoadTrigger);
+      });
     }
-    runInAction(() => {
-      this.meta = Meta.success;
-      this.coins = data;
-      this.paginationStore.count = this.coins.length;
-    });
   }
 
-  destroy() {
-    // если диспоузить реакцию она перестает работать
-    // this._queryPaginationReaction();
-  }
+  destroy() {}
 }

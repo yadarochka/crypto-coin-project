@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
+import React from "react";
 import { useParams } from "react-router-dom";
 
 import { NotFoundPage } from "pages/NotFoundPage";

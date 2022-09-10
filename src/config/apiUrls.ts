@@ -3,9 +3,11 @@ const coinGeckoApi = (endpoint: string): string =>
 
 export const apiUrls = {
   coinGecko: {
-    getAll: (currency: string): string =>
+    getAll: (currency: string, perPage: number, page: number): string =>
       coinGeckoApi(
-        `coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=true`
+        `coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=${String(
+          perPage
+        )}&page=${String(page)}&sparkline=true`
       ),
 
     getCoin: (id: string): string =>
