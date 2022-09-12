@@ -28,7 +28,7 @@ const CoinList = ({
 
   return (
     <div className={styles["coin-list"]}>
-      {searchedCoins.slice(slicer).map((coin: CoinListModel) => {
+      {searchedCoins.map((coin: CoinListModel) => {
         return (
           <Link
             className={styles["coin-list__link"]}

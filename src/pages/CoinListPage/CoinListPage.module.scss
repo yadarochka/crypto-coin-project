@@ -5,11 +5,17 @@
   flex-direction: column;
   align-items: center;
 
-  &__dropdown {
+  &__dropdown-currency {
     position: absolute;
     top: 8px;
     right: -100px;
-    width: 100px;
+    width: 110px;
+  }
+  &__dropdown-category {
+    position: absolute;
+    top: 8px;
+    right: -260px;
+    width: 150px;
   }
 
   &__search {

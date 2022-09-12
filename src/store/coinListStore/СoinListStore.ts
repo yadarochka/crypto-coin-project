@@ -1,5 +1,6 @@
 import {
   action,
+  autorun,
   computed,
   makeAutoObservable,
   observable,
@@ -7,13 +8,14 @@ import {
   runInAction,
   toJS,
 } from "mobx";
+import { storeAnnotation } from "mobx/dist/internal";
 
 import rootStore from "store/RootStore/instance";
 import { CoinListModel } from "store/models";
-import PaginationStore from "store/paginationStore";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
 
+import CategoryStore from "./CategoryStore";
 import DropdownStore from "./DropdownStore";
 import SearchStore from "./SearchStore";
 import { requestCoinList } from "./requestCoinList";
@@ -23,20 +25,23 @@ export default class СoinListStore implements ILocalStore {
   _meta: Meta = Meta.initial;
   searchStore;
   dropdownStore;
-  contentPerPage = 20;
+  categoryStore;
+  contentPerPage = 12;
   page = 1;
   observer = new IntersectionObserver(([entry], observer) => {
     if (entry.isIntersecting) {
+      this.pageIncrement();
       this.fetch();
       observer.unobserve(entry.target);
-      this.page++;
     }
   }, {});
 
   constructor() {
     this.searchStore = new SearchStore();
     this.dropdownStore = new DropdownStore();
-    this.searchStore._search = rootStore.query.getParam("search");
+    this.categoryStore = new CategoryStore();
+    this.searchStore._search = rootStore.query.getParam("search") || "";
+
     this.dropdownStore.dropdownValues.key = rootStore.query.getParam("currency")
       ? rootStore.query.getParam("currency")
       : "usd";
@@ -45,10 +50,18 @@ export default class СoinListStore implements ILocalStore {
     )
       ? `Market - ${rootStore.query.getParam("currency").toUpperCase()}`
       : "Market - USD";
+    this.categoryStore.value = {
+      value: rootStore.query.getParam("category") || "All categories",
+      key: rootStore.query.getParam("category") || "all",
+    };
+
     makeAutoObservable(this, {
       fetch: action.bound,
-      coins: computed,
-      serchedCoins: computed,
+      dropdownFetch: action,
+      categoryFetch: action,
+      pageReset: action.bound,
+      pageIncrement: action,
+      categoryStore: observable,
     });
   }
 
@@ -60,15 +73,6 @@ export default class СoinListStore implements ILocalStore {
     this._meta = newMeta;
   }
 
-  get serchedCoins() {
-    if (!this.searchStore.search) return this.coins;
-    return this.coins.filter((coin) =>
-      coin.name
-        .toLowerCase()
-        .includes(this.searchStore.search ? this.searchStore.search : "")
-    );
-  }
-
   get coins() {
     return this._coins;
   }
@@ -77,37 +81,81 @@ export default class СoinListStore implements ILocalStore {
     this._coins = newCoins;
   }
 
-  async dropdownFetch(): Promise<void> {}
-
   async fetch(): Promise<void> {
     console.log("запуск fetch");
+
     if (
       this.dropdownStore.meta !== Meta.loading &&
       this.dropdownStore.meta !== Meta.success
     ) {
-      await this.dropdownStore.fetch();
+      this.dropdownFetch();
+    }
+
+    if (
+      this.categoryStore.meta !== Meta.loading &&
+      this.categoryStore.meta !== Meta.success
+    ) {
+      this.categoryFetch();
     }
 
     if (this.meta !== Meta.loading) {
-      this.meta = Meta.loading;
-
-      const { isError, data } = await requestCoinList(
-        this.dropdownStore.dropdownValues.key,
-        this.contentPerPage,
-        this.page
-      );
-      if (isError) {
-        this.meta = Meta.error;
-        return;
-      }
-      runInAction(() => {
-        this.meta = Meta.success;
-        this.coins = [...this.coins, ...data];
-        const contentLoadTrigger = document.getElementById("loader");
-        if (contentLoadTrigger) this.observer.observe(contentLoadTrigger);
-      });
+      await this.coinListFetch();
     }
   }
+
+  async dropdownFetch(): Promise<void> {
+    await this.dropdownStore.fetch();
+  }
+
+  async categoryFetch(): Promise<void> {
+    await this.categoryStore.fetch();
+  }
+
+  async coinListFetch(): Promise<void> {
+    this.meta = Meta.loading;
+
+    const { isError, data } = await requestCoinList(
+      this.dropdownStore.dropdownValues.key,
+      this.contentPerPage,
+      this.page,
+      this.searchStore.search,
+      this.categoryStore.value.key
+    );
+    if (isError) {
+      this.meta = Meta.error;
+      return;
+    }
+    runInAction(() => {
+      this.meta = Meta.success;
+      this.coins = [...this.coins, ...data];
+      const contentLoadTrigger = document.getElementById("loader");
+      if (contentLoadTrigger && this.searchStore.search?.length === 0) {
+        this.observer.observe(contentLoadTrigger);
+      }
+    });
+  }
+
+  pageReset() {
+    this.page = 1;
+  }
+  pageIncrement() {
+    this.page++;
+  }
+
+  searchFetch() {
+    this.coins = [];
+    this.pageReset();
+    this.fetch();
+  }
+
+  category = reaction(
+    () => {
+      this.categoryStore.value.value;
+    },
+    () => {
+      this.fetch();
+    }
+  );
 
   destroy() {}
 }

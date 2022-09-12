@@ -1,6 +1,6 @@
 export type Option = {
   key: string;
-  value: String;
+  value: string;
 };
 
 /** Пропсы, которые принимает компонент Dropdown */

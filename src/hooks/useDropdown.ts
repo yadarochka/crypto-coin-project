@@ -1,21 +1,21 @@
 import { useState } from "react";
 
-import { Options } from "components/UI/Dropdown";
+import { Option } from "components/UI/Dropdown";
 
 interface UseDropdownProps {
   /** Варианты выбора */
-  option: Options[];
+  option: Option[];
   /** Выбранное значение */
-  value: Options;
+  value: Option;
 }
 
 interface UseDropdownReturn {
   /** Варианты выбора */
-  options: Options[];
+  options: Option[];
   /** Установить варианты выбора */
-  setOptions: (option: Options[]) => void;
+  setOptions: (option: Option[]) => void;
   /** Выбранное значение */
-  dropdownValue: Options;
+  dropdownValue: Option;
   /** Установить выбранное значение */
   handlerDropdown: () => void;
 }
@@ -23,9 +23,9 @@ interface UseDropdownReturn {
 type UseSearchDropdown = (arg0: UseDropdownProps) => UseDropdownReturn;
 
 const useDropdown: UseSearchDropdown = ({ option, value }) => {
-  const [options, setOptions] = useState<Options[]>(option);
+  const [options, setOptions] = useState<Option[]>(option);
 
-  const [dropdownValue, setDropdownValue] = useState<Options>(value);
+  const [dropdownValue, setDropdownValue] = useState<Option>(value);
 
   function handlerDropdown(): void {
     setDropdownValue(arguments[0]);

@@ -1,3 +1,4 @@
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import React, { useCallback, useEffect } from "react";
@@ -9,7 +10,6 @@ import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
 
 import CoinList from "./components/CoinList";
-import stylesCoinList from "./components/CoinList/CoinList.module.scss";
 import Dropdown, { Option } from "components/UI/Dropdown";
 import Loader from "components/UI/Loader";
 import Search from "components/UI/Search";
@@ -18,9 +18,11 @@ import styles from "./CoinListPage.module.scss";
 
 const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
+  console.log(toJS(store));
   const navigate = useNavigate();
-  console.log(store.page);
   useAsync(store.fetch, [store.dropdownStore.dropdownValues]);
+
+  console.log(toJS(store.categoryStore.value));
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -30,19 +32,33 @@ const CoinListPage = () => {
     if (store.dropdownStore.dropdownValues.key !== "usd") {
       params.append("currency", store.dropdownStore.dropdownValues.key);
     }
+    if (store.categoryStore.value.key !== "all") {
+      params.append("category", store.categoryStore.value.key);
+    }
     navigate({ search: params.toString() });
   }, [
     store.searchStore._search,
     navigate,
     store.dropdownStore.dropdownValues.key,
+    store.categoryStore.value.key,
   ]);
 
-  const handlerDropdownChange = useCallback(
+  const handlerDropdownCurrencyChange = useCallback(
     (value: Option) => {
       store.dropdownStore.dropdownValues = value;
+      store.pageReset();
       store.coins = [];
     },
     [store.dropdownStore.dropdownValues]
+  );
+
+  const handlerDropdownCategoryChange = useCallback(
+    (value: Option) => {
+      store.categoryStore.value = value;
+      // store.pageReset();
+      // store.coins = [];
+    },
+    [store.categoryStore.value]
   );
 
   const handleInputChange = useCallback(
@@ -52,16 +68,22 @@ const CoinListPage = () => {
     [store.searchStore.search]
   );
   const handleButtonClick = useCallback(() => {
-    store.searchStore.search = "";
-  }, [store.searchStore.search]);
+    store.searchFetch();
+  }, []);
 
   return (
     <div className={styles["coin-list-page"]}>
       <Dropdown
-        onChange={handlerDropdownChange}
+        onChange={handlerDropdownCategoryChange}
+        options={store.categoryStore.options}
+        value={store.categoryStore.value}
+        className={styles["coin-list-page__dropdown-category"]}
+      />
+      <Dropdown
+        onChange={handlerDropdownCurrencyChange}
         options={store.dropdownStore.dropdownOptions}
         value={store.dropdownStore.dropdownValues}
-        className={styles["coin-list-page__dropdown"]}
+        className={styles["coin-list-page__dropdown-currency"]}
       />
       <Search
         disabled={false}
@@ -69,18 +91,22 @@ const CoinListPage = () => {
         type="text"
         className={styles["coin-list-page__search"]}
         onChange={handleInputChange}
-        buttonText="Cancel"
+        buttonText="Поиск"
         placeholder="Search Cryptocurrency"
         buttonOnClick={handleButtonClick}
       />
+      {store.meta === Meta.error && <div>Error</div>}
       <div className={styles["coin-list-page__items-list"]}>
         <CoinList
           slicer={store.contentPerPage}
-          searchedCoins={store.serchedCoins}
+          searchedCoins={store.coins}
           currency={store.dropdownStore.dropdownValues.key}
         />
       </div>
       {store.meta === Meta.loading && <Loader />}
+      {store.meta !== Meta.loading &&
+        store.meta !== Meta.error &&
+        store.coins.length === 0 && <div>Такой монеты нет</div>}
       <div id="loader"></div>
     </div>
   );

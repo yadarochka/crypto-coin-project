@@ -1,17 +1,20 @@
-import { computed, makeAutoObservable, observable } from "mobx";
+import { computed, makeAutoObservable, observable, runInAction } from "mobx";
 
+import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
 
 export default class Search implements ILocalStore {
   _search: string | undefined = "";
+  _meta: Meta = Meta.initial;
 
   constructor() {
     makeAutoObservable(this, {
       _search: observable,
       search: computed,
+      _meta: observable,
+      meta: computed,
     });
   }
-  destroy(): void {}
 
   get search() {
     return this._search;
@@ -20,4 +23,14 @@ export default class Search implements ILocalStore {
   set search(newSearch) {
     this._search = newSearch;
   }
+
+  get meta() {
+    return this._meta;
+  }
+
+  set meta(newMeta: Meta) {
+    this._meta = newMeta;
+  }
+
+  destroy(): void {}
 }

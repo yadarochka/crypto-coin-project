@@ -3,18 +3,25 @@ import { apiUrls } from "config/apiUrls";
 
 import { CoinListModel, normalizeCurrency } from "store/models";
 import { normalizeCoinListApiModel } from "store/models";
+import {
+  CategoryListModel,
+  CategoryModel,
+  normalizeCategoryModel,
+} from "store/models/coinList/category";
 import { ApiResp } from "utils/apiTypes";
 
 import { Option } from "components/UI/Dropdown";
 
 export const requestCoinList = async (
-  vs_currency: string,
+  currency: string,
   perPage: number,
-  page: number
+  page: number,
+  id?: string,
+  category?: string
 ): Promise<ApiResp<CoinListModel[]>> => {
   try {
     const response = await axios(
-      apiUrls.coinGecko.getAll(vs_currency, perPage, page)
+      apiUrls.coinGecko.getAll(currency, perPage, page, id, category)
     );
     return {
       isError: false,
@@ -34,6 +41,23 @@ export const requestCoinListCurrency = async (): Promise<ApiResp<Option[]>> => {
     return {
       isError: false,
       data: normalizeCurrency(response.data),
+    };
+  } catch (e) {
+    return {
+      isError: true,
+      data: null,
+    };
+  }
+};
+
+export const requestCategoryList = async (): Promise<
+  ApiResp<CategoryListModel>
+> => {
+  try {
+    const response = await axios(apiUrls.coinGecko.getCategoryList());
+    return {
+      isError: false,
+      data: normalizeCategoryModel(response.data),
     };
   } catch (e) {
     return {

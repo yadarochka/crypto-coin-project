@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, makeAutoObservable, runInAction } from "mobx";
 
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
@@ -23,7 +23,9 @@ export default class DropdownStore implements ILocalStore {
   };
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      fetch: action,
+    });
     this._meta = Meta.initial;
   }
 

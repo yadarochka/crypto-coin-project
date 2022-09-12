@@ -1,3 +1,5 @@
+import classNames from "classnames";
+
 import React from "react";
 import { FC, useState } from "react";
 
@@ -22,7 +24,10 @@ export const Dropdown: FC<MultiDropdownProps> = ({
     return (
       <div
         key={el.key}
-        className={styles["dropdown__item"]}
+        className={classNames(
+          styles["dropdown__item"],
+          el.key === value.key ? styles["active"] : ""
+        )}
         onClick={() => itemOnClick(el)}
       >
         {el.value}
@@ -35,8 +40,11 @@ export const Dropdown: FC<MultiDropdownProps> = ({
   };
 
   return (
-    <div className={`${styles["dropdown"]} ${className}`}>
-      <div className={styles["dropdown__value"]} onClick={toggleList}>
+    <div className={classNames(styles.dropdown, className)}>
+      <div
+        className={classNames(styles["dropdown__value"])}
+        onClick={toggleList}
+      >
         {value.value}
       </div>
       {isVisible && !disabled && items}
