@@ -12,6 +12,32 @@ import { ApiResp } from "utils/apiTypes";
 
 import { Option } from "components/UI/Dropdown";
 
+export const axiosWithError = async (
+  normalize: any,
+  ...args: Parameters<typeof axios>
+) => {
+  try {
+    const response = await axios(...args);
+    return {
+      isError: false,
+      data: normalize(response.data),
+    };
+  } catch (error) {
+    console.error("request error", error);
+
+    return {
+      isError: true,
+      data: null,
+    };
+  }
+};
+
+// export const request = (currency, perPage, page, id, category, normalize) =>
+//   axiosWithError(
+//     apiUrls.coinGecko.getAll(currency, perPage, page, id, category),
+//     normalize
+//   );
+
 export const requestCoinList = async (
   currency: string,
   perPage: number,
@@ -25,7 +51,7 @@ export const requestCoinList = async (
     );
     return {
       isError: false,
-      data: response.data.map(normalizeCoinListApiModel),
+      data: normalizeCoinListApiModel(response.data),
     };
   } catch (e) {
     return {

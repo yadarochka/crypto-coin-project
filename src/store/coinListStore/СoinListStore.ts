@@ -1,12 +1,9 @@
 import {
   action,
-  autorun,
-  computed,
   makeAutoObservable,
   observable,
   reaction,
   runInAction,
-  toJS,
 } from "mobx";
 import { storeAnnotation } from "mobx/dist/internal";
 
@@ -82,8 +79,6 @@ export default class СoinListStore implements ILocalStore {
   }
 
   async fetch(): Promise<void> {
-    console.log("запуск fetch");
-
     if (
       this.dropdownStore.meta !== Meta.loading &&
       this.dropdownStore.meta !== Meta.success
