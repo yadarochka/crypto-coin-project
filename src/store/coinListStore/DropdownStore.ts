@@ -1,5 +1,6 @@
 import { action, makeAutoObservable, runInAction } from "mobx";
 
+import { normalizeCurrency } from "store/models";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
 
@@ -72,7 +73,7 @@ export default class DropdownStore implements ILocalStore {
     }
     runInAction(() => {
       this.meta = Meta.success;
-      this.dropdownOptions = data;
+      this.dropdownOptions = normalizeCurrency(data);
     });
   }
 

@@ -8,7 +8,7 @@ import {
 import { storeAnnotation } from "mobx/dist/internal";
 
 import rootStore from "store/RootStore/instance";
-import { CoinListModel } from "store/models";
+import { CoinListModel, normalizeCoinListApiModel } from "store/models";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
 
@@ -47,10 +47,6 @@ export default class СoinListStore implements ILocalStore {
     )
       ? `Market - ${rootStore.query.getParam("currency").toUpperCase()}`
       : "Market - USD";
-    this.categoryStore.value = {
-      value: rootStore.query.getParam("category") || "All categories",
-      key: rootStore.query.getParam("category") || "all",
-    };
 
     makeAutoObservable(this, {
       fetch: action.bound,
@@ -122,7 +118,7 @@ export default class СoinListStore implements ILocalStore {
     }
     runInAction(() => {
       this.meta = Meta.success;
-      this.coins = [...this.coins, ...data];
+      this.coins = normalizeCoinListApiModel([...this.coins, ...data]);
       const contentLoadTrigger = document.getElementById("loader");
       if (contentLoadTrigger && this.searchStore.search?.length === 0) {
         this.observer.observe(contentLoadTrigger);
@@ -142,15 +138,6 @@ export default class СoinListStore implements ILocalStore {
     this.pageReset();
     this.fetch();
   }
-
-  category = reaction(
-    () => {
-      this.categoryStore.value.value;
-    },
-    () => {
-      this.fetch();
-    }
-  );
 
   destroy() {}
 }

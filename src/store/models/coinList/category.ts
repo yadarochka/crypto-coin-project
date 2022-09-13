@@ -8,22 +8,29 @@ export type CategoryModel = {
   value: string;
 };
 
+export type CategoryListOptionsModel = {
+  options: CategoryModel[];
+};
+
 export type CategoryListModel = {
   options: CategoryModel[];
+  value: CategoryModel;
 };
 
 export const normalizeCategoryModel = (
   raw: CategoryApiModel[]
-): CategoryListModel => {
-  return {
-    options: [
-      { key: "all", value: "All categories" },
-      ...raw.map((categoreItem) => {
-        return {
-          key: categoreItem.category_id,
-          value: categoreItem.name,
-        };
-      }),
-    ],
-  };
+): CategoryModel[] => {
+  const afdasfd: CategoryModel[] = [
+    {
+      key: "all",
+      value: "All categories",
+    },
+    ...raw.map((categoreItem) => {
+      return {
+        key: categoreItem.category_id,
+        value: categoreItem.name,
+      };
+    }),
+  ];
+  return afdasfd;
 };

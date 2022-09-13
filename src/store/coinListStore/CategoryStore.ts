@@ -10,6 +10,7 @@ import {
 import {
   CategoryListModel,
   CategoryModel,
+  normalizeCategoryModel,
 } from "store/models/coinList/category";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
@@ -19,18 +20,25 @@ import { requestCategoryList } from "./requestCoinList";
 export default class CategoryStore implements ILocalStore {
   _meta: Meta = Meta.initial;
   options: CategoryModel[] = [];
-  value = {
-    value: "",
-    key: "",
+  _value: CategoryModel = {
+    key: "all",
+    value: "All categories",
   };
 
   constructor() {
     makeAutoObservable(this, {
+      _value: observable,
       options: observable,
-      value: observable,
       fetch: action,
     });
     this._meta = Meta.initial;
+  }
+
+  set value(newValue) {
+    this._value = newValue;
+  }
+  get value() {
+    return this._value;
   }
 
   get meta() {
@@ -56,7 +64,7 @@ export default class CategoryStore implements ILocalStore {
     }
     runInAction(() => {
       this.meta = Meta.success;
-      this.options = data.options;
+      this.options = normalizeCategoryModel(data);
     });
   }
 
