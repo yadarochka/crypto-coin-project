@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "chart.js";
 
-import React from "react";
+import React, { memo, useMemo } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -34,7 +34,6 @@ const Chart = ({
   onMouseEvent = true,
   className,
 }: ChartProps) => {
-  // console.warn("Chart render")
   const data = {
     labels: coinLabels,
     datasets: [
@@ -86,7 +85,8 @@ const Chart = ({
       },
     },
   };
+
   return <Line options={options} data={data} className={className} />;
 };
 
-export default Chart;
+export default memo(Chart);

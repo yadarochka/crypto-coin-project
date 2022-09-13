@@ -37,7 +37,8 @@ export default class СoinListStore implements ILocalStore {
     this.searchStore = new SearchStore();
     this.dropdownStore = new DropdownStore();
     this.categoryStore = new CategoryStore();
-    this.searchStore._search = rootStore.query.getParam("search") || "";
+    this.searchStore._search =
+      decodeURI(rootStore.query.getParam("search")) || "";
 
     this.dropdownStore.dropdownValues.key = rootStore.query.getParam("currency")
       ? rootStore.query.getParam("currency")
@@ -118,7 +119,7 @@ export default class СoinListStore implements ILocalStore {
     }
     runInAction(() => {
       this.meta = Meta.success;
-      this.coins = normalizeCoinListApiModel([...this.coins, ...data]);
+      this.coins = [...this.coins, ...normalizeCoinListApiModel(data)];
       const contentLoadTrigger = document.getElementById("loader");
       if (contentLoadTrigger && this.searchStore.search?.length === 0) {
         this.observer.observe(contentLoadTrigger);

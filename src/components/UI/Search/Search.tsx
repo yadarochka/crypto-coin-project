@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import Button from "components/UI/Button";
 
@@ -51,4 +51,4 @@ const Search = ({
     </div>
   );
 };
-export default Search;
+export default memo(Search);

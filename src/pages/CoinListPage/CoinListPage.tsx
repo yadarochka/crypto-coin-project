@@ -93,7 +93,6 @@ const CoinListPage = () => {
       {store.meta === Meta.error && <div>Error</div>}
       <div className={styles["coin-list-page__items-list"]}>
         <CoinList
-          slicer={store.contentPerPage}
           searchedCoins={store.coins}
           currency={store.dropdownStore.dropdownValues.key}
         />

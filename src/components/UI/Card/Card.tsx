@@ -27,10 +27,9 @@ interface CardProps {
   /** Наличие графика в карточке */
   withChart?: boolean;
   /** На карточке будет отображаться информация о токене */
+  cardType?: string;
   priceType?: boolean;
-  /** На карточке будет отображаться информация о наличии токена у конкретного пользователя */
-  userType?: boolean;
-  /** Нужно исправить (при передачи одинаковых значений priceType и userType будет сломано отображение) */
+
   coinData?: number[];
 
   coinLabels?: string[];
@@ -46,14 +45,12 @@ export const Card: FC<CardProps> = ({
   priceChange,
   className,
   withChart = true,
-  priceType,
-  userType,
+  cardType,
   currency,
   coinData = [],
   coinLabels = [],
   onMouseEvent,
 }) => {
-  // console.warn("Card render")
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles["card__img-box"]}>
@@ -66,7 +63,7 @@ export const Card: FC<CardProps> = ({
       <div className={styles["card__name"]}>
         <h3 className={styles["card__title"]}>{name}</h3>
         <span className={styles["card__subtitle"]}>
-          {userType && `00.00 `}
+          {cardType === "userType" && `00.00 `}
           {subtitle.toUpperCase()}
         </span>
       </div>
@@ -80,7 +77,7 @@ export const Card: FC<CardProps> = ({
           />
         </div>
       )}
-      {priceType && (
+      {cardType === "priceType" && (
         <div className={styles["card__price-box"]}>
           <div className={styles["card__price"]}>
             {currency} {price}
@@ -101,7 +98,7 @@ export const Card: FC<CardProps> = ({
           )}
         </div>
       )}
-      {userType && (
+      {cardType === "userType" && (
         <div className={styles["card__price-box"]}>
           <div className={styles["card__price"]}>${`00.00`}</div>
           {priceChange > 0 && (

@@ -100,7 +100,7 @@ const CoinPage = () => {
               priceChange={store.coin.priceChangePercentage24hInCurrency.usd}
               className={classNames(styles["coin_page__card"])}
               withChart={false}
-              userType={true}
+              cardType="userType"
             />
           </>
         ) : (

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-import React from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { FC, useState } from "react";
 
 import styles from "./Dropdown.module.scss";
@@ -14,6 +14,10 @@ export const Dropdown: FC<MultiDropdownProps> = ({
   className,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+
+  const toggleList = () => {
+    setIsVisible(!isVisible);
+  };
 
   const itemOnClick = (el: Option) => {
     onChange(el);
@@ -35,10 +39,6 @@ export const Dropdown: FC<MultiDropdownProps> = ({
     );
   });
 
-  const toggleList = () => {
-    setIsVisible(!isVisible);
-  };
-
   return (
     <div className={classNames(styles.dropdown, className)}>
       <div
@@ -51,4 +51,4 @@ export const Dropdown: FC<MultiDropdownProps> = ({
     </div>
   );
 };
-export default Dropdown;
+export default memo(Dropdown);

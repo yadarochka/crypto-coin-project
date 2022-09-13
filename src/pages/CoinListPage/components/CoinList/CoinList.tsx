@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { CoinListModel } from "store/models";
@@ -11,7 +11,6 @@ import styles from "./CoinList.module.scss";
 type CoinListProps = {
   searchedCoins: CoinListModel[];
   currency: string;
-  slicer: number;
 };
 
 const CoinList = ({
@@ -19,7 +18,6 @@ const CoinList = ({
   searchedCoins,
   /** Валюта */
   currency,
-  slicer,
 }: CoinListProps) => {
   const labels = React.useMemo(
     () => Array.from({ length: 100 }, (_, index) => String(index)),
@@ -44,7 +42,7 @@ const CoinList = ({
               price={rounding(coin.currentPrice, 5)}
               priceChange={rounding(coin.priceChangePercentage24h, 5)}
               className={styles["coin-list__item"]}
-              priceType
+              cardType="priceType"
               coinData={coin.sparkline7d.price}
               coinLabels={labels}
               onMouseEvent={false}
