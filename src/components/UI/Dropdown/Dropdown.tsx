@@ -47,7 +47,9 @@ export const Dropdown: FC<MultiDropdownProps> = ({
       >
         {value.value}
       </div>
-      {isVisible && !disabled && items}
+      <div className={classNames(styles["dropdown__options"])}>
+        {isVisible && !disabled && items}
+      </div>
     </div>
   );
 };

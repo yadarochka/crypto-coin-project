@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
@@ -6,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 
 import coinListStore from "store/coinListStore";
 import { Meta } from "utils/meta";
+import { rounding } from "utils/rounding";
 import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
 
 import CoinList from "./components/CoinList";
 import Dropdown, { Option } from "components/UI/Dropdown";
+import { IncreaseOrDecrease } from "components/UI/IncreaseOrDecrease";
 import Loader from "components/UI/Loader";
 import Search from "components/UI/Search";
 
@@ -80,27 +83,74 @@ const CoinListPage = () => {
         value={store.dropdownStore.dropdownValues}
         className={styles["coin-list-page__dropdown-currency"]}
       />
-      <Search
-        disabled={false}
-        value={store.searchStore.search}
-        type="text"
-        className={styles["coin-list-page__search"]}
-        onChange={handleInputChange}
-        buttonText="Поиск"
-        placeholder="Search Cryptocurrency"
-        buttonOnClick={handleButtonClick}
-      />
-      {store.meta === Meta.error && <div>Error</div>}
-      <div className={styles["coin-list-page__items-list"]}>
-        <CoinList
-          searchedCoins={store.coins}
-          currency={store.dropdownStore.dropdownValues.key}
+      <section className={classNames(styles["coin-list-page__header"])}>
+        <h2
+          className={classNames(
+            styles["coin-list-page__header-title"],
+            styles["coin-list-page__title"]
+          )}
+        >
+          Market is{" "}
+          {store.globalDataStore.globalData.marketCapChangePercentage24hUsd > 0
+            ? "up "
+            : "down "}
+          <IncreaseOrDecrease
+            procent={rounding(
+              store.globalDataStore.globalData.marketCapChangePercentage24hUsd,
+              2
+            )}
+          />
+        </h2>
+        <span
+          className={classNames(
+            styles["coin-list-page__header-subtitle"],
+            styles["coin-list-page__subtitle"]
+          )}
+        >
+          In the past 24 hours
+        </span>
+      </section>
+      <section className={classNames(styles["coin-list-page__coins-section"])}>
+        <div
+          className={classNames(
+            styles["coin-list-page__coins-section__header"]
+          )}
+        >
+          <h2
+            className={classNames(
+              styles["coin-list-page__coin-sections-title"],
+              styles["coin-list-page__title"]
+            )}
+          >
+            Coins
+          </h2>
+          <span className={classNames(styles["coin-list-page__subtitle"])}>
+            Active cryptocurrencies:{" "}
+            {store.globalDataStore.globalData.activeCryptocurrencies}
+          </span>
+        </div>
+        <Search
+          disabled={false}
+          value={store.searchStore.search}
+          type="text"
+          className={styles["coin-list-page__search"]}
+          onChange={handleInputChange}
+          buttonText="Поиск"
+          placeholder="Search Cryptocurrency"
+          buttonOnClick={handleButtonClick}
         />
-      </div>
-      {store.meta === Meta.loading && <Loader />}
-      {store.meta !== Meta.loading &&
-        store.meta !== Meta.error &&
-        store.coins.length === 0 && <div>Такой монеты нет</div>}
+        {store.meta === Meta.error && <div>Error</div>}
+        <div className={styles["coin-list-page__items-list"]}>
+          <CoinList
+            searchedCoins={store.coins}
+            currency={store.dropdownStore.dropdownValues.key}
+          />
+        </div>
+        {store.meta === Meta.loading && <Loader />}
+        {store.meta !== Meta.loading &&
+          store.meta !== Meta.error &&
+          store.coins.length === 0 && <div>Такой монеты нет</div>}
+      </section>
       <div id="loader" />
     </div>
   );

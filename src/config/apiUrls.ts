@@ -33,5 +33,7 @@ export const apiUrls = {
       coinGeckoApi(`coins/${name}/ohlc?vs_currency=${currency}&days=${days}`),
 
     getCategoryList: () => coinGeckoApi("coins/categories/list"),
+
+    getGlobalInfo: () => coinGeckoApi("global"),
   },
 };

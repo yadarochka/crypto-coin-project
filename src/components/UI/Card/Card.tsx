@@ -3,6 +3,7 @@ import React from "react";
 
 import Chart from "components/UI/Chart";
 
+import { IncreaseOrDecrease } from "../IncreaseOrDecrease";
 import styles from "./Card.module.scss";
 
 interface CardProps {
@@ -82,39 +83,19 @@ export const Card: FC<CardProps> = ({
           <div className={styles["card__price"]}>
             {currency} {price}
           </div>
-          {priceChange > 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["success"]}`}
-            >
-              +{priceChange}%
-            </div>
-          )}
-          {priceChange < 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["danger"]}`}
-            >
-              {priceChange}%
-            </div>
-          )}
+          <IncreaseOrDecrease
+            procent={priceChange}
+            className={styles["card__price-change"]}
+          />
         </div>
       )}
       {cardType === "userType" && (
         <div className={styles["card__price-box"]}>
           <div className={styles["card__price"]}>${`00.00`}</div>
-          {priceChange > 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["success"]}`}
-            >
-              +{`00.00`}%
-            </div>
-          )}
-          {priceChange < 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["danger"]}`}
-            >
-              {`00.00`}%
-            </div>
-          )}
+          <IncreaseOrDecrease
+            number={"00.00"}
+            className={styles["card__price-change"]}
+          />
         </div>
       )}
     </div>

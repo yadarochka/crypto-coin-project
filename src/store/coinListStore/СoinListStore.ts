@@ -14,6 +14,7 @@ import { ILocalStore } from "utils/useLocalStore";
 
 import CategoryStore from "./CategoryStore";
 import DropdownStore from "./DropdownStore";
+import GlobalDataStore from "./GlobalDataStore";
 import SearchStore from "./SearchStore";
 import { requestCoinList } from "./requestCoinList";
 
@@ -23,6 +24,7 @@ export default class СoinListStore implements ILocalStore {
   searchStore;
   dropdownStore;
   categoryStore;
+  globalDataStore;
   contentPerPage = 12;
   page = 1;
   observer = new IntersectionObserver(([entry], observer) => {
@@ -37,8 +39,10 @@ export default class СoinListStore implements ILocalStore {
     this.searchStore = new SearchStore();
     this.dropdownStore = new DropdownStore();
     this.categoryStore = new CategoryStore();
-    this.searchStore._search =
-      decodeURI(rootStore.query.getParam("search")) || "";
+    this.globalDataStore = new GlobalDataStore();
+    this.searchStore._search = rootStore.query.getParam("search")
+      ? decodeURI(rootStore.query.getParam("search"))
+      : "";
 
     this.dropdownStore.dropdownValues.key = rootStore.query.getParam("currency")
       ? rootStore.query.getParam("currency")
@@ -76,6 +80,12 @@ export default class СoinListStore implements ILocalStore {
   }
 
   async fetch(): Promise<void> {
+    if (
+      this.globalDataStore.meta !== Meta.loading &&
+      this.globalDataStore.meta !== Meta.success
+    ) {
+      this.globalDataStore.fetch();
+    }
     if (
       this.dropdownStore.meta !== Meta.loading &&
       this.dropdownStore.meta !== Meta.success

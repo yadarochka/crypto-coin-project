@@ -18,3 +18,6 @@ export const requestCoinListCurrency = () =>
 
 export const requestCategoryList = () =>
   axiosWithError(apiUrls.coinGecko.getCategoryList());
+
+export const requestGlobalInfo = () =>
+  axiosWithError(apiUrls.coinGecko.getGlobalInfo());

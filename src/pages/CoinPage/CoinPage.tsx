@@ -3,7 +3,7 @@ import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { NotFoundPage } from "pages/NotFoundPage";
 import CoinStore from "store/coinStore/CoinStore";
@@ -21,6 +21,7 @@ import styles from "./CoinPage.module.scss";
 
 const CoinPage = () => {
   const { name } = useParams();
+  const navigate = useNavigate();
 
   const store = useLocalStore(() => new CoinStore(name));
 
@@ -30,14 +31,18 @@ const CoinPage = () => {
     return <NotFoundPage />;
   } else
     return (
-      <div>
+      <div className={styles["coin-page"]}>
         {store.coin ? (
           <>
             <div className={styles["coin-page__header"]}>
               <div className={styles["coin-page__header__name-box"]}>
+                <div
+                  onClick={() => navigate(-1)}
+                  className={styles["coin-page__header__button"]}
+                />
                 <img
                   className={styles["coin-page__header__img"]}
-                  src={store.coin.image.thumb}
+                  src={store.coin.image.large}
                   alt={`Изображение ${store.coin.name}`}
                 />
                 <div>
@@ -77,9 +82,10 @@ const CoinPage = () => {
                 </span>
               </div>
             </div>
-            <div className={classNames(styles["coin_page__chart"])}>
+            <div className={classNames(styles["coin-page__chart-box"])}>
               {store.chart ? (
                 <Chart
+                  className={classNames(styles["coin-page__chart"])}
                   onMouseEvent={true}
                   coinData={toJS(store.chart).map((arr) => arr[2])}
                   coinLabels={toJS(store.chart).map((arr) =>
@@ -95,7 +101,7 @@ const CoinPage = () => {
               key={store.coin.id}
               name={store.coin.name}
               subtitle={store.coin.symbol}
-              image={store.coin.image.thumb}
+              image={store.coin.image.large}
               price={store.coin.currentPrice.usd}
               priceChange={store.coin.priceChangePercentage24hInCurrency.usd}
               className={classNames(styles["coin_page__card"])}
