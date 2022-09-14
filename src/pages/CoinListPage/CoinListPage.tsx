@@ -22,7 +22,10 @@ import styles from "./CoinListPage.module.scss";
 const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
   const navigate = useNavigate();
-  useAsync(store.fetch, [store.dropdownStore.dropdownValues]);
+  useAsync(store.fetch, [
+    store.dropdownStore.dropdownValues,
+    store.categoryStore.value.key,
+  ]);
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -55,6 +58,8 @@ const CoinListPage = () => {
   const handlerDropdownCategoryChange = useCallback(
     (value: Option) => {
       store.categoryStore.value = value;
+      store.pageReset();
+      store.coins = [];
     },
     [store.categoryStore.value]
   );

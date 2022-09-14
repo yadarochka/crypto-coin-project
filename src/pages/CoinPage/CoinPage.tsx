@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
-import React from "react";
+import React, { ReactNode, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { NotFoundPage } from "pages/NotFoundPage";
@@ -15,7 +15,9 @@ import { useLocalStore } from "utils/useLocalStore";
 
 import Card from "components/UI/Card";
 import Chart from "components/UI/Chart";
+import { Option } from "components/UI/Dropdown";
 import Loader from "components/UI/Loader";
+import { TabBar } from "components/UI/TabBar";
 
 import styles from "./CoinPage.module.scss";
 
@@ -25,7 +27,13 @@ const CoinPage = () => {
 
   const store = useLocalStore(() => new CoinStore(name));
 
-  useAsync(store.fetch, [store.coin]);
+  useAsync(store.fetch, [store.coin, store.chartStore.time.value.key]);
+
+  console.log(toJS(store.chartStore.timeValues));
+
+  const handleTabBarChange = (value: Option) => {
+    store.chartStore.time.value = value;
+  };
 
   if (store.meta === Meta.error) {
     return <NotFoundPage />;
@@ -83,12 +91,12 @@ const CoinPage = () => {
               </div>
             </div>
             <div className={classNames(styles["coin-page__chart-box"])}>
-              {store.chart ? (
+              {store.chartStore.chart.length > 0 ? (
                 <Chart
                   className={classNames(styles["coin-page__chart"])}
                   onMouseEvent={true}
-                  coinData={toJS(store.chart).map((arr) => arr[2])}
-                  coinLabels={toJS(store.chart).map((arr) =>
+                  coinData={toJS(store.chartStore.chart).map((arr) => arr[2])}
+                  coinLabels={toJS(store.chartStore.chart).map((arr) =>
                     convertTimestamp(arr[0])
                   )}
                 />
@@ -96,6 +104,11 @@ const CoinPage = () => {
                 <Loader />
               )}
             </div>
+            <TabBar
+              options={store.chartStore.time.options}
+              value={store.chartStore.time.value}
+              onChange={handleTabBarChange}
+            />
             <Card
               currency={"USD"}
               key={store.coin.id}

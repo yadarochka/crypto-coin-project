@@ -40,6 +40,12 @@ export default class СoinListStore implements ILocalStore {
     this.dropdownStore = new DropdownStore();
     this.categoryStore = new CategoryStore();
     this.globalDataStore = new GlobalDataStore();
+    this.categoryStore.value.key = rootStore.query.getParam("category")
+      ? rootStore.query.getParam("category")
+      : "all";
+    this.categoryStore.value.value = rootStore.query.getParam("category")
+      ? rootStore.query.getParam("category")
+      : "All categories";
     this.searchStore._search = rootStore.query.getParam("search")
       ? decodeURI(rootStore.query.getParam("search"))
       : "";

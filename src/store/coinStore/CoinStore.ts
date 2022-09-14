@@ -5,61 +5,50 @@ import {
   observable,
   runInAction,
 } from "mobx";
+import { storeAnnotation } from "mobx/dist/internal";
 
 import { CoinModel } from "store/models/coin";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
 
+import ChartStore from "./ChartStore";
 import { requestChart } from "./requestChart";
 import { requestCoin } from "./requestCoin";
 
 export default class CoinStore implements ILocalStore {
-  _id: string | undefined;
-  _coin: CoinModel | undefined;
-  _chart: number[][] | undefined = [];
+  private _id: string;
+  private _coin: CoinModel | undefined;
   meta: Meta = Meta.initial;
+  chartStore;
   constructor(id: string | undefined) {
-    this._id = id;
+    this._id = id || "";
+    this.chartStore = new ChartStore(this._id);
     makeAutoObservable(this, {
-      _coin: observable,
-      _chart: observable,
       fetch: action.bound,
-      chart: computed,
     });
   }
 
   async fetch() {
-    if (this.meta === Meta.loading) return;
-    this.meta = Meta.loading;
-    if (this._id) {
-      const { isError, data } = await requestCoin(this._id);
-      if (isError) {
-        this.meta = Meta.error;
-        return;
+    if (this.meta !== Meta.loading && this.meta !== Meta.success) {
+      this.meta = Meta.loading;
+      if (this._id) {
+        const { isError, data } = await requestCoin(this._id);
+        if (isError) {
+          this.meta = Meta.error;
+          return;
+        }
+        runInAction(() => {
+          this.meta = Meta.success;
+          this._coin = data;
+        });
       }
-      runInAction(() => {
-        this._coin = data;
-      });
     }
-    if (this.coin) {
-      /* захардкодил */
-      const { isError, data } = await requestChart(this.coin.id, "usd");
-      if (isError) {
-        this.meta = Meta.error;
-        return;
-      }
-      runInAction(() => {
-        this.chart = data;
-        this.meta = Meta.success;
-      });
-    }
-  }
-  get chart() {
-    return this._chart;
+
+    this.chartFetch();
   }
 
-  set chart(newData) {
-    this._chart = newData;
+  async chartFetch() {
+    await this.chartStore.fetch();
   }
 
   get coin() {
