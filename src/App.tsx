@@ -24,8 +24,8 @@ function App() {
   return (
     <div className={styles.app}>
       <div className={styles.header}>
-        <BurgerMenu items={BurgerItems}></BurgerMenu>
-        <img src={logo} className={styles.logo}></img>
+        <BurgerMenu items={BurgerItems} />
+        <img src={logo} className={styles.logo} />
       </div>
       <Routes>
         <Route path="/" element={<CoinListPage />} />

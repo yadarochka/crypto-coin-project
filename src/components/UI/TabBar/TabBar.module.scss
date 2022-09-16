@@ -1,22 +1,23 @@
-@import "~styles/variables.scss";
+@import "~styles/variables";
 
-$blue-color: rgba(0, 99, 245, 1);
+$blue-color: rgb(0 99 245 / 100%);
 
 .tab {
   display: flex;
   justify-content: space-between;
+
   &__item {
     padding: 6px 10px;
-    color: $gray-color;
-    font-size: 12px;
-    background: #f8f9fa;
     border: 0.5px solid #dfe2e4;
+    background: #f8f9fa;
     border-radius: 20px;
+    color: $gray-color;
     cursor: pointer;
+    font-size: 12px;
   }
 }
 
 .active {
-  color: $blue-color;
   border-color: $blue-color;
+  color: $blue-color;
 }

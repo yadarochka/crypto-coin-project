@@ -6,12 +6,12 @@ import logo from "images/Logo.svg";
 import styles from "./BurgerMenu.module.scss";
 
 export type BurgerMenuItems = {
-  linkTo: "string";
-  label: "string";
+  linkTo: string;
+  label: string;
 };
 
 type BurgerMenuProps = {
-  items?: BurgerMenuItems[];
+  items: BurgerMenuItems[];
 };
 
 export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
@@ -23,7 +23,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
     return (
       <>
         <div className={styles.burger}>
-          <div className={styles["burger__blur"]}></div>
+          <div className={styles["burger__blur"]} />
           <div className={styles["burger__header"]}>
             <span className={styles.cross} onClick={burgerIsVisibleChange} />
             <img src={logo} className={styles.logo} />

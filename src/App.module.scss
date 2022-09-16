@@ -11,6 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 500;
 }
+
 .app {
   position: relative;
 }
@@ -20,8 +21,8 @@ html {
 }
 
 .header {
-  height: 35px;
   display: flex;
+  height: 35px;
   margin-bottom: 5px;
   background-color: #dfe2e4;
 }
@@ -38,11 +39,11 @@ html {
 }
 
 .burger {
-  margin-right: 15px;
-  height: 15px;
   width: 15px;
+  height: 15px;
   padding: 10px 5px;
+  margin-right: 15px;
   background-image: url("./images/Burger-menu.svg");
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
 }

@@ -83,7 +83,6 @@ export default class ChartStore implements ILocalStore {
         }
         runInAction(() => {
           this.chart = data;
-          console.log(toJS(this.chart));
           this.meta = Meta.success;
         });
       }
