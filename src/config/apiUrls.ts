@@ -3,10 +3,24 @@ const coinGeckoApi = (endpoint: string): string =>
 
 export const apiUrls = {
   coinGecko: {
-    getAll: (currency: string): string =>
-      coinGeckoApi(
-        `coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=true`
-      ),
+    getAll: (
+      currency: string,
+      perPage: number,
+      page: number,
+      id: string = "",
+      category: string = ""
+    ): string =>
+      category.length > 0 && category !== "all"
+        ? coinGeckoApi(
+            `coins/markets?vs_currency=${currency}&category=${category}&ids=${id}&order=market_cap_desc&per_page=${String(
+              perPage
+            )}&page=${String(page)}&sparkline=true`
+          )
+        : coinGeckoApi(
+            `coins/markets?vs_currency=${currency}&ids=${id}&order=market_cap_desc&per_page=${String(
+              perPage
+            )}&page=${String(page)}&sparkline=true`
+          ),
 
     getCoin: (id: string): string =>
       coinGeckoApi(
@@ -17,5 +31,9 @@ export const apiUrls = {
 
     getChart: (name: string, currency: string, days: string = "1") =>
       coinGeckoApi(`coins/${name}/ohlc?vs_currency=${currency}&days=${days}`),
+
+    getCategoryList: () => coinGeckoApi("coins/categories/list"),
+
+    getGlobalInfo: () => coinGeckoApi("global"),
   },
 };

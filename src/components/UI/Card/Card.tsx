@@ -1,7 +1,9 @@
 import { FC } from "react";
+import React from "react";
 
-import Chart from "@components/UI/Chart";
+import Chart from "components/UI/Chart/Chart";
 
+import { IncreaseOrDecrease } from "../IncreaseOrDecrease";
 import styles from "./Card.module.scss";
 
 interface CardProps {
@@ -26,10 +28,9 @@ interface CardProps {
   /** Наличие графика в карточке */
   withChart?: boolean;
   /** На карточке будет отображаться информация о токене */
+  cardType?: string;
   priceType?: boolean;
-  /** На карточке будет отображаться информация о наличии токена у конкретного пользователя */
-  userType?: boolean;
-  /** Нужно исправить (при передачи одинаковых значений priceType и userType будет сломано отображение) */
+
   coinData?: number[];
 
   coinLabels?: string[];
@@ -45,14 +46,13 @@ export const Card: FC<CardProps> = ({
   priceChange,
   className,
   withChart = true,
-  priceType,
-  userType,
+  cardType,
   currency,
   coinData = [],
   coinLabels = [],
   onMouseEvent,
 }) => {
-  // console.warn("Card render")
+  const colorChart = priceChange < 0 ? "#d90429" : "#21bf73";
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles["card__img-box"]}>
@@ -65,7 +65,7 @@ export const Card: FC<CardProps> = ({
       <div className={styles["card__name"]}>
         <h3 className={styles["card__title"]}>{name}</h3>
         <span className={styles["card__subtitle"]}>
-          {userType && `00.00 `}
+          {cardType === "userType" && `00.00 `}
           {subtitle.toUpperCase()}
         </span>
       </div>
@@ -76,47 +76,28 @@ export const Card: FC<CardProps> = ({
             coinLabels={coinLabels}
             onMouseEvent={false}
             className={styles["card__chart"]}
+            color={colorChart}
           />
         </div>
       )}
-      {priceType && (
+      {cardType === "priceType" && (
         <div className={styles["card__price-box"]}>
           <div className={styles["card__price"]}>
             {currency} {price}
           </div>
-          {priceChange > 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["success"]}`}
-            >
-              +{priceChange}%
-            </div>
-          )}
-          {priceChange < 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["danger"]}`}
-            >
-              {priceChange}%
-            </div>
-          )}
+          <IncreaseOrDecrease
+            procent={priceChange}
+            className={styles["card__price-change"]}
+          />
         </div>
       )}
-      {userType && (
+      {cardType === "userType" && (
         <div className={styles["card__price-box"]}>
           <div className={styles["card__price"]}>${`00.00`}</div>
-          {priceChange > 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["success"]}`}
-            >
-              +{`00.00`}%
-            </div>
-          )}
-          {priceChange < 0 && (
-            <div
-              className={`${styles["card__price-change"]} ${styles["danger"]}`}
-            >
-              {`00.00`}%
-            </div>
-          )}
+          <IncreaseOrDecrease
+            number={"00.00"}
+            className={styles["card__price-change"]}
+          />
         </div>
       )}
     </div>

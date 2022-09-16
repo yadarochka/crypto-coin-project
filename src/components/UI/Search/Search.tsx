@@ -1,5 +1,8 @@
-import Button from "@components/UI/Button";
-import searchIcon from "@images/search-icon.svg";
+import React, { memo } from "react";
+
+import Button from "components/UI/Button";
+
+import searchIcon from "images/search-icon.svg";
 
 import styles from "./Search.module.scss";
 
@@ -33,7 +36,7 @@ const Search = ({
 }: SearchProps) => {
   return (
     <div className={className}>
-      <div className={styles["search"]}>
+      <div className={styles.search}>
         <input
           value={value}
           onChange={onChange}
@@ -44,12 +47,8 @@ const Search = ({
         />
         <img src={searchIcon} alt="" className={styles["search__icon"]} />
       </div>
-      <Button
-        disabled={disabled}
-        onClick={buttonOnClick}
-        value={buttonText}
-      ></Button>
+      <Button disabled={disabled} onClick={buttonOnClick} value={buttonText} />
     </div>
   );
 };
-export default Search;
+export default memo(Search);

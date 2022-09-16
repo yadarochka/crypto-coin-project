@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import { FC } from "react";
 
 import styles from "./Button.module.scss";
@@ -16,4 +17,4 @@ const Button: FC<ButtonProps> = ({ value, className, ...otherProps }) => {
   );
 };
 
-export default Button;
+export default memo(Button);

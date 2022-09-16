@@ -1,4 +1,4 @@
-@import "@styles/variables";
+@import "~styles/variables";
 
 .card {
   position: relative;
@@ -70,12 +70,4 @@
     margin-top: 5px;
     font-size: 10px;
   }
-}
-
-.success {
-  color: $green-color;
-}
-
-.danger {
-  color: $red-color;
 }

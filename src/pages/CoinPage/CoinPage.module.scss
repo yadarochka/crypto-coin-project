@@ -1,8 +1,17 @@
-@import "@styles/variables";
+@import "~styles/variables";
 
-.coin_page {
+.coin-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   &__chart {
-    margin-bottom: 20px;
+    width: 375px;
+
+    &__box {
+      margin-bottom: 20px;
+      background-color: aqua;
+    }
   }
 
   &__card {
@@ -11,6 +20,9 @@
 }
 
 .coin-page__header {
+  align-self: flex-start;
+  padding: 0 15px;
+
   &__name-box {
     display: flex;
     align-items: center;
@@ -29,6 +41,16 @@
     }
   }
 
+  &__button {
+    width: 5px;
+    height: 10px;
+    padding: 5px;
+    margin-right: 10px;
+    background-image: url("../../images/prevPage.svg");
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+
   &__price-info {
     &__price {
       margin-right: 12px;
@@ -44,4 +66,8 @@
     width: 24px;
     height: 24px;
   }
+}
+
+.active {
+  color: red;
 }

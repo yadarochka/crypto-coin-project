@@ -1,18 +1,59 @@
-@import "../../styles/variables";
+@import "~styles/variables";
 
 .coin-list-page {
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  &__dropdown {
+  &__title {
+    display: block;
+    width: 340px;
+    margin: 0;
+    font-size: 20px;
+  }
+
+  &__subtitle {
+    width: 340px;
+    color: $gray-color;
+    font-size: 12px;
+  }
+
+  &__header {
+    margin-bottom: 10px;
+
+    &-title {
+      margin-bottom: 4;
+      font-size: 20px;
+    }
+  }
+
+  &__dropdown-currency {
     position: absolute;
-    top: 8px;
-    right: -100px;
-    width: 100px;
+    z-index: 2;
+    top: 92px;
+    left: 80px;
+    width: 110px;
+  }
+
+  &__dropdown-category {
+    position: absolute;
+    z-index: 2;
+    top: 92px;
+    right: 15px;
+    width: 150px;
   }
 
   &__search {
-    margin-bottom: 34px;
+    margin-bottom: 10px;
+  }
+
+  &__coin-sections-title {
+    margin-bottom: 5px;
+  }
+
+  &__coins-section {
+    &__header {
+      margin-bottom: 10px;
+    }
   }
 }

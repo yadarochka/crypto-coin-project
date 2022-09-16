@@ -1,13 +1,15 @@
 import {
-  Chart as ChartJS,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LineElement,
   LinearScale,
   PointElement,
-  LineElement,
   Title,
   Tooltip,
-  Legend,
 } from "chart.js";
+
+import React, { memo, useMemo } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -25,21 +27,24 @@ type ChartProps = {
   coinLabels: string[];
   onMouseEvent?: boolean;
   className?: string;
+  type?: string;
+  color?: string;
 };
 const Chart = ({
   coinData,
   coinLabels,
   onMouseEvent = true,
   className,
+  type = "",
+  color = "rgba(0, 99, 245, 1)",
 }: ChartProps) => {
-  // console.warn("Chart render")
   const data = {
     labels: coinLabels,
     datasets: [
       {
         label: "$",
         data: coinData,
-        borderColor: "rgba(0, 99, 245, 1)",
+        borderColor: color,
         backgroundColor: "#F5F5F5",
         borderWidth: 3,
         pointRadius: 0,
@@ -74,17 +79,31 @@ const Chart = ({
       },
     },
     scales: {
-      xAxes: {
-        display: false,
-        gridLines: {},
-      },
       yAxes: {
         display: false,
         gridLines: {},
       },
+      x: {
+        ticks: {
+          autoSkip: true,
+          autoSkipPadding: 25,
+          callback: (value: any, index: any, ticks: any) => {
+            if (type === "") return coinLabels[index];
+            const date = coinLabels[index].split(",");
+            const time = date[1].split(":");
+            const day = date[0].split(".");
+            if (type === "day") return time[0] + ":" + time[1];
+            if (type === "year") return day[2];
+            if (type === "week") return day[0] + "." + day[1];
+          },
+        },
+        ...(type === "" ? { display: false } : { display: true }),
+        gridLines: {},
+      },
     },
   };
+
   return <Line options={options} data={data} className={className} />;
 };
 
-export default Chart;
+export default memo(Chart);

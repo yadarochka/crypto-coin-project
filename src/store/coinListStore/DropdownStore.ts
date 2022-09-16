@@ -1,17 +1,20 @@
-import { Options } from "@components/UI/Dropdown";
-import { Meta } from "@utils/meta";
-import { ILocalStore } from "@utils/useLocalStore";
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, makeAutoObservable, runInAction } from "mobx";
+
+import { normalizeCurrency } from "store/models";
+import { Meta } from "utils/meta";
+import { ILocalStore } from "utils/useLocalStore";
+
+import { Option } from "components/UI/Dropdown";
 
 import { requestCoinListCurrency } from "./requestCoinList";
 
 type DropDownType = {
-  options: Options[];
-  value: Options;
+  options: Option[];
+  value: Option;
 };
 
 export default class DropdownStore implements ILocalStore {
-  meta: Meta = Meta.initial;
+  _meta: Meta = Meta.initial;
   _dropDown: DropDownType = {
     options: [],
     value: {
@@ -21,28 +24,19 @@ export default class DropdownStore implements ILocalStore {
   };
 
   constructor() {
-    makeAutoObservable(this);
-    this.meta = Meta.initial;
-  }
-
-  async fetch(): Promise<void> {
-    if (this.meta === Meta.loading) return;
-
-    this.meta = Meta.loading;
-
-    const { isError, data } = await requestCoinListCurrency();
-
-    if (isError) {
-      this.meta = Meta.error;
-      return;
-    }
-    runInAction(() => {
-      this.meta = Meta.success;
-      this.dropdownOptions = data;
+    makeAutoObservable(this, {
+      fetch: action,
     });
+    this._meta = Meta.initial;
   }
 
-  destroy() {}
+  get meta() {
+    return this._meta;
+  }
+
+  set meta(newMeta: Meta) {
+    this._meta = newMeta;
+  }
 
   get dropdown() {
     return this._dropDown;
@@ -56,11 +50,32 @@ export default class DropdownStore implements ILocalStore {
     return this._dropDown.value;
   }
 
-  set dropdownValues({ key, value }: Options) {
-    this._dropDown.value = { key: key, value: value };
+  set dropdownValues(value: Option) {
+    this._dropDown.value = value;
   }
 
-  set dropdownOptions(newOption: Options[]) {
+  set dropdownOptions(newOption: Option[]) {
     this._dropDown.options = newOption;
   }
+
+  async fetch(): Promise<void> {
+    if (this.meta === Meta.loading) {
+      return;
+    }
+
+    this.meta = Meta.loading;
+
+    const { isError, data } = await requestCoinListCurrency();
+
+    if (isError) {
+      this.meta = Meta.error;
+      return;
+    }
+    runInAction(() => {
+      this.meta = Meta.success;
+      this.dropdownOptions = normalizeCurrency(data);
+    });
+  }
+
+  destroy() {}
 }

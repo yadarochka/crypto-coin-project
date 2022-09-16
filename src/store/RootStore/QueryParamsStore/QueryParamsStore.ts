@@ -1,6 +1,7 @@
-import { parseQueryString } from "@utils/parseQueryString";
-import { Params } from "@utils/parseQueryString";
 import { makeAutoObservable } from "mobx";
+
+import { Params, parseQueryString } from "utils/parseQueryString";
+
 export default class QueryParamsStore {
   _search = "";
   _currency = "";
@@ -13,19 +14,27 @@ export default class QueryParamsStore {
     makeAutoObservable(this);
   }
 
+  get search() {
+    return this._search;
+  }
+
+  set params(newParams: Params) {
+    this._params = newParams;
+  }
+
   getParam(): Params;
+
   getParam(key: string): string;
 
-  // Implementation signature
-  getParam(key?: string): unknown {
+  getParam(key?: string): Params | string {
     if (key) return this._params[key];
     return this._params;
   }
 
   setSearch(search: string) {
-    if (this._search !== search) {
+    if (this.search !== search) {
       this._search = search;
-      this._params = parseQueryString(search);
+      this.params = parseQueryString(search);
     }
   }
 }

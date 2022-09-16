@@ -1,16 +1,16 @@
-export type Options = {
+export type Option = {
   key: string;
-  value: String;
+  value: string;
 };
 
 /** Пропсы, которые принимает компонент Dropdown */
 export type MultiDropdownProps = {
   /** Массив возможных вариантов для выбора */
-  options?: Options[];
+  options?: Option[];
   /** Текущие выбранные значения поля, массив может быть пустым */
-  value?: Options;
+  value?: Option;
   /** Callback, вызываемый при выборе варианта */
-  onChange: (value: Options) => void;
+  onChange: (value: Option) => void;
   /** Заблокирован ли дропдаун */
   disabled?: boolean;
   /** Преобразовать выбранные значения в строку. Отображается в дропдауне в качестве выбранного значения */

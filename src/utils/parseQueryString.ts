@@ -12,7 +12,6 @@ export type Params = {
  * }
  */
 
-// upd: русские символы при передаче в search params превращаются в крокозябры, поэтому лучше подключить библиотеку и удалить эту функцию
 export const parseQueryString = (search: string) => {
   const param: Params = {};
   search = search.startsWith("?") ? search.slice(1) : search;

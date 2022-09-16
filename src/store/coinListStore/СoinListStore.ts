@@ -1,34 +1,55 @@
-import { CoinListModel } from "@store/models";
-import PaginationStore from "@store/paginationStore";
-import rootStore from "@store/RootStore/instance";
-import { Meta } from "@utils/meta";
-import { ILocalStore } from "@utils/useLocalStore";
 import {
   action,
-  computed,
-  reaction,
   makeAutoObservable,
+  observable,
+  reaction,
   runInAction,
 } from "mobx";
+import { storeAnnotation } from "mobx/dist/internal";
 
+import rootStore from "store/RootStore/instance";
+import { CoinListModel, normalizeCoinListApiModel } from "store/models";
+import { Meta } from "utils/meta";
+import { ILocalStore } from "utils/useLocalStore";
+
+import CategoryStore from "./CategoryStore";
 import DropdownStore from "./DropdownStore";
-import { requestCoinList } from "./requestCoinList";
+import GlobalDataStore from "./GlobalDataStore";
 import SearchStore from "./SearchStore";
+import { requestCoinList } from "./requestCoinList";
 
 export default class СoinListStore implements ILocalStore {
   _coins: CoinListModel[] = [];
-  meta: Meta;
+  _meta: Meta = Meta.initial;
   searchStore;
   dropdownStore;
-  paginationStore;
+  categoryStore;
+  globalDataStore;
+  contentPerPage = 12;
+  page = 1;
+  observer = new IntersectionObserver(([entry], observer) => {
+    if (entry.isIntersecting) {
+      this.pageIncrement();
+      this.fetch();
+      observer.unobserve(entry.target);
+    }
+  }, {});
 
   constructor() {
-    this.meta = Meta.initial;
     this.searchStore = new SearchStore();
     this.dropdownStore = new DropdownStore();
-    this.paginationStore = new PaginationStore(10);
-    this.paginationStore.page = Number(rootStore.query.getParam("page")) || 1;
-    this.searchStore._search = rootStore.query.getParam("search");
+    this.categoryStore = new CategoryStore();
+    this.globalDataStore = new GlobalDataStore();
+    this.categoryStore.value.key = rootStore.query.getParam("category")
+      ? rootStore.query.getParam("category")
+      : "all";
+    this.categoryStore.value.value = rootStore.query.getParam("category")
+      ? rootStore.query.getParam("category")
+      : "All categories";
+    this.searchStore._search = rootStore.query.getParam("search")
+      ? decodeURI(rootStore.query.getParam("search"))
+      : "";
+
     this.dropdownStore.dropdownValues.key = rootStore.query.getParam("currency")
       ? rootStore.query.getParam("currency")
       : "usd";
@@ -37,37 +58,76 @@ export default class СoinListStore implements ILocalStore {
     )
       ? `Market - ${rootStore.query.getParam("currency").toUpperCase()}`
       : "Market - USD";
+
     makeAutoObservable(this, {
       fetch: action.bound,
-      coins: computed,
-      serchedCoins: computed,
+      dropdownFetch: action,
+      categoryFetch: action,
+      pageReset: action.bound,
+      pageIncrement: action,
+      categoryStore: observable,
     });
   }
 
-  destroy() {
-    // если диспоузить реакцию она перестает работать
-    // this._queryPaginationReaction();
+  get meta() {
+    return this._meta;
   }
 
-  _queryPaginationReaction = reaction(
-    () => this.serchedCoins.length,
-    () => {
-      this.paginationStore.count = this.serchedCoins.length;
-      this.paginationStore.page = 1;
-    }
-  );
+  set meta(newMeta: Meta) {
+    this._meta = newMeta;
+  }
+
+  get coins() {
+    return this._coins;
+  }
+
+  set coins(newCoins) {
+    this._coins = newCoins;
+  }
 
   async fetch(): Promise<void> {
-    if (this.dropdownStore.meta === Meta.loading) return;
-    else {
-      await this.dropdownStore.fetch();
+    if (
+      this.globalDataStore.meta !== Meta.loading &&
+      this.globalDataStore.meta !== Meta.success
+    ) {
+      this.globalDataStore.fetch();
+    }
+    if (
+      this.dropdownStore.meta !== Meta.loading &&
+      this.dropdownStore.meta !== Meta.success
+    ) {
+      this.dropdownFetch();
     }
 
-    this.coins = [];
+    if (
+      this.categoryStore.meta !== Meta.loading &&
+      this.categoryStore.meta !== Meta.success
+    ) {
+      this.categoryFetch();
+    }
+
+    if (this.meta !== Meta.loading) {
+      await this.coinListFetch();
+    }
+  }
+
+  async dropdownFetch(): Promise<void> {
+    await this.dropdownStore.fetch();
+  }
+
+  async categoryFetch(): Promise<void> {
+    await this.categoryStore.fetch();
+  }
+
+  async coinListFetch(): Promise<void> {
     this.meta = Meta.loading;
 
     const { isError, data } = await requestCoinList(
-      this.dropdownStore.dropdownValues.key
+      this.dropdownStore.dropdownValues.key,
+      this.contentPerPage,
+      this.page,
+      this.searchStore.search,
+      this.categoryStore.value.key
     );
     if (isError) {
       this.meta = Meta.error;
@@ -75,26 +135,26 @@ export default class СoinListStore implements ILocalStore {
     }
     runInAction(() => {
       this.meta = Meta.success;
-      this.coins = data;
-      this.paginationStore.count = this.coins.length;
+      this.coins = [...this.coins, ...normalizeCoinListApiModel(data)];
+      const contentLoadTrigger = document.getElementById("loader");
+      if (contentLoadTrigger && this.searchStore.search?.length === 0) {
+        this.observer.observe(contentLoadTrigger);
+      }
     });
   }
 
-  get serchedCoins() {
-    if (!this.searchStore.search) return this.coins;
-    else {
-      return this.coins.filter((coin) =>
-        coin.name
-          .toLowerCase()
-          .includes(this.searchStore.search ? this.searchStore.search : "")
-      );
-    }
+  pageReset() {
+    this.page = 1;
+  }
+  pageIncrement() {
+    this.page++;
   }
 
-  get coins() {
-    return this._coins;
+  searchFetch() {
+    this.coins = [];
+    this.pageReset();
+    this.fetch();
   }
-  set coins(newCoins) {
-    this._coins = newCoins;
-  }
+
+  destroy() {}
 }

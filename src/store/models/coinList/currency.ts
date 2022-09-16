@@ -1,10 +1,9 @@
-import "@components/UI/Dropdown/types";
+import "components/UI/Dropdown/types";
 
-export const normalizeCurrency = (currencyData: string[]) => {
-  return currencyData.map((el) => {
+export const normalizeCurrency = (currencyData: string[]) =>
+  currencyData.map((el) => {
     return {
       key: el,
       value: `Market - ${el.toUpperCase()}`,
     };
   });
-};

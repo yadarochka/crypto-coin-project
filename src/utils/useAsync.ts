@@ -1,8 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 
-export const useAsync = (func: () => Promise<any>, inputs: any[]): void => {
+export const useAsync = (
+  func: () => Promise<any>,
+  inputs: React.DependencyList
+): void => {
   useEffect(() => {
-    func().then();
+    func();
   }, inputs);
 };

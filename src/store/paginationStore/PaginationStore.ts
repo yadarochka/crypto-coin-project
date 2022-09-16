@@ -1,4 +1,3 @@
-import { ILocalStore } from "@utils/useLocalStore";
 import {
   action,
   computed,
@@ -6,6 +5,8 @@ import {
   observable,
   reaction,
 } from "mobx";
+
+import { ILocalStore } from "utils/useLocalStore";
 
 export default class PaginationStore implements ILocalStore {
   /** Текущая страница */

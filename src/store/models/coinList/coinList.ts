@@ -25,16 +25,20 @@ export type CoinListApiModel = {
 };
 
 export const normalizeCoinListApiModel = (
-  raw: CoinListApiModel
-): CoinListModel => ({
-  id: raw.id,
-  name: raw.name,
-  image: raw.image,
-  symbol: raw.symbol,
-  currentPrice: raw.current_price,
-  priceChange24h: raw.price_change_24h,
-  priceChangePercentage24h: raw.price_change_percentage_24h,
-  sparkline7d: {
-    price: raw.sparkline_in_7d.price,
-  },
-});
+  raw: CoinListApiModel[]
+): CoinListModel[] => {
+  return raw.map((rawEl) => {
+    return {
+      id: rawEl.id,
+      name: rawEl.name,
+      image: rawEl.image,
+      symbol: rawEl.symbol,
+      currentPrice: rawEl.current_price,
+      priceChange24h: rawEl.price_change_24h,
+      priceChangePercentage24h: rawEl.price_change_percentage_24h,
+      sparkline7d: {
+        price: rawEl.sparkline_in_7d.price,
+      },
+    };
+  });
+};

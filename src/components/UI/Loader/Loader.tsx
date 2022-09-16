@@ -1,6 +1,8 @@
+import React from "react";
 import { FC } from "react";
 
 import styles from "./Loader.module.scss";
+
 type LoaderProps = {
   /**
    * Идет ли загрузка.
