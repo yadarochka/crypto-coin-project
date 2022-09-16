@@ -27,12 +27,16 @@ type ChartProps = {
   coinLabels: string[];
   onMouseEvent?: boolean;
   className?: string;
+  type?: string;
+  color?: string;
 };
 const Chart = ({
   coinData,
   coinLabels,
   onMouseEvent = true,
   className,
+  type = "",
+  color = "rgba(0, 99, 245, 1)",
 }: ChartProps) => {
   const data = {
     labels: coinLabels,
@@ -40,7 +44,7 @@ const Chart = ({
       {
         label: "$",
         data: coinData,
-        borderColor: "rgba(0, 99, 245, 1)",
+        borderColor: color,
         backgroundColor: "#F5F5F5",
         borderWidth: 3,
         pointRadius: 0,
@@ -75,12 +79,25 @@ const Chart = ({
       },
     },
     scales: {
-      xAxes: {
+      yAxes: {
         display: false,
         gridLines: {},
       },
-      yAxes: {
-        display: false,
+      x: {
+        ticks: {
+          autoSkip: true,
+          autoSkipPadding: 25,
+          callback: (value: any, index: any, ticks: any) => {
+            if (type === "") return coinLabels[index];
+            const date = coinLabels[index].split(",");
+            const time = date[1].split(":");
+            const day = date[0].split(".");
+            if (type === "day") return time[0] + ":" + time[1];
+            if (type === "year") return day[2];
+            if (type === "week") return day[0] + "." + day[1];
+          },
+        },
+        ...(type === "" ? { display: false } : { display: true }),
         gridLines: {},
       },
     },

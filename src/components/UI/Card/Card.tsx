@@ -1,7 +1,7 @@
 import { FC } from "react";
 import React from "react";
 
-import Chart from "components/UI/Chart";
+import Chart from "components/UI/Chart/Chart";
 
 import { IncreaseOrDecrease } from "../IncreaseOrDecrease";
 import styles from "./Card.module.scss";
@@ -52,6 +52,7 @@ export const Card: FC<CardProps> = ({
   coinLabels = [],
   onMouseEvent,
 }) => {
+  const colorChart = priceChange < 0 ? "#d90429" : "#21bf73";
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles["card__img-box"]}>
@@ -75,6 +76,7 @@ export const Card: FC<CardProps> = ({
             coinLabels={coinLabels}
             onMouseEvent={false}
             className={styles["card__chart"]}
+            color={colorChart}
           />
         </div>
       )}

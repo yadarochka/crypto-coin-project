@@ -14,7 +14,7 @@ import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
 
 import Card from "components/UI/Card";
-import Chart from "components/UI/Chart";
+import Chart from "components/UI/Chart/Chart";
 import { Option } from "components/UI/Dropdown";
 import Loader from "components/UI/Loader";
 import { TabBar } from "components/UI/TabBar";
@@ -29,11 +29,17 @@ const CoinPage = () => {
 
   useAsync(store.fetch, [store.coin, store.chartStore.time.value.key]);
 
-  console.log(toJS(store.chartStore.timeValues));
-
   const handleTabBarChange = (value: Option) => {
     store.chartStore.time.value = value;
   };
+
+  let type = "day";
+
+  if (store.chartStore.time.value.key === "1") {
+    type = "day";
+  } else if (store.chartStore.time.value.key === "max") {
+    type = "year";
+  } else type = "week";
 
   if (store.meta === Meta.error) {
     return <NotFoundPage />;
@@ -99,6 +105,7 @@ const CoinPage = () => {
                   coinLabels={toJS(store.chartStore.chart).map((arr) =>
                     convertTimestamp(arr[0])
                   )}
+                  type={type}
                 />
               ) : (
                 <Loader />

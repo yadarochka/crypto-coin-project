@@ -27,6 +27,8 @@ const CoinListPage = () => {
     store.categoryStore.value.key,
   ]);
 
+  console.log(toJS(store.coins));
+
   useEffect(() => {
     const params = new URLSearchParams();
     if (store.searchStore._search) {

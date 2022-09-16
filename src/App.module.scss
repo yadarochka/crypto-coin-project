@@ -1,4 +1,5 @@
 @import "~styles/fonts";
+@import "~styles/variables";
 
 body {
   position: relative;
@@ -10,7 +11,38 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 500;
 }
+.app {
+  position: relative;
+}
 
 html {
   overflow-y: scroll;
+}
+
+.header {
+  height: 35px;
+  display: flex;
+  margin-bottom: 5px;
+  background-color: #dfe2e4;
+}
+
+.logo {
+  width: 150px;
+  align-self: center;
+  justify-self: center;
+}
+
+.logo-box {
+  display: flex;
+  justify-content: center;
+}
+
+.burger {
+  margin-right: 15px;
+  height: 15px;
+  width: 15px;
+  padding: 10px 5px;
+  background-image: url("./images/Burger-menu.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }

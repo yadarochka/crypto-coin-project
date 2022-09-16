@@ -16,7 +16,7 @@ export const Dropdown: FC<MultiDropdownProps> = ({
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleList = () => {
-    setIsVisible(!isVisible);
+    setIsVisible((prevIsVisible) => !prevIsVisible);
   };
 
   const itemOnClick = (el: Option) => {
@@ -30,7 +30,7 @@ export const Dropdown: FC<MultiDropdownProps> = ({
         key={el.key}
         className={classNames(
           styles["dropdown__item"],
-          el.key === value.key ? styles["active"] : ""
+          el.key === value.key && styles["active"]
         )}
         onClick={() => itemOnClick(el)}
       >

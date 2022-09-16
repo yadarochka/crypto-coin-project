@@ -13,7 +13,7 @@ export default class ChartStore implements ILocalStore {
     options: [
       {
         key: "1",
-        value: "1 H",
+        value: "1 D",
       },
       {
         key: "7",

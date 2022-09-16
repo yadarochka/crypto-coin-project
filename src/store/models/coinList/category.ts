@@ -20,7 +20,7 @@ export type CategoryListModel = {
 export const normalizeCategoryModel = (
   raw: CategoryApiModel[]
 ): CategoryModel[] => {
-  const afdasfd: CategoryModel[] = [
+  const normalizeData: CategoryModel[] = [
     {
       key: "all",
       value: "All categories",
@@ -32,5 +32,5 @@ export const normalizeCategoryModel = (
       };
     }),
   ];
-  return afdasfd;
+  return normalizeData;
 };
