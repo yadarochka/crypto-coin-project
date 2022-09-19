@@ -14,12 +14,12 @@ export const apiUrls = {
         ? coinGeckoApi(
             `coins/markets?vs_currency=${currency}&category=${category}&ids=${id}&order=market_cap_desc&per_page=${String(
               perPage
-            )}&page=${String(page)}&sparkline=true`
+            )}&page=${String(page)}&sparkline=true&price_change_percentage=7d`
           )
         : coinGeckoApi(
             `coins/markets?vs_currency=${currency}&ids=${id}&order=market_cap_desc&per_page=${String(
               perPage
-            )}&page=${String(page)}&sparkline=true`
+            )}&page=${String(page)}&sparkline=true&price_change_percentage=7d`
           ),
 
     getCoin: (id: string): string =>

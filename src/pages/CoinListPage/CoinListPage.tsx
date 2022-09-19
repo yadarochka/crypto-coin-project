@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import rootStore from "store/RootStore/instance";
 import coinListStore from "store/coinListStore";
 import { currencySymbol } from "store/coinStore/currencySymbol";
 import { Meta } from "utils/meta";
@@ -17,6 +18,7 @@ import Dropdown, { Option } from "components/UI/Dropdown";
 import { IncreaseOrDecrease } from "components/UI/IncreaseOrDecrease";
 import Loader from "components/UI/Loader";
 import Search from "components/UI/Search";
+import { Tooltip } from "components/UI/Tooltip";
 
 import styles from "./CoinListPage.module.scss";
 
@@ -78,6 +80,17 @@ const CoinListPage = () => {
       store.hideFavouritesCoins();
     }
     store.searchFetch();
+  }, [store.searchStore.search]);
+
+  const handleButtonHideClick: () => void = useCallback(() => {
+    if (store.favouritesStore.isShow === true) {
+      store.hideFavouritesCoins();
+      return;
+    }
+    if (store.favouritesStore.isShow === false) {
+      store.showFavouritesCoins();
+      return;
+    }
   }, []);
 
   return (
@@ -129,12 +142,15 @@ const CoinListPage = () => {
         >
           <h2
             className={classNames(
-              styles["coin-list-page__coin-sections-title"],
+              styles["coin-list-page__coin-section-title"],
               styles["coin-list-page__title"]
             )}
           >
             Coins
           </h2>
+          <Tooltip className={styles["coins-section__tooltip"]}>
+            7 Days Range
+          </Tooltip>
           <span className={classNames(styles["coin-list-page__subtitle"])}>
             Active cryptocurrencies:{" "}
             {store.globalDataStore.globalData.activeCryptocurrencies}
@@ -150,22 +166,39 @@ const CoinListPage = () => {
           placeholder="Search Cryptocurrency"
           buttonOnClick={handleButtonClick}
         />
-        {store.favouritesStore.coins.length > 0 &&
-          store.favouritesStore.isShow && (
-            <div>
-              <div className={styles["display-flex"]}>
-                <h2>Favourites coins</h2>
-                {/* <button>hide</button> */}
-              </div>
+        {store.favouritesStore.coins.length > 0 && (
+          <div>
+            <div
+              className={classNames(
+                styles["display-flex"],
+                styles["justify-content-sb"],
+                styles["align-items-center"]
+              )}
+            >
+              <h2 className={classNames(styles["m-0"], styles["font-size-20"])}>
+                Favourites coins
+              </h2>
+              <button
+                className={classNames(
+                  styles["hide-button"],
+                  store.favouritesStore.isShow
+                    ? styles["hide-button__show"]
+                    : styles["hide-button__hide"]
+                )}
+                onClick={handleButtonHideClick}
+              />
+            </div>
+            {store.favouritesStore.isShow && (
               <CoinList
                 searchedCoins={store.favouritesStore.coins}
                 currency={store.dropdownStore.dropdownValues.key}
               />
-            </div>
-          )}
+            )}
+          </div>
+        )}
         {store.meta === Meta.error && <div>Error</div>}
         <div className={styles["coin-list-page__items-list"]}>
-          <h2>Serched coins</h2>
+          <h2 className={styles["font-size-20"]}>Serched coins</h2>
           <CoinList
             searchedCoins={store.coins}
             currency={store.dropdownStore.dropdownValues.key}

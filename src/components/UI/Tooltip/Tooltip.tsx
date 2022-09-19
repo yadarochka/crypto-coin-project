@@ -47,14 +47,14 @@ export const Tooltip: FC<TooltipProps> = ({
     setIsClicked((prevState) => !prevState);
   };
   return (
-    <div className={styles.tooltip}>
+    <div className={classNames(styles.tooltip, className)}>
       <img
         ref={targetRef}
         onClick={handleClick}
         className={styles["tooltip__icon"]}
         src={icon}
         alt=""
-      ></img>
+      />
       {isClicked && (
         <div
           className={classNames(

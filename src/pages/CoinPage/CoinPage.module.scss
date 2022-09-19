@@ -4,11 +4,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
   &__chart-box {
-    height: 187px;
     width: 375px;
+    height: 187px;
     margin-bottom: 10px;
   }
+
   &__chart {
     width: 375px;
     height: 187px;
@@ -23,11 +25,12 @@
     margin-bottom: 10px;
   }
 }
+
 .coin-page__header {
+  position: relative;
   width: calc(100% - 30px);
   align-self: flex-start;
   padding: 0 15px;
-  position: relative;
 
   &__dropdown-currency {
     position: absolute;
@@ -59,9 +62,10 @@
     height: 10px;
     padding: 5px;
     margin-right: 10px;
-    background-image: url("../../images/prevPage.svg");
+    background-image: url("~images/prevPage.svg");
     background-position: 50% 50%;
     background-repeat: no-repeat;
+    cursor: pointer;
   }
 
   &__price-info {
@@ -79,13 +83,14 @@
     width: 24px;
     height: 24px;
   }
+
   &__rank {
-    color: white;
-    font-size: 12px;
     padding: 0.2em 0.4em;
+    margin-left: 5px;
     background-color: $black-color;
     border-radius: 5px;
-    margin-left: 5px;
+    color: white;
+    font-size: 12px;
   }
 }
 
@@ -95,9 +100,14 @@
   justify-content: space-between;
   padding: 10px 0;
   border-bottom: 1px solid $border-color;
+
   &__title {
     color: $gray-color;
   }
+}
+
+.header__tooltip {
+  margin-left: 5px;
 }
 
 .active {

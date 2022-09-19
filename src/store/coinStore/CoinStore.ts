@@ -1,19 +1,12 @@
-import {
-  action,
-  computed,
-  makeAutoObservable,
-  observable,
-  runInAction,
-} from "mobx";
+import { action, makeAutoObservable, runInAction } from "mobx";
 
+import rootStore from "store/RootStore/instance";
 import DropdownStore from "store/coinListStore/DropdownStore";
-import { defaultCurrencyValue } from "store/defaultValues";
 import { CoinModel } from "store/models/coin";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
 
 import ChartStore from "./ChartStore";
-import { requestChart } from "./requestChart";
 import { requestCoin } from "./requestCoin";
 
 export default class CoinStore implements ILocalStore {
@@ -26,7 +19,19 @@ export default class CoinStore implements ILocalStore {
     this._id = id || "";
     this.chartStore = new ChartStore(this._id);
     this.currencyStore = new DropdownStore();
-    this.currencyStore.dropdownValues = defaultCurrencyValue;
+
+    if (rootStore.query.getParam("currency")) {
+      this.currencyStore.dropdownValues.key =
+        rootStore.query.getParam("currency");
+      this.currencyStore.dropdownValues.value = `Market - ${rootStore.query
+        .getParam("currency")
+        .toUpperCase()}`;
+    }
+
+    if (rootStore.query.getParam("chart_range")) {
+      this.chartStore.timeValues.key = rootStore.query.getParam("chart_range");
+    }
+
     makeAutoObservable(this, {
       fetch: action.bound,
     });

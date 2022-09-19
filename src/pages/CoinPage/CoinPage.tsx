@@ -2,10 +2,11 @@ import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
-import React, { ReactNode, useCallback, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { NotFoundPage } from "pages/NotFoundPage";
+import rootStore from "store/RootStore/instance";
 import CoinStore from "store/coinStore/CoinStore";
 import { currencySymbol } from "store/coinStore/currencySymbol";
 import { convertTimestamp } from "utils/convertTimestamp";
@@ -34,6 +35,21 @@ const CoinPage = () => {
     store.coin,
     store.chartStore.time.value.key,
     store.currencyStore.dropdownValues,
+  ]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (store.chartStore.time.value.key !== "1") {
+      params.append("chart_range", store.chartStore.time.value.key);
+    }
+    if (store.currencyStore.dropdownValues.key !== "usd") {
+      params.append("currency", store.currencyStore.dropdownValues.key);
+    }
+    navigate({ search: params.toString() });
+  }, [
+    store.chartStore.time.value.key,
+    navigate,
+    store.currencyStore.dropdownValues.key,
   ]);
 
   const handlerDropdownCurrencyChange = useCallback(
@@ -144,6 +160,9 @@ const CoinPage = () => {
                     ]
                   )}%)`}
                 </span>
+                <Tooltip className={styles["header__tooltip"]}>
+                  <span>24H Range</span>
+                </Tooltip>
                 <Dropdown
                   onChange={handlerDropdownCurrencyChange}
                   options={store.currencyStore.dropdownOptions}
