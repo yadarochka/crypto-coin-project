@@ -5,8 +5,9 @@ import {
   observable,
   runInAction,
 } from "mobx";
-import { storeAnnotation } from "mobx/dist/internal";
 
+import DropdownStore from "store/coinListStore/DropdownStore";
+import { defaultCurrencyValue } from "store/defaultValues";
 import { CoinModel } from "store/models/coin";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
@@ -19,16 +20,21 @@ export default class CoinStore implements ILocalStore {
   private _id: string;
   private _coin: CoinModel | undefined;
   meta: Meta = Meta.initial;
+  currencyStore;
   chartStore;
   constructor(id: string | undefined) {
     this._id = id || "";
     this.chartStore = new ChartStore(this._id);
+    this.currencyStore = new DropdownStore();
+    this.currencyStore.dropdownValues = defaultCurrencyValue;
     makeAutoObservable(this, {
       fetch: action.bound,
     });
   }
 
   async fetch() {
+    await this.currencyStore.fetch();
+
     if (this.meta !== Meta.loading && this.meta !== Meta.success) {
       this.meta = Meta.loading;
       if (this._id) {
@@ -44,11 +50,7 @@ export default class CoinStore implements ILocalStore {
       }
     }
 
-    this.chartFetch();
-  }
-
-  async chartFetch() {
-    await this.chartStore.fetch();
+    await this.chartStore.fetch(this.currencyStore.dropdownValues.key);
   }
 
   get coin() {

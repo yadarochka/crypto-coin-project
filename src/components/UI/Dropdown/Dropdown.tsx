@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo, useRef } from "react";
 import { FC, useState } from "react";
 
 import styles from "./Dropdown.module.scss";
@@ -14,14 +14,32 @@ export const Dropdown: FC<MultiDropdownProps> = ({
   className,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const targetRef = useRef<HTMLDivElement>(null);
 
-  const toggleList = () => {
-    setIsVisible((prevIsVisible) => !prevIsVisible);
-  };
+  // const toggleList = () => {
+  //   setIsVisible((prevIsVisible) => !prevIsVisible);
+  // };
 
   const itemOnClick = (el: Option) => {
     onChange(el);
-    toggleList();
+    handleClick();
+  };
+
+  const handleOutsideClick = (event: any) => {
+    if (targetRef.current) {
+      if (targetRef.current.contains(event.target)) {
+        return;
+      }
+      setIsVisible(false);
+    }
+  };
+  const handleClick = () => {
+    if (!isVisible) {
+      document.addEventListener("click", handleOutsideClick, false);
+    } else {
+      document.removeEventListener("click", handleOutsideClick, false);
+    }
+    setIsVisible((prevState) => !prevState);
   };
 
   const items = Object.values(options).map((el) => {
@@ -42,8 +60,9 @@ export const Dropdown: FC<MultiDropdownProps> = ({
   return (
     <div className={classNames(styles.dropdown, className)}>
       <div
+        ref={targetRef}
         className={classNames(styles["dropdown__value"])}
-        onClick={toggleList}
+        onClick={handleClick}
       >
         {value.value}
       </div>

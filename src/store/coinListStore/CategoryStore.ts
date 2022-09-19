@@ -50,7 +50,7 @@ export default class CategoryStore implements ILocalStore {
   }
 
   async fetch(): Promise<void> {
-    if (this.meta === Meta.loading) {
+    if (this.meta === Meta.loading || this.meta === Meta.success) {
       return;
     }
 

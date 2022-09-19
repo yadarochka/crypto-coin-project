@@ -1,8 +1,11 @@
 import { FC } from "react";
 import React from "react";
 
+import { currencySymbol } from "store/coinStore/currencySymbol";
+
 import Chart from "components/UI/Chart/Chart";
 
+import { Favourites } from "../Favourites";
 import { IncreaseOrDecrease } from "../IncreaseOrDecrease";
 import styles from "./Card.module.scss";
 
@@ -53,6 +56,9 @@ export const Card: FC<CardProps> = ({
   onMouseEvent,
 }) => {
   const colorChart = priceChange < 0 ? "#d90429" : "#21bf73";
+  const symbol: string = currencySymbol[`${currency}`]
+    ? currencySymbol[`${currency}`]
+    : `${currency.toUpperCase()} `;
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles["card__img-box"]}>
@@ -82,9 +88,7 @@ export const Card: FC<CardProps> = ({
       )}
       {cardType === "priceType" && (
         <div className={styles["card__price-box"]}>
-          <div className={styles["card__price"]}>
-            {currency} {price}
-          </div>
+          <div className={styles["card__price"]}>{symbol + `${price}`}</div>
           <IncreaseOrDecrease
             procent={priceChange}
             className={styles["card__price-change"]}

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 
+import { currencySymbol } from "store/coinStore/currencySymbol";
 import { CoinListModel } from "store/models";
 import { rounding } from "utils/rounding";
 
@@ -34,7 +35,7 @@ const CoinList = ({
             to={`${coin.id}`}
           >
             <Card
-              currency={currency.toUpperCase()}
+              currency={currency}
               key={coin.id}
               name={coin.name}
               subtitle={coin.symbol}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 import CoinListPage from "pages/CoinListPage";
 import CoinPage from "pages/CoinPage";
@@ -21,11 +21,14 @@ const BurgerItems: BurgerMenuItems[] = [
 
 function App() {
   useQueryParamsStoreInit();
+  const navigate = useNavigate();
+  const handlerLogoClick = () => navigate("/");
+
   return (
     <div className={styles.app}>
       <div className={styles.header}>
         <BurgerMenu items={BurgerItems} />
-        <img src={logo} className={styles.logo} />
+        <img src={logo} className={styles.logo} onClick={handlerLogoClick} />
       </div>
       <Routes>
         <Route path="/" element={<CoinListPage />} />

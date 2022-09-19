@@ -59,7 +59,7 @@ export default class DropdownStore implements ILocalStore {
   }
 
   async fetch(): Promise<void> {
-    if (this.meta === Meta.loading) {
+    if (this.meta === Meta.loading || this.meta === Meta.success) {
       return;
     }
 

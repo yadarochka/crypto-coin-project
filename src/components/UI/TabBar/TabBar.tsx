@@ -6,17 +6,23 @@ import { Option } from "../Dropdown";
 import styles from "./TabBar.module.scss";
 
 type TabBarProps = {
+  className?: string;
   options: Option[];
   value: Option;
   onChange: (value: Option) => void;
 };
 
-export const TabBar: FC<TabBarProps> = ({ options, value, onChange }) => {
+export const TabBar: FC<TabBarProps> = ({
+  options,
+  value,
+  onChange,
+  className,
+}) => {
   const handleTabChange = (option: any) => {
     onChange(option);
   };
   return (
-    <div className={styles.tab}>
+    <div className={classNames(styles.tab, className)}>
       {options.map((option) => (
         <div
           onClick={() => handleTabChange(option)}

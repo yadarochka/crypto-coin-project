@@ -5,7 +5,7 @@ $red-color: #d90429;
 $black-color: #212529;
 $gray-color: #6c757d;
 $blue-color: #39f;
-$dropdown-border-color: #dfe2e4;
+$border-color: #dfe2e4;
 $spacer: 20px;
 
 .mb-0 {
@@ -24,6 +24,10 @@ $spacer: 20px;
   margin: auto;
 }
 
+.ml-1 {
+  margin-left: $spacer * 0.25;
+}
+
 .success {
   color: $green-color;
 }
@@ -34,4 +38,8 @@ $spacer: 20px;
 
 .text-center {
   text-align: center;
+}
+
+.display-flex {
+  display: flex;
 }

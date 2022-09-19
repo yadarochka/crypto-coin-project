@@ -81,13 +81,13 @@ module.exports = {
         use: "babel-loader",
       },
       {
-        test: /\.(woff)$/,
-        type: 'asset',
-      }
+        test: /\.(eot|woff2|woff?)$/,
+        type: "asset",
+      },
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx",".woff"],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".woff"],
     alias: {
       components: path.join(srcPath, "components"),
       images: path.join(srcPath, "images"),
@@ -104,6 +104,6 @@ module.exports = {
   devServer: {
     host: "127.0.0.1",
     port: "9000",
-    historyApiFallback:  true,
+    historyApiFallback: true,
   },
 };

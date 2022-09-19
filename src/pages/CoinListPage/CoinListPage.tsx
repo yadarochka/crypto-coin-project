@@ -6,6 +6,7 @@ import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import coinListStore from "store/coinListStore";
+import { currencySymbol } from "store/coinStore/currencySymbol";
 import { Meta } from "utils/meta";
 import { rounding } from "utils/rounding";
 import { useAsync } from "utils/useAsync";
@@ -48,20 +49,20 @@ const CoinListPage = () => {
 
   const handlerDropdownCurrencyChange = useCallback(
     (value: Option) => {
-      store.dropdownStore.dropdownValues = value;
       store.pageReset();
       store.coins = [];
+      store.dropdownStore.dropdownValues = value;
     },
     [store.dropdownStore.dropdownValues]
   );
 
   const handlerDropdownCategoryChange = useCallback(
     (value: Option) => {
-      store.categoryStore.value = value;
       store.pageReset();
       store.coins = [];
+      store.categoryStore.value = value;
     },
-    [store.categoryStore.value]
+    [store.categoryStore.value.key]
   );
 
   const handleInputChange = useCallback(
@@ -70,7 +71,12 @@ const CoinListPage = () => {
     },
     [store.searchStore.search]
   );
-  const handleButtonClick = useCallback(() => {
+  const handleButtonClick: () => void = useCallback(() => {
+    if (store.searchStore.search?.length === 0) {
+      store.showFavouritesCoins();
+    } else {
+      store.hideFavouritesCoins();
+    }
     store.searchFetch();
   }, []);
 
@@ -144,8 +150,22 @@ const CoinListPage = () => {
           placeholder="Search Cryptocurrency"
           buttonOnClick={handleButtonClick}
         />
+        {store.favouritesStore.coins.length > 0 &&
+          store.favouritesStore.isShow && (
+            <div>
+              <div className={styles["display-flex"]}>
+                <h2>Favourites coins</h2>
+                {/* <button>hide</button> */}
+              </div>
+              <CoinList
+                searchedCoins={store.favouritesStore.coins}
+                currency={store.dropdownStore.dropdownValues.key}
+              />
+            </div>
+          )}
         {store.meta === Meta.error && <div>Error</div>}
         <div className={styles["coin-list-page__items-list"]}>
+          <h2>Serched coins</h2>
           <CoinList
             searchedCoins={store.coins}
             currency={store.dropdownStore.dropdownValues.key}

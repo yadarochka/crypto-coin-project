@@ -4,8 +4,8 @@ import {
   observable,
   reaction,
   runInAction,
+  toJS,
 } from "mobx";
-import { storeAnnotation } from "mobx/dist/internal";
 
 import rootStore from "store/RootStore/instance";
 import { CoinListModel, normalizeCoinListApiModel } from "store/models";
@@ -18,6 +18,13 @@ import GlobalDataStore from "./GlobalDataStore";
 import SearchStore from "./SearchStore";
 import { requestCoinList } from "./requestCoinList";
 
+type favouritesStoreType = {
+  queryString: string;
+  coins: CoinListModel[];
+  meta: Meta;
+  isShow: boolean | undefined;
+};
+
 export default class СoinListStore implements ILocalStore {
   _coins: CoinListModel[] = [];
   _meta: Meta = Meta.initial;
@@ -25,6 +32,12 @@ export default class СoinListStore implements ILocalStore {
   dropdownStore;
   categoryStore;
   globalDataStore;
+  favouritesStore: favouritesStoreType = {
+    queryString: "",
+    coins: [],
+    meta: Meta.initial,
+    isShow: undefined,
+  };
   contentPerPage = 12;
   page = 1;
   observer = new IntersectionObserver(([entry], observer) => {
@@ -58,6 +71,9 @@ export default class СoinListStore implements ILocalStore {
     )
       ? `Market - ${rootStore.query.getParam("currency").toUpperCase()}`
       : "Market - USD";
+    this.favouritesStore.queryString = Object.keys(localStorage).join(",");
+    this.favouritesStore.isShow = this.searchStore.search?.length === 0;
+    console.log(toJS(this.favouritesStore));
 
     makeAutoObservable(this, {
       fetch: action.bound,
@@ -86,25 +102,13 @@ export default class СoinListStore implements ILocalStore {
   }
 
   async fetch(): Promise<void> {
-    if (
-      this.globalDataStore.meta !== Meta.loading &&
-      this.globalDataStore.meta !== Meta.success
-    ) {
-      this.globalDataStore.fetch();
-    }
-    if (
-      this.dropdownStore.meta !== Meta.loading &&
-      this.dropdownStore.meta !== Meta.success
-    ) {
-      this.dropdownFetch();
-    }
+    await this.globalDataStore.fetch();
 
-    if (
-      this.categoryStore.meta !== Meta.loading &&
-      this.categoryStore.meta !== Meta.success
-    ) {
-      this.categoryFetch();
-    }
+    await this.dropdownFetch();
+
+    await this.categoryFetch();
+
+    await this.coinFavouritesListFetch();
 
     if (this.meta !== Meta.loading) {
       await this.coinListFetch();
@@ -126,7 +130,7 @@ export default class СoinListStore implements ILocalStore {
       this.dropdownStore.dropdownValues.key,
       this.contentPerPage,
       this.page,
-      this.searchStore.search,
+      this.searchStore.search?.split(" ").join("-").toLowerCase(),
       this.categoryStore.value.key
     );
     if (isError) {
@@ -136,10 +140,53 @@ export default class СoinListStore implements ILocalStore {
     runInAction(() => {
       this.meta = Meta.success;
       this.coins = [...this.coins, ...normalizeCoinListApiModel(data)];
+
+      //удаляем дубликаты
+
+      if (this.searchStore.search?.length === 0) {
+        for (let i = 0; i < Object.keys(localStorage).length; i++) {
+          this.coins = this.coins.filter(
+            (coin) => coin.id !== localStorage.key(i)
+          );
+        }
+      }
+      //вставляем внизу списка блок-бесконечный-скролл
+
       const contentLoadTrigger = document.getElementById("loader");
-      if (contentLoadTrigger && this.searchStore.search?.length === 0) {
+      if (
+        contentLoadTrigger &&
+        this.searchStore.search?.length === 0 &&
+        data.length > 10
+      ) {
         this.observer.observe(contentLoadTrigger);
       }
+
+      console.log(toJS(this.coins));
+    });
+  }
+
+  async coinFavouritesListFetch(): Promise<void> {
+    if (
+      this.favouritesStore.meta === Meta.success ||
+      this.favouritesStore.meta === Meta.loading
+    ) {
+      return;
+    }
+    this.favouritesStore.meta = Meta.loading;
+
+    const { isError, data } = await requestCoinList(
+      this.dropdownStore.dropdownValues.key,
+      this.contentPerPage,
+      1,
+      this.favouritesStore.queryString
+    );
+    if (isError) {
+      this.favouritesStore.meta = Meta.error;
+      return;
+    }
+    runInAction(() => {
+      this.favouritesStore.meta = Meta.success;
+      this.favouritesStore.coins = normalizeCoinListApiModel(data);
     });
   }
 
@@ -153,7 +200,15 @@ export default class СoinListStore implements ILocalStore {
   searchFetch() {
     this.coins = [];
     this.pageReset();
-    this.fetch();
+    this.coinListFetch();
+  }
+
+  showFavouritesCoins() {
+    this.favouritesStore.isShow = true;
+  }
+
+  hideFavouritesCoins() {
+    this.favouritesStore.isShow = false;
   }
 
   destroy() {}
