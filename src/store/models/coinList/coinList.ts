@@ -6,6 +6,7 @@ export type CoinListModel = {
   currentPrice: number;
   priceChange24h: number;
   priceChangePercentage24h: number;
+  priceChangePercentage7dInCurrency: number;
   sparkline7d: {
     price: number[];
   };
@@ -18,6 +19,7 @@ export type CoinListApiModel = {
   image: string;
   current_price: number;
   price_change_24h: number;
+  price_change_percentage_7d_in_currency: number;
   price_change_percentage_24h: number;
   sparkline_in_7d: {
     price: number[];
@@ -36,6 +38,8 @@ export const normalizeCoinListApiModel = (
       currentPrice: rawEl.current_price,
       priceChange24h: rawEl.price_change_24h,
       priceChangePercentage24h: rawEl.price_change_percentage_24h,
+      priceChangePercentage7dInCurrency:
+        rawEl.price_change_percentage_7d_in_currency,
       sparkline7d: {
         price: rawEl.sparkline_in_7d.price,
       },

@@ -13,7 +13,9 @@
   }
 
   &__subtitle {
+    display: block;
     width: 340px;
+    margin-top: 5px;
     color: $gray-color;
     font-size: 12px;
   }
@@ -31,7 +33,7 @@
     position: absolute;
     z-index: 2;
     top: 92px;
-    left: 80px;
+    left: 90px;
     width: 110px;
   }
 
@@ -39,7 +41,7 @@
     position: absolute;
     z-index: 2;
     top: 92px;
-    right: 15px;
+    right: 10px;
     width: 150px;
   }
 
@@ -47,13 +49,50 @@
     margin-bottom: 10px;
   }
 
-  &__coin-sections-title {
-    margin-bottom: 5px;
+  &__coin-section-title {
+    display: inline;
   }
 
   &__coins-section {
     &__header {
       margin-bottom: 10px;
+    }
+  }
+}
+
+.coins-section {
+  &__tooltip {
+    margin-left: 5px;
+    transform: translateY(-2px);
+  }
+}
+
+.hide-button {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+
+  &__show {
+    &::after {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      border: 10px solid transparent;
+      border-bottom: 10px solid $gray-color;
+      content: "";
+    }
+  }
+
+  &__hide {
+    &::after {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: 10px solid transparent;
+      border-top: 10px solid $gray-color;
+      content: "";
     }
   }
 }

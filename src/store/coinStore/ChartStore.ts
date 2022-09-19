@@ -66,7 +66,7 @@ export default class ChartStore implements ILocalStore {
     this._time.value = newValue;
   }
 
-  async fetch() {
+  async fetch(currency: string) {
     if (this.meta !== Meta.loading) {
       this.meta = Meta.loading;
       this.chart = [];
@@ -74,7 +74,7 @@ export default class ChartStore implements ILocalStore {
         /* захардкодил */
         const { isError, data } = await requestChart(
           this.idCoin,
-          "usd",
+          currency,
           this.time.value.key
         );
         if (isError) {

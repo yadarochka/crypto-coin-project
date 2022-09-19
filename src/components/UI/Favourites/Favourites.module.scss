@@ -1,0 +1,12 @@
+.favourites {
+  z-index: 10;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background-color: transparent;
+  background-image: url("~images/Star-icon.svg");
+}
+
+.active {
+  background-image: url("~images/Star-icon__focus.svg");
+}

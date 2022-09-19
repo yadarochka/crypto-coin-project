@@ -7,6 +7,7 @@ import {
   runInAction,
 } from "mobx";
 
+import { defaultCategoryValue } from "store/defaultValues";
 import {
   CategoryListModel,
   CategoryModel,
@@ -20,10 +21,7 @@ import { requestCategoryList } from "./requestCoinList";
 export default class CategoryStore implements ILocalStore {
   _meta: Meta = Meta.initial;
   options: CategoryModel[] = [];
-  _value: CategoryModel = {
-    key: "all",
-    value: "All categories",
-  };
+  _value: CategoryModel = defaultCategoryValue;
 
   constructor() {
     makeAutoObservable(this, {
@@ -50,7 +48,7 @@ export default class CategoryStore implements ILocalStore {
   }
 
   async fetch(): Promise<void> {
-    if (this.meta === Meta.loading) {
+    if (this.meta === Meta.loading || this.meta === Meta.success) {
       return;
     }
 

@@ -9,17 +9,25 @@ import { ApiResp } from "utils/apiTypes";
 export const normalizeCoinApiModel = (raw: CoinApiModel): CoinModel => {
   return {
     id: raw.id,
-    symbol: raw.id,
+    symbol: raw.symbol,
     name: raw.name,
-
+    marketCapRank: raw.market_cap_rank,
+    marketCap: {
+      ...raw.market_data.market_cap,
+    },
+    fullyDilutedValuation: {
+      ...raw.market_data.fully_diluted_valuation,
+    },
+    totalSupply: raw.market_data.total_supply,
+    maxSupply: raw.market_data.max_supply,
+    circulatingSupply: raw.market_data.circulating_supply,
     image: { ...raw.image },
     currentPrice: {
       ...raw.market_data.current_price,
     },
     priceChange24hInCurrency: {
-      ...raw.market_data.price_change_percentage_24h_in_currency,
+      ...raw.market_data.price_change_24h_in_currency,
     },
-    priceChangePercentage24h: raw.market_data.price_change_percentage_24h,
     priceChangePercentage24hInCurrency: {
       ...raw.market_data.price_change_percentage_24h_in_currency,
     },

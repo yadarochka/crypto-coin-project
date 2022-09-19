@@ -1,0 +1,43 @@
+@import "~styles/variables";
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+
+  &__icon {
+    width: 15px;
+    height: 15px;
+    margin: auto;
+    vertical-align: middle;
+  }
+
+  &__content {
+    position: absolute;
+    z-index: 50;
+    left: 100%;
+    width: max-content;
+    max-width: 200px;
+    padding: 1em 1em 01em;
+    border: 1px solid $gray-color;
+    background-color: white;
+    border-radius: 5px;
+    color: $gray-color;
+    font-size: 14px;
+    transform: translateX(-50%);
+  }
+
+  &-top {
+    bottom: calc(100% + 5px);
+  }
+
+  &-bot {
+    top: calc(100% + 5px);
+  }
+
+  &__content > div,
+  p,
+  span,
+  a {
+    margin-bottom: 1em;
+  }
+}

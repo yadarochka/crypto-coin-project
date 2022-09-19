@@ -29,6 +29,7 @@ type ChartProps = {
   className?: string;
   type?: string;
   color?: string;
+  label?: string;
 };
 const Chart = ({
   coinData,
@@ -37,12 +38,13 @@ const Chart = ({
   className,
   type = "",
   color = "rgba(0, 99, 245, 1)",
+  label,
 }: ChartProps) => {
   const data = {
     labels: coinLabels,
     datasets: [
       {
-        label: "$",
+        label: label,
         data: coinData,
         borderColor: color,
         backgroundColor: "#F5F5F5",

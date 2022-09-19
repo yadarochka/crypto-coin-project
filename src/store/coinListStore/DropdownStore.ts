@@ -1,5 +1,6 @@
 import { action, makeAutoObservable, runInAction } from "mobx";
 
+import { defaultCurrencyValue } from "store/defaultValues";
 import { normalizeCurrency } from "store/models";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
@@ -17,10 +18,7 @@ export default class DropdownStore implements ILocalStore {
   _meta: Meta = Meta.initial;
   _dropDown: DropDownType = {
     options: [],
-    value: {
-      key: "",
-      value: "",
-    },
+    value: defaultCurrencyValue,
   };
 
   constructor() {
@@ -59,7 +57,7 @@ export default class DropdownStore implements ILocalStore {
   }
 
   async fetch(): Promise<void> {
-    if (this.meta === Meta.loading) {
+    if (this.meta === Meta.loading || this.meta === Meta.success) {
       return;
     }
 

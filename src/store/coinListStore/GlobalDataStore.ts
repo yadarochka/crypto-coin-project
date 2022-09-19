@@ -29,7 +29,7 @@ export default class GlobalDataStore implements ILocalStore {
   }
 
   async fetch() {
-    if (this.meta === Meta.loading) {
+    if (this.meta === Meta.loading || this.meta === Meta.success) {
       return;
     }
 
