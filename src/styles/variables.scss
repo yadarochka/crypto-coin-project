@@ -19,6 +19,7 @@ $spacer: 20px;
 .mb-1 {
   margin-bottom: $spacer * 0.25;
 }
+
 .mb-2 {
   margin-bottom: $spacer * 0.5;
 }
@@ -50,15 +51,19 @@ $spacer: 20px;
 .display-flex {
   display: flex;
 }
+
 .display-block {
   display: block;
 }
+
 .display-inline {
   display: inline;
 }
+
 .display-none {
   display: none;
 }
+
 .display-inline-block {
   display: inline-block;
 }
@@ -86,12 +91,15 @@ $spacer: 20px;
 .top-50 {
   top: 50%;
 }
+
 .bot-50 {
   bottom: 50%;
 }
+
 .left-50 {
   left: 50%;
 }
+
 .right-50 {
   right: 50%;
 }
@@ -108,6 +116,7 @@ $spacer: 20px;
 .flex-shrink-0 {
   flex-shrink: 0;
 }
+
 .word-wrap-bw {
   word-wrap: break-word;
 }

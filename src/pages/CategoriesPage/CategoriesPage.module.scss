@@ -1,22 +1,26 @@
-@import "~styles/variables.scss";
+@import "~styles/variables";
+
 .img {
-  height: 25px;
   width: 25px;
+  height: 25px;
   margin-right: 5px;
 }
+
 .img:last-child {
   margin-right: 0;
 }
+
 .name {
   width: 30%;
 }
+
 .category-item {
   padding: 10px;
+  border: 1px solid $border-color;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
-  cursor: pointer;
-  border: 1px solid $border-color;
   color: $black-color;
+  cursor: pointer;
   text-decoration: none;
 }
