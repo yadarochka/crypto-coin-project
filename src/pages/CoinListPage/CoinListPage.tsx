@@ -185,7 +185,7 @@ const CoinListPage = () => {
           type="text"
           className={styles["coin-list-page__search"]}
           onChange={handleInputChange}
-          buttonText="Поиск"
+          buttonText="Seacrh"
           placeholder="Search Cryptocurrency"
           buttonOnClick={handleButtonClick}
         />

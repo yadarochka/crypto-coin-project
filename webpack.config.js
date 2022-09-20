@@ -39,7 +39,7 @@ const getSettingsForStyles = (withModules) => {
 
 module.exports = {
   target: !isProd ? "web" : "browserslist",
-  devtool: isProd ? "hidden-source-map" : "eval-source-map",
+  devtool: isProd ? "hidden-nosources-source-map" : "eval-source-map",
   entry: path.join(srcPath, "index.tsx"),
   output: {
     path: buildPath,
