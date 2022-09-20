@@ -310,18 +310,6 @@ const CoinPage = () => {
               value={store.chartStore.time.value}
               onChange={handleTabBarChange}
             />
-            <Card
-              currency={"USD"}
-              key={store.coin.id}
-              name={store.coin.name}
-              subtitle={store.coin.symbol}
-              image={store.coin.image.large}
-              price={store.coin.currentPrice.usd}
-              priceChange={store.coin.priceChangePercentage24hInCurrency.usd}
-              className={classNames(styles["coin_page__card"])}
-              withChart={false}
-              cardType="userType"
-            />
           </>
         ) : (
           <>
