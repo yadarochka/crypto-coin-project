@@ -1,13 +1,10 @@
 import classNames from "classnames";
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
-import React, { KeyboardEvent, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import rootStore from "store/RootStore/instance";
 import coinListStore from "store/coinListStore";
-import { currencySymbol } from "store/coinStore/currencySymbol";
 import {
   defaultCategoryValue,
   defaultCurrencyValue,
@@ -30,8 +27,6 @@ const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
   const navigate = useNavigate();
   useAsync(store.fetch, []);
-
-  console.log(toJS(store));
 
   useEffect(() => {
     const params = new URLSearchParams();
