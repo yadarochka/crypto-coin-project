@@ -1,9 +1,8 @@
 import classNames from "classnames";
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { CategoriesStore } from "store/categoriesStore/categoriesStore";
 import { requestCategories } from "store/categoriesStore/requestCategories";
@@ -15,13 +14,9 @@ import styles from "./CategoriesPage.module.scss";
 
 const CategoriesPage = () => {
   const store = useLocalStore(() => new CategoriesStore());
-  const navigate = useNavigate();
 
   const fetch = async () => {
     const { isError, data } = await requestCategories();
-
-    console.log(data);
-
     if (isError) {
       return;
     }
