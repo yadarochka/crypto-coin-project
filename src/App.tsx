@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 import CategoriesPage from "pages/CategoriesPage/CategoriesPage";
 import CoinListPage from "pages/CoinListPage";
