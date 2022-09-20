@@ -6,8 +6,10 @@ import {
   runInAction,
   toJS,
 } from "mobx";
+import { storeAnnotation } from "mobx/dist/internal";
 
 import rootStore from "store/RootStore/instance";
+import { defaultCategoryValue } from "store/defaultValues";
 import { CoinListModel, normalizeCoinListApiModel } from "store/models";
 import { Meta } from "utils/meta";
 import { ILocalStore } from "utils/useLocalStore";
@@ -26,8 +28,8 @@ type favouritesStoreType = {
 };
 
 export default class СoinListStore implements ILocalStore {
-  _coins: CoinListModel[] = [];
-  _meta: Meta = Meta.initial;
+  private _coins: CoinListModel[] = [];
+  _meta: Meta;
   searchStore;
   dropdownStore;
   categoryStore;
@@ -42,8 +44,7 @@ export default class СoinListStore implements ILocalStore {
   page = 1;
   observer = new IntersectionObserver(([entry], observer) => {
     if (entry.isIntersecting) {
-      this.pageIncrement();
-      this.fetch();
+      this.coinListFetch();
       observer.unobserve(entry.target);
     }
   }, {});
@@ -53,6 +54,7 @@ export default class СoinListStore implements ILocalStore {
     this.dropdownStore = new DropdownStore();
     this.categoryStore = new CategoryStore();
     this.globalDataStore = new GlobalDataStore();
+    this._meta = Meta.initial;
 
     if (rootStore.query.getParam("category")) {
       this.categoryStore.value.key = rootStore.query.getParam("category");
@@ -73,11 +75,11 @@ export default class СoinListStore implements ILocalStore {
 
     this.favouritesStore.queryString = Object.keys(localStorage).join(",");
     this.favouritesStore.isShow = this.searchStore.search?.length === 0;
+    this.coins = [];
 
     makeAutoObservable(this, {
       fetch: action.bound,
       dropdownFetch: action,
-      categoryFetch: action,
       pageReset: action.bound,
       pageIncrement: action,
       categoryStore: observable,
@@ -100,26 +102,28 @@ export default class СoinListStore implements ILocalStore {
     this._coins = newCoins;
   }
 
+  get marketCapChange() {
+    return this.globalDataStore.globalData.marketCapChangePercentage24hUsd;
+  }
+
   async fetch(): Promise<void> {
     await this.globalDataStore.fetch();
 
     await this.dropdownFetch();
 
-    await this.categoryFetch();
+    await this.categoryStore.fetch();
 
     await this.coinFavouritesListFetch();
 
-    if (this.meta !== Meta.loading) {
-      await this.coinListFetch();
+    if (this.meta === Meta.success || this.meta === Meta.loading) {
+      return;
     }
+
+    await this.coinListFetch();
   }
 
   async dropdownFetch(): Promise<void> {
     await this.dropdownStore.fetch();
-  }
-
-  async categoryFetch(): Promise<void> {
-    await this.categoryStore.fetch();
   }
 
   async coinListFetch(): Promise<void> {
@@ -139,17 +143,11 @@ export default class СoinListStore implements ILocalStore {
     runInAction(() => {
       this.meta = Meta.success;
       this.coins = [...this.coins, ...normalizeCoinListApiModel(data)];
-
-      //удаляем дубликаты
+      this.pageIncrement();
 
       if (this.searchStore.search?.length === 0) {
-        for (let i = 0; i < Object.keys(localStorage).length; i++) {
-          this.coins = this.coins.filter(
-            (coin) => coin.id !== localStorage.key(i)
-          );
-        }
+        this.deleteDublicateCoins();
       }
-      //вставляем внизу списка блок-бесконечный-скролл
 
       const contentLoadTrigger = document.getElementById("loader");
       if (
@@ -163,10 +161,7 @@ export default class СoinListStore implements ILocalStore {
   }
 
   async coinFavouritesListFetch(): Promise<void> {
-    if (
-      this.favouritesStore.meta === Meta.success ||
-      this.favouritesStore.meta === Meta.loading
-    ) {
+    if (!this.favouritesStore.queryString) {
       return;
     }
     this.favouritesStore.meta = Meta.loading;
@@ -196,6 +191,7 @@ export default class СoinListStore implements ILocalStore {
 
   searchFetch() {
     this.coins = [];
+    this.categoryStore.value = defaultCategoryValue;
     this.pageReset();
     this.coinListFetch();
   }
@@ -206,6 +202,12 @@ export default class СoinListStore implements ILocalStore {
 
   hideFavouritesCoins() {
     this.favouritesStore.isShow = false;
+  }
+
+  deleteDublicateCoins() {
+    for (let i = 0; i < Object.keys(localStorage).length; i++) {
+      this.coins = this.coins.filter((coin) => coin.id !== localStorage.key(i));
+    }
   }
 
   destroy() {}

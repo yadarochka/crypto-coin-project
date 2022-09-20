@@ -3,6 +3,8 @@ import classNames from "classnames";
 import React, { memo, useCallback, useMemo, useRef } from "react";
 import { FC, useState } from "react";
 
+import { useKeyboardEvent } from "utils/useKeyboardEvent";
+
 import styles from "./Dropdown.module.scss";
 import { MultiDropdownProps, Option } from "./types";
 
@@ -15,10 +17,6 @@ export const Dropdown: FC<MultiDropdownProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
-
-  // const toggleList = () => {
-  //   setIsVisible((prevIsVisible) => !prevIsVisible);
-  // };
 
   const itemOnClick = (el: Option) => {
     onChange(el);
@@ -44,7 +42,8 @@ export const Dropdown: FC<MultiDropdownProps> = ({
 
   const items = Object.values(options).map((el) => {
     return (
-      <div
+      <button
+        tabIndex={0}
         key={el.key}
         className={classNames(
           styles["dropdown__item"],
@@ -53,13 +52,18 @@ export const Dropdown: FC<MultiDropdownProps> = ({
         onClick={() => itemOnClick(el)}
       >
         {el.value}
-      </div>
+      </button>
     );
   });
 
+  const dropdownId = Math.random();
+
+  useKeyboardEvent("Enter", handleClick, `dropdown${dropdownId}`, [isVisible]);
   return (
-    <div className={classNames(styles.dropdown, className)}>
+    <div id="dropdown" className={classNames(styles.dropdown, className)}>
       <div
+        id={`dropdown${dropdownId}`}
+        tabIndex={0}
         ref={targetRef}
         className={classNames(styles["dropdown__value"])}
         onClick={handleClick}

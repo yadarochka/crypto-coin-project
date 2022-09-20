@@ -10,7 +10,7 @@ import { ILocalStore } from "utils/useLocalStore";
 import { requestGlobalInfo } from "./requestCoinList";
 
 export default class GlobalDataStore implements ILocalStore {
-  _meta: Meta = Meta.initial;
+  private _meta: Meta = Meta.initial;
   globalData: GlobalDataModel = {
     marketCapChangePercentage24hUsd: 0,
     activeCryptocurrencies: 0,
@@ -32,6 +32,7 @@ export default class GlobalDataStore implements ILocalStore {
     if (this.meta === Meta.loading || this.meta === Meta.success) {
       return;
     }
+    this.meta = Meta.loading;
 
     const { isError, data } = await requestGlobalInfo();
 

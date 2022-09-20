@@ -1,5 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import { useKeyboardEvent } from "utils/useKeyboardEvent";
 
 import logo from "images/Logo.svg";
 
@@ -19,13 +21,26 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
   const burgerIsVisibleChange = () => {
     setActive(!isActive);
   };
+  useKeyboardEvent("Esc", burgerIsVisibleChange, "burgerMenu", [isActive]);
+  useKeyboardEvent("Enter", burgerIsVisibleChange, "burgerMenu-icon", [
+    isActive,
+  ]);
+  useKeyboardEvent("Enter", burgerIsVisibleChange, "burgerMenu-cross", [
+    isActive,
+  ]);
+
   if (isActive) {
     return (
       <>
-        <div className={styles.burger}>
+        <div id="burgerMenu" className={styles.burger}>
           <div className={styles["burger__blur"]} />
           <div className={styles["burger__header"]}>
-            <span className={styles.cross} onClick={burgerIsVisibleChange} />
+            <span
+              tabIndex={0}
+              id="burgerMenu-cross"
+              className={styles.cross}
+              onClick={burgerIsVisibleChange}
+            />
             <img src={logo} className={styles.logo} />
           </div>
           <div className={styles["burger__items"]}>
@@ -50,6 +65,8 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
   } else
     return (
       <span
+        id="burgerMenu-icon"
+        tabIndex={0}
         className={styles["burger__icon"]}
         onClick={burgerIsVisibleChange}
       />

@@ -35,5 +35,7 @@ export const apiUrls = {
     getCategoryList: () => coinGeckoApi("coins/categories/list"),
 
     getGlobalInfo: () => coinGeckoApi("global"),
+
+    getCategoties: () => coinGeckoApi("coins/categories"),
   },
 };

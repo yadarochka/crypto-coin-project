@@ -13,7 +13,6 @@
   }
 
   &__subtitle {
-    display: block;
     width: 340px;
     margin-top: 5px;
     color: $gray-color;
@@ -95,4 +94,9 @@
       content: "";
     }
   }
+}
+.reset-filters-button {
+  margin-left: 50px;
+  text-decoration: underline;
+  cursor: pointer;
 }
