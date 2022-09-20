@@ -90,7 +90,7 @@ export const Card: FC<CardProps> = ({
         <div className={styles["card__price-box"]}>
           <div className={styles["card__price"]}>{symbol + `${price}`}</div>
           <IncreaseOrDecrease
-            procent={priceChange}
+            percent={priceChange}
             className={styles["card__price-change"]}
           />
         </div>

@@ -19,12 +19,15 @@ $spacer: 20px;
 .mb-1 {
   margin-bottom: $spacer * 0.25;
 }
+.mb-2 {
+  margin-bottom: $spacer * 0.5;
+}
 
 .mb-3 {
   margin-bottom: $spacer;
 }
 
-.mb-auto {
+.margin-auto {
   margin: auto;
 }
 
@@ -47,6 +50,18 @@ $spacer: 20px;
 .display-flex {
   display: flex;
 }
+.display-block {
+  display: block;
+}
+.display-inline {
+  display: inline;
+}
+.display-none {
+  display: none;
+}
+.display-inline-block {
+  display: inline-block;
+}
 
 .justify-content-sb {
   justify-content: space-between;
@@ -58,4 +73,41 @@ $spacer: 20px;
 
 .font-size-20 {
   font-size: 20px;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.top-50 {
+  top: 50%;
+}
+.bot-50 {
+  bottom: 50%;
+}
+.left-50 {
+  left: 50%;
+}
+.right-50 {
+  right: 50%;
+}
+
+.page-title {
+  font-size: 20px;
+}
+
+.page-subtitle {
+  color: $gray-color;
+  font-size: 12px;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+.word-wrap-bw {
+  word-wrap: break-word;
 }

@@ -8,6 +8,8 @@ import React, {
   useState,
 } from "react";
 
+import { useKeyboardEvent } from "utils/useKeyboardEvent";
+
 import icon from "images/Tooltip-icon.svg";
 
 import styles from "./Tooltip.module.scss";
@@ -46,9 +48,14 @@ export const Tooltip: FC<TooltipProps> = ({
     }
     setIsClicked((prevState) => !prevState);
   };
+  const tooltipId = Math.random();
+  useKeyboardEvent("Enter", handleClick, `tooltip${tooltipId}`);
+
   return (
     <div className={classNames(styles.tooltip, className)}>
       <img
+        id={`tooltip${tooltipId}`}
+        tabIndex={0}
         ref={targetRef}
         onClick={handleClick}
         className={styles["tooltip__icon"]}

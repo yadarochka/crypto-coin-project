@@ -6,17 +6,17 @@ import styles from "./IncreaseOrDecrease.module.scss";
 
 type IncreaseOrDecreaseProps = {
   number?: number | string;
-  procent?: number;
+  percent?: number;
   className?: string;
 };
 
 export const IncreaseOrDecrease: FC<IncreaseOrDecreaseProps> = ({
-  procent,
+  percent,
   number,
   className,
 }) => {
-  if (procent) {
-    number = procent;
+  if (percent) {
+    number = percent;
   }
   if (!!number) {
     return (
@@ -29,7 +29,7 @@ export const IncreaseOrDecrease: FC<IncreaseOrDecreaseProps> = ({
         )}
       >
         {number}
-        {procent ? "%" : ""}
+        {percent ? "%" : ""}
       </div>
     );
   }

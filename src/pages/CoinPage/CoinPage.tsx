@@ -81,6 +81,13 @@ const CoinPage = () => {
 
   let type = "day";
 
+  const cutCoinName = (name: string) => {
+    if (name.split(" ").length > 2) {
+      return `${name.split(" ")[0]} ${name.split(" ")[1]}`;
+    }
+    return name;
+  };
+
   if (store.chartStore.time.value.key === "1") {
     type = "day";
   } else if (store.chartStore.time.value.key === "max") {
@@ -107,7 +114,7 @@ const CoinPage = () => {
                 />
                 <div>
                   <h1 className={styles["coin-page__header__name-box__name"]}>
-                    {store.coin.name}
+                    {cutCoinName(store.coin.name)}
                   </h1>
                   {store.coin.symbol.length < 5 && (
                     <span

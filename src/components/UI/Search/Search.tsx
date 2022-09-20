@@ -1,4 +1,6 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
+
+import { useKeyboardEvent } from "utils/useKeyboardEvent";
 
 import Button from "components/UI/Button";
 
@@ -20,7 +22,7 @@ type SearchProps = {
   /** Текст у button */
   buttonText?: string;
   /** Функция OnClick у button */
-  buttonOnClick?: () => void;
+  buttonOnClick: () => void;
   disabled: boolean;
 };
 
@@ -34,8 +36,10 @@ const Search = ({
   value,
   disabled,
 }: SearchProps) => {
+  useKeyboardEvent("Enter", buttonOnClick, "search");
+
   return (
-    <div className={className}>
+    <div className={className} id="search">
       <div className={styles.search}>
         <input
           value={value}
