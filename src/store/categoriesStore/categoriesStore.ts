@@ -28,5 +28,18 @@ export class CategoriesStore implements ILocalStore {
     return this._categories;
   }
 
+  // async fetch() {
+  //   const { isError, data } = await requestCategories();
+  //   this._categories = [];
+
+  //   if (isError) {
+  //     this.meta = Meta.error;
+  //     return;
+  //   }
+
+  //   runInAction(() => {
+  //     this._categories = normalizeCategoriesModel(data);
+  //   });
+  // }
   destroy() {}
 }

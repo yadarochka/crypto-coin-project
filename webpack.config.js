@@ -19,9 +19,7 @@ const getSettingsForStyles = (withModules) => {
           loader: "css-loader",
           options: {
             modules: {
-              localIdentName: !isProd
-                ? "[path][name]__[local]"
-                : "[hash:base64]",
+              localIdentName: "[hash:base64]",
             },
           },
         },
@@ -49,12 +47,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(srcPath, "index.html"),
     }),
-    !isProd &&
-      (new ReactRefreshWebpackPlugin(),
-      new ForkTsCheckerPlugin(),
-      new MiniCssExtractPlugin({
-        filename: "[name]-[hash].css",
-      })),
+    new MiniCssExtractPlugin({
+      filename: "[name]-[hash].css",
+    }),
+    !isProd && (new ReactRefreshWebpackPlugin(), new ForkTsCheckerPlugin()),
   ].filter(Boolean),
   module: {
     rules: [

@@ -7,8 +7,11 @@ import { Link } from "react-router-dom";
 import { CategoriesStore } from "store/categoriesStore/categoriesStore";
 import { requestCategories } from "store/categoriesStore/requestCategories";
 import { normalizeCategoriesModel } from "store/models/categories/categoriesModel";
+import { Meta } from "utils/meta";
 import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
+
+import Loader from "components/UI/Loader";
 
 import styles from "./CategoriesPage.module.scss";
 
@@ -16,12 +19,15 @@ const CategoriesPage = () => {
   const store = useLocalStore(() => new CategoriesStore());
 
   const fetch = async () => {
+    store.meta = Meta.loading;
     const { isError, data } = await requestCategories();
     if (isError) {
+      store.meta = Meta.error;
       return;
     }
 
     store._categories = normalizeCategoriesModel(data);
+    store.meta = Meta.success;
   };
 
   useAsync(fetch, []);
@@ -57,7 +63,11 @@ const CategoriesPage = () => {
       <h2 className={classNames(styles["page-title"], styles["display-block"])}>
         Categories
       </h2>
-      {categoryItems}
+      {store.meta === Meta.loading && <Loader />}
+      {store.meta === Meta.success && categoryItems}
+      {store.meta === Meta.error && (
+        <div className={styles["text-align-center"]}>Error</div>
+      )}
     </div>
   );
 };
