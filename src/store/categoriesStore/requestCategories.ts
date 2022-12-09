@@ -1,4 +1,4 @@
-import { apiUrls } from "config/apiUrls";
+import { apiUrls } from "api/apiUrls";
 
 import { axiosWithError } from "utils/axiosWithError";
 

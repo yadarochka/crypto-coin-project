@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { PageLoader } from "widgets/PageLoader";
 
 import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +18,6 @@ import { useLocalStore } from "utils/useLocalStore";
 import CoinList from "./components/CoinList";
 import Dropdown, { Option } from "components/UI/Dropdown";
 import { IncreaseOrDecrease } from "components/UI/IncreaseOrDecrease";
-import Loader from "components/UI/Loader";
 import Search from "components/UI/Search";
 import { Tooltip } from "components/UI/Tooltip";
 
@@ -74,6 +74,7 @@ const CoinListPage = () => {
     },
     [store.searchStore.search]
   );
+
   const handleButtonClick: () => void = useCallback(() => {
     if (store.searchStore.search?.length === 0) {
       store.showFavouritesCoins();
@@ -222,7 +223,7 @@ const CoinListPage = () => {
             />
           )}
 
-        {store.favouritesStore.meta === Meta.loading && <Loader />}
+        {store.favouritesStore.meta === Meta.loading && <PageLoader />}
         <div className={styles["coin-list-page__items-list"]}>
           <h2 className={styles["font-size-20"]}>Serched coins</h2>
 
@@ -230,7 +231,7 @@ const CoinListPage = () => {
             searchedCoins={store.coins}
             currency={store.dropdownStore.dropdownValues.key}
           />
-          {store.meta === Meta.loading && <Loader />}
+          {store.meta === Meta.loading && <PageLoader />}
 
           {store.meta !== Meta.loading &&
             store.meta !== Meta.error &&

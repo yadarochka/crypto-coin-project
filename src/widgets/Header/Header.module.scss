@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  height: 35px;
+  margin-bottom: 5px;
+  background-color: #dfe2e4;
+}
+
+.logo {
+  width: 150px;
+  align-self: center;
+  cursor: pointer;
+  justify-self: center;
+}
+
+.logo-box {
+  display: flex;
+  justify-content: center;
+}
+
+.burger {
+  width: 15px;
+  height: 15px;
+  padding: 10px 5px;
+  margin-right: 15px;
+  background-image: url("~images/Burger-menu.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}

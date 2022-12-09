@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { PageLoader } from "widgets/PageLoader";
 
 import React from "react";
 import { Link } from "react-router-dom";
@@ -10,8 +11,6 @@ import { normalizeCategoriesModel } from "store/models/categories/categoriesMode
 import { Meta } from "utils/meta";
 import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
-
-import Loader from "components/UI/Loader";
 
 import styles from "./CategoriesPage.module.scss";
 
@@ -63,7 +62,7 @@ const CategoriesPage = () => {
       <h2 className={classNames(styles["page-title"], styles["display-block"])}>
         Categories
       </h2>
-      {store.meta === Meta.loading && <Loader />}
+      {store.meta === Meta.loading && <PageLoader />}
       {store.meta === Meta.success && categoryItems}
       {store.meta === Meta.error && (
         <div className={styles["text-align-center"]}>Error</div>
