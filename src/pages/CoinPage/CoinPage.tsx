@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
+import { PageLoader } from "widgets/PageLoader";
 
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,7 +20,6 @@ import Card from "components/UI/Card";
 import Chart from "components/UI/Chart/Chart";
 import Dropdown, { Option } from "components/UI/Dropdown";
 import { Favourites } from "components/UI/Favourites";
-import Loader from "components/UI/Loader";
 import { TabBar } from "components/UI/TabBar";
 import { Tooltip, TooltipPostition } from "components/UI/Tooltip";
 
@@ -300,7 +300,7 @@ const CoinPage = () => {
                     type={type}
                   />
                 ) : (
-                  <Loader />
+                  <PageLoader />
                 )}
               </div>
             </section>
@@ -313,7 +313,7 @@ const CoinPage = () => {
           </>
         ) : (
           <>
-            <Loader />
+            <PageLoader />
           </>
         )}
       </div>

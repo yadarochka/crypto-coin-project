@@ -1,6 +1,6 @@
-import { Loader, LoaderSize } from "shared/components/Loader";
-
 import React, { FC } from "react";
+
+import { Loader, LoaderSize } from "components/UI/Loader";
 
 import styles from "./PageLoader.module.scss";
 
