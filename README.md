@@ -1,6 +1,6 @@
 # Coin Tracker
 
-Front-end приложение для мониторинга криптовалюты. Демо: https://yadaro4ka.netlify.app/
+Front-end приложение для мониторинга криптовалюты. Демо(старая версия): https://yadaro4ka.netlify.app/
 
 # Стек технологий
 * React
