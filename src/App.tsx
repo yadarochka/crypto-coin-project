@@ -1,9 +1,9 @@
 import React from "react";
 
+import Routing from "pages/Routing";
 import { useQueryParamsStoreInit } from "store/RootStore/hooks/useQueryParamsStoreInit";
 
 import styles from "./App.module.scss";
-import { Routing } from "./pages";
 import { Header } from "./widgets/Header";
 
 function App() {
