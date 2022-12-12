@@ -42,7 +42,6 @@ const CoinList = ({
               price={rounding(coin.currentPrice, 5)}
               priceChange={rounding(coin.priceChangePercentage7dInCurrency, 5)}
               className={styles["coin-list__item"]}
-              cardType="priceType"
               coinData={coin.sparkline7d.price}
               coinLabels={labels}
               onMouseEvent={false}

@@ -1,12 +1,16 @@
 @import "~styles/variables";
 
+* {
+  text-decoration: none;
+}
+
 .card {
   position: relative;
   display: flex;
-  width: 343px;
-  height: 72px;
+  max-width: 343px;
+  padding: 15px 15px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
@@ -15,59 +19,57 @@
   &:hover {
     background-color: gainsboro;
   }
+}
 
-  &__img-box {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-  }
+.flex {
+  display: flex;
+}
 
-  &__img {
-    width: 40px;
-    height: 40px;
-    align-self: center;
-    object-fit: cover;
-  }
+.img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  align-self: center;
+  object-fit: cover;
+}
 
-  &__name {
-    position: absolute;
-    top: 16px;
-    left: 68px;
-  }
+.name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  width: 100px;
+  font-size: 16px;
+}
 
-  &__title {
-    padding: 0;
-    margin: 0;
-    font-size: 16px;
-  }
+.subtitle {
+  padding: 0;
+  margin: 0;
+  color: $gray-color;
+  font-size: 12px;
+}
 
-  &__subtitle {
-    padding: 0;
-    margin: 0;
-    color: $gray-color;
-    font-size: 12px;
-  }
+.chart {
+  width: 50px;
+  height: 25px;
+}
 
-  &__chart-box {
-    position: absolute;
-    top: 16px;
-    right: 112px;
-  }
+.priceBox {
+  display: flex;
+  flex-direction: column;
+}
 
-  &__chart {
-    width: 50px;
-    height: 25px;
-  }
+.price {
+  width: 75px;
+  text-align: right;
+}
 
-  &__price-box {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    text-align: end;
-  }
+.percent {
+  margin-top: 5px;
+  font-size: 10px;
+  text-align: right;
+}
 
-  &__price-change {
-    margin-top: 5px;
-    font-size: 10px;
-  }
+@media (width < 992px) {
 }
