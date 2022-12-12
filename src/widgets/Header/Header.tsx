@@ -1,11 +1,9 @@
-import classnames from "classnames";
 import { useIsMobile } from "shared/hooks/useIsMobile";
 import { Logo } from "widgets/Logo";
 
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import { CustomNavLink } from "components/CustomNavLink";
 import { BurgerMenu, BurgerMenuItems } from "components/UI/BurgerMenu";
 
 import styles from "./Header.module.scss";
