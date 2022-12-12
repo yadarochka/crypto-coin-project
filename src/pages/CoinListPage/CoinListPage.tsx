@@ -106,7 +106,7 @@ const CoinListPage = () => {
   }, [store.dropdownStore.dropdownValues.key, store.categoryStore.value.key]);
 
   return (
-    <div className={styles["coin-list-page"]}>
+    <main className={styles["coin-list-page"]}>
       <Dropdown
         disabled={store.meta === Meta.loading}
         onChange={handlerDropdownCategoryChange}
@@ -121,36 +121,32 @@ const CoinListPage = () => {
         value={store.dropdownStore.dropdownValues}
         className={styles["coin-list-page__dropdown-currency"]}
       />
-      <section className={classNames(styles["coin-list-page__header"])}>
+      <section className={styles["coin-list-page__header"]}>
         <h2
-          className={classNames(
-            styles["coin-list-page__header-title"],
-            styles["coin-list-page__title"]
-          )}
+          className={
+            (styles["coin-list-page__header-title"],
+            styles["coin-list-page__title"])
+          }
         >
           Market is {store.marketCapChange > 0 ? "up " : "down "}
           <IncreaseOrDecrease percent={rounding(store.marketCapChange, 2)} />
         </h2>
         <span
-          className={classNames(
-            styles["coin-list-page__header-subtitle"],
-            styles["coin-list-page__subtitle"]
-          )}
+          className={
+            (styles["coin-list-page__header-subtitle"],
+            styles["coin-list-page__subtitle"])
+          }
         >
           In the past 24 hours
         </span>
       </section>
       <section className={classNames(styles["coin-list-page__coins-section"])}>
-        <div
-          className={classNames(
-            styles["coin-list-page__coins-section__header"]
-          )}
-        >
+        <div className={styles["coin-list-page__coins-section__header"]}>
           <h2
-            className={classNames(
-              styles["coin-list-page__coin-section-title"],
-              styles["coin-list-page__title"]
-            )}
+            className={
+              (styles["coin-list-page__coin-section-title"],
+              styles["coin-list-page__title"])
+            }
           >
             Coins
           </h2>
@@ -225,7 +221,7 @@ const CoinListPage = () => {
 
         {store.favouritesStore.meta === Meta.loading && <PageLoader />}
         <div className={styles["coin-list-page__items-list"]}>
-          <h2 className={styles["font-size-20"]}>Serched coins</h2>
+          <h2 className={styles["font-size-20"]}>Searched coins</h2>
 
           <CoinList
             searchedCoins={store.coins}
@@ -240,7 +236,7 @@ const CoinListPage = () => {
       </section>
       {store.meta === Meta.error && <div>Error</div>}
       <div id="loader" />
-    </div>
+    </main>
   );
 };
 

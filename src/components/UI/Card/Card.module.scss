@@ -21,10 +21,6 @@
   }
 }
 
-.flex {
-  display: flex;
-}
-
 .img {
   display: block;
   width: 40px;
@@ -69,7 +65,4 @@
   margin-top: 5px;
   font-size: 10px;
   text-align: right;
-}
-
-@media (width < 992px) {
 }
