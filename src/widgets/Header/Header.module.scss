@@ -1,6 +1,7 @@
 @import "~./../../../styles/variables.scss";
 .header {
-  height: 50px;
+  min-width: 320px;
+  height: $header-height;
   border-bottom: 1px solid $border-color;
 }
 
@@ -9,7 +10,7 @@
   height: 100%;
   margin: auto;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 

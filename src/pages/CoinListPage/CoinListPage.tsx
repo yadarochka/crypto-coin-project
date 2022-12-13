@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { NotFound } from "widgets/NotFound";
 import { PageLoader } from "widgets/PageLoader";
 
 import React, { useCallback, useEffect } from "react";
@@ -84,157 +85,100 @@ const CoinListPage = () => {
     store.searchFetch();
   }, [store.searchStore.search]);
 
-  const handleButtonHideClick: () => void = useCallback(() => {
-    if (store.favouritesStore.isShow === true) {
-      store.hideFavouritesCoins();
-      return;
-    }
-    if (store.favouritesStore.isShow === false) {
-      store.showFavouritesCoins();
-      return;
-    }
-  }, [store.favouritesStore.isShow]);
+  const MarketIs = () => (
+    <section className={styles.marketInfo}>
+      <h2
+        className={
+          (styles["coin-list-page__header-title"],
+          styles["coin-list-page__title"])
+        }
+      >
+        Market is {store.marketCapChange > 0 ? "up " : "down "}
+        <IncreaseOrDecrease percent={rounding(store.marketCapChange, 2)} />
+      </h2>
+      <span
+        className={
+          (styles["coin-list-page__header-subtitle"],
+          styles["coin-list-page__subtitle"])
+        }
+      >
+        In the past 24 hours
+      </span>
+    </section>
+  );
 
-  const handleResetButtonClick: () => void = useCallback(() => {
-    store.dropdownStore.dropdownValues = defaultCurrencyValue;
-    store.categoryStore.value = defaultCategoryValue;
-    store.searchStore.search = "";
-    store.pageReset();
-    store.coins = [];
-    store.coinListFetch();
-    store.coinFavouritesListFetch();
-  }, [store.dropdownStore.dropdownValues.key, store.categoryStore.value.key]);
+  const CoinInfo = () => (
+    <div>
+      <div className={styles["coin-list-page__coins-section__header"]}>
+        <h2 className={styles["coin-list-page__coin-section-title"]}>Coins</h2>
+        <Tooltip className={styles["coins-section__tooltip"]}>
+          7 Days Range
+        </Tooltip>
+      </div>
+      <div className={classNames(styles["position-relative"], styles["mb-1"])}>
+        <span className={classNames(styles["coin-list-page__subtitle"])}>
+          Active cryptocurrencies:{" "}
+          {store.globalDataStore.globalData.activeCryptocurrencies}
+        </span>
+      </div>
+    </div>
+  );
+
+  const Filters = () => (
+    <div className={styles.filters}>
+      <div className={styles.relative}>
+        <Dropdown
+          disabled={store.meta === Meta.loading}
+          onChange={handlerDropdownCategoryChange}
+          options={store.categoryStore.options}
+          value={store.categoryStore.value}
+          className={styles.dropdownCategory}
+        />
+      </div>
+      <div className={styles.relative}>
+        <Dropdown
+          disabled={store.meta === Meta.loading}
+          onChange={handlerDropdownCurrencyChange}
+          options={store.dropdownStore.dropdownOptions}
+          value={store.dropdownStore.dropdownValues}
+          className={styles.dropdownCurrency}
+        />
+      </div>
+    </div>
+  );
+
+  if (store.meta === Meta.error) {
+    return null;
+  }
 
   return (
     <main className={styles["coin-list-page"]}>
-      <Dropdown
-        disabled={store.meta === Meta.loading}
-        onChange={handlerDropdownCategoryChange}
-        options={store.categoryStore.options}
-        value={store.categoryStore.value}
-        className={styles["coin-list-page__dropdown-category"]}
-      />
-      <Dropdown
-        disabled={store.meta === Meta.loading}
-        onChange={handlerDropdownCurrencyChange}
-        options={store.dropdownStore.dropdownOptions}
-        value={store.dropdownStore.dropdownValues}
-        className={styles["coin-list-page__dropdown-currency"]}
-      />
-      <section className={styles["coin-list-page__header"]}>
-        <h2
-          className={
-            (styles["coin-list-page__header-title"],
-            styles["coin-list-page__title"])
-          }
-        >
-          Market is {store.marketCapChange > 0 ? "up " : "down "}
-          <IncreaseOrDecrease percent={rounding(store.marketCapChange, 2)} />
-        </h2>
-        <span
-          className={
-            (styles["coin-list-page__header-subtitle"],
-            styles["coin-list-page__subtitle"])
-          }
-        >
-          In the past 24 hours
-        </span>
-      </section>
-      <section className={classNames(styles["coin-list-page__coins-section"])}>
-        <div className={styles["coin-list-page__coins-section__header"]}>
-          <h2
-            className={
-              (styles["coin-list-page__coin-section-title"],
-              styles["coin-list-page__title"])
-            }
-          >
-            Coins
-          </h2>
-          <Tooltip className={styles["coins-section__tooltip"]}>
-            7 Days Range
-          </Tooltip>
-        </div>
-        <div
-          className={classNames(styles["position-relative"], styles["mb-1"])}
-        >
-          <span className={classNames(styles["coin-list-page__subtitle"])}>
-            Active cryptocurrencies:{" "}
-            {store.globalDataStore.globalData.activeCryptocurrencies}
-          </span>
-          <span
-            onClick={handleResetButtonClick}
-            className={classNames(
-              styles["coin-list-page__subtitle"],
-              styles["reset-filters-button"],
-              store.categoryStore.value.key !== defaultCategoryValue.key ||
-                store.dropdownStore.dropdownValues.key !==
-                  defaultCurrencyValue.key
-                ? styles["display-inline"]
-                : styles["display-none"]
-            )}
-          >
-            Reset Filters
-          </span>
-        </div>
+      <div className={styles.row}>
+        <MarketIs />
+        <CoinInfo />
+        <Filters />
         <Search
           disabled={store.meta === Meta.loading}
           value={store.searchStore.search}
-          type="text"
           className={styles["coin-list-page__search"]}
           onChange={handleInputChange}
           buttonText="Seacrh"
           placeholder="Search Cryptocurrency"
           buttonOnClick={handleButtonClick}
         />
-        <div
-          className={classNames(
-            styles["display-flex"],
-            styles["justify-content-sb"],
-            styles["align-items-center"]
-          )}
-        >
-          {store.favouritesStore.coins.length > 0 && (
-            <>
-              <h2 className={classNames(styles["m-0"], styles["font-size-20"])}>
-                Favourites coins
-              </h2>
-              <button
-                className={classNames(
-                  styles["hide-button"],
-                  store.favouritesStore.isShow
-                    ? styles["hide-button__show"]
-                    : styles["hide-button__hide"]
-                )}
-                onClick={handleButtonHideClick}
-              />
-            </>
-          )}
-        </div>
+      </div>
+      <section className={styles.coinList}>
+        <h2 className={styles["font-size-20"]}>Searched coins</h2>
+        <CoinList
+          searchedCoins={store.coins}
+          currency={store.dropdownStore.dropdownValues.key}
+        />
+        {store.meta === Meta.loading && <PageLoader loaderSize="m" />}
 
-        {store.favouritesStore.isShow &&
-          store.favouritesStore.meta !== Meta.loading && (
-            <CoinList
-              searchedCoins={store.favouritesStore.coins}
-              currency={store.dropdownStore.dropdownValues.key}
-            />
-          )}
-
-        {store.favouritesStore.meta === Meta.loading && <PageLoader />}
-        <div className={styles["coin-list-page__items-list"]}>
-          <h2 className={styles["font-size-20"]}>Searched coins</h2>
-
-          <CoinList
-            searchedCoins={store.coins}
-            currency={store.dropdownStore.dropdownValues.key}
-          />
-          {store.meta === Meta.loading && <PageLoader />}
-
-          {store.meta !== Meta.loading &&
-            store.meta !== Meta.error &&
-            store.coins.length === 0 && <div>Такой монеты нет</div>}
-        </div>
+        {store.meta === Meta.success && store.coins.length === 0 && (
+          <NotFound />
+        )}
       </section>
-      {store.meta === Meta.error && <div>Error</div>}
       <div id="loader" />
     </main>
   );

@@ -9,8 +9,6 @@ import searchIcon from "images/search-icon.svg";
 import styles from "./Search.module.scss";
 
 type SearchProps = {
-  /** Тип input */
-  type: string;
   /** Css-класс компонента Search */
   className?: string;
   /** Функция OnChange у input */
@@ -30,7 +28,6 @@ const Search = ({
   className,
   onChange,
   placeholder,
-  type,
   buttonText,
   buttonOnClick,
   value,
@@ -44,7 +41,6 @@ const Search = ({
         <input
           value={value}
           onChange={onChange}
-          type={type}
           className={styles["search__field"]}
           placeholder={placeholder}
           disabled={disabled}

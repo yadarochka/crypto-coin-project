@@ -20,12 +20,12 @@ export const Header = () => {
   const isMobile = useIsMobile();
   if (isMobile) {
     return (
-      <div className={styles.header}>
+      <header className={styles.header}>
         <div className={styles.wrapper}>
           <Logo />
           <BurgerMenu items={BurgerItems} />
         </div>
-      </div>
+      </header>
     );
   } else
     return (
