@@ -153,7 +153,7 @@ const CoinListPage = () => {
 
   return (
     <main className={styles["coin-list-page"]}>
-      <div className={styles.row}>
+      <section className={styles.row}>
         <MarketIs />
         <CoinInfo />
         <Filters />
@@ -166,9 +166,9 @@ const CoinListPage = () => {
           placeholder="Search Cryptocurrency"
           buttonOnClick={handleButtonClick}
         />
-      </div>
+      </section>
       <section className={styles.coinList}>
-        <h2 className={styles["font-size-20"]}>Searched coins</h2>
+        <h2 className={styles.title}>Searched coins</h2>
         <CoinList
           searchedCoins={store.coins}
           currency={store.dropdownStore.dropdownValues.key}
