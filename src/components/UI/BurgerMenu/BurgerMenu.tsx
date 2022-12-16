@@ -9,6 +9,7 @@ import styles from "./BurgerMenu.module.scss";
 
 export type BurgerMenuItems = {
   linkTo: string;
+  imgSrc?: any;
   label: string;
 };
 
@@ -42,7 +43,14 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
               to={link.linkTo}
               onClick={burgerIsVisibleChange}
             >
-              {link.label}
+              <div className={styles.link}>
+                <img
+                  src={link.imgSrc}
+                  alt={link.label}
+                  className={styles.linkImg}
+                />
+                {link.label}
+              </div>
             </NavLink>
           </li>
         ))}

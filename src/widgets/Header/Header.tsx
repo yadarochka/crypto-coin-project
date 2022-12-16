@@ -6,14 +6,17 @@ import { NavLink } from "react-router-dom";
 
 import { BurgerMenu, BurgerMenuItems } from "components/UI/BurgerMenu";
 
+import coinImg from "images/Bitcoin.svg";
+import categoriesImg from "images/Categories.svg";
+
 import styles from "./Header.module.scss";
 
 const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
   isActive ? styles.active : styles.link;
 
 const BurgerItems: BurgerMenuItems[] = [
-  { linkTo: "/", label: "Coins" },
-  { linkTo: "/categories", label: "Categories" },
+  { linkTo: "/", label: "Coins", imgSrc: coinImg },
+  { linkTo: "/categories", label: "Categories", imgSrc: categoriesImg },
 ];
 
 export const Header = () => {
