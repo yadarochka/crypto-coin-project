@@ -1,11 +1,9 @@
 import classnames from "classnames";
 
-import React, { FC, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { FC, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 import { useKeyboardEvent } from "utils/useKeyboardEvent";
-
-import logo from "images/Logo.svg";
 
 import styles from "./BurgerMenu.module.scss";
 
@@ -26,17 +24,17 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
   useKeyboardEvent("Enter", burgerIsVisibleChange, "burgerMenu-icon", [
     isActive,
   ]);
-  useKeyboardEvent("Enter", burgerIsVisibleChange, "burgerMenu-cross", [
-    isActive,
-  ]);
 
   const Menu = () => (
     <div className={styles.menu}>
-      <div className={styles.blur} />
+      <div className={isActive ? styles.blur : ""} />
       <nav
-        className={classnames(isActive ? styles.menuActive : "", styles.list)}
+        className={classnames(
+          isActive ? styles.menuActive : styles.menuNoActive,
+          styles.list
+        )}
       >
-        <h2>Pages</h2>
+        <h2 className={styles.title}>Pages</h2>
         {items.map((link) => (
           <li>
             <NavLink
@@ -55,6 +53,8 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
   return (
     <>
       <div
+        id="burgerMenu-icon"
+        tabIndex={0}
         className={classnames(styles.btn, isActive ? styles.btnActive : "")}
         onClick={burgerIsVisibleChange}
       >
