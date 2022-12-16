@@ -1,36 +1,53 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "shared/hooks/useIsMobile";
+import { Logo } from "widgets/Logo";
 
-import { useKeyboardEvent } from "utils/useKeyboardEvent";
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 import { BurgerMenu, BurgerMenuItems } from "components/UI/BurgerMenu";
 
-import logo from "images/Logo.svg";
+import coinImg from "images/Bitcoin.svg";
+import categoriesImg from "images/Categories.svg";
 
 import styles from "./Header.module.scss";
 
+const navLinkStyles = ({ isActive }: { isActive: boolean }) =>
+  isActive ? styles.active : styles.link;
+
 const BurgerItems: BurgerMenuItems[] = [
-  { linkTo: "/", label: "Coins" },
-  { linkTo: "/categories", label: "Categories" },
+  { linkTo: "/", label: "Coins", imgSrc: coinImg },
+  { linkTo: "/categories", label: "Categories", imgSrc: categoriesImg },
 ];
 
 export const Header = () => {
-  const navigate = useNavigate();
-  const handlerLogoClick = () => {
-    navigate("/");
-  };
-
-  useKeyboardEvent("Enter", handlerLogoClick, "logo");
-  return (
-    <div className={styles.header}>
-      <BurgerMenu items={BurgerItems} />
-      <img
-        id="logo"
-        tabIndex={0}
-        src={logo}
-        className={styles.logo}
-        onClick={handlerLogoClick}
-      />
-    </div>
-  );
+  const isMobile = useIsMobile();
+  if (isMobile) {
+    return (
+      <header className={styles.header}>
+        <div className={styles.wrapper}>
+          <Logo />
+          <BurgerMenu items={BurgerItems} />
+        </div>
+      </header>
+    );
+  } else
+    return (
+      <header className={styles.header}>
+        <div className={styles.wrapper}>
+          <Logo />
+          <div className={styles.nav}>
+            {BurgerItems.map((link) => (
+              <NavLink
+                key={link.label}
+                to={link.linkTo}
+                className={navLinkStyles}
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </div>
+          <span>Log in</span>
+        </div>
+      </header>
+    );
 };

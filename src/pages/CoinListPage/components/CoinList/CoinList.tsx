@@ -25,11 +25,11 @@ const CoinList = ({
   );
 
   return (
-    <div className={styles["coin-list"]}>
+    <div className={styles.list}>
       {searchedCoins.map((coin: CoinListModel) => {
         return (
           <Link
-            className={styles["coin-list__link"]}
+            className={styles.link}
             key={`link_${coin.id}`}
             to={`${coin.id}`}
           >
@@ -41,8 +41,7 @@ const CoinList = ({
               image={coin.image}
               price={rounding(coin.currentPrice, 5)}
               priceChange={rounding(coin.priceChangePercentage7dInCurrency, 5)}
-              className={styles["coin-list__item"]}
-              cardType="priceType"
+              className={styles.card}
               coinData={coin.sparkline7d.price}
               coinLabels={labels}
               onMouseEvent={false}

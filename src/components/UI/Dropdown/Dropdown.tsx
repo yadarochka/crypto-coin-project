@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-import React, { memo, useCallback, useMemo, useRef } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { FC, useState } from "react";
 
 import { useKeyboardEvent } from "utils/useKeyboardEvent";
@@ -46,7 +46,7 @@ export const Dropdown: FC<MultiDropdownProps> = ({
         tabIndex={0}
         key={el.key}
         className={classNames(
-          styles["dropdown__item"],
+          styles.item,
           el.key === value.key && styles["active"]
         )}
         onClick={() => itemOnClick(el)}
@@ -65,14 +65,12 @@ export const Dropdown: FC<MultiDropdownProps> = ({
         id={`dropdown${dropdownId}`}
         tabIndex={0}
         ref={targetRef}
-        className={classNames(styles["dropdown__value"])}
+        className={styles.backdrop}
         onClick={handleClick}
       >
         {value.value}
       </div>
-      <div className={classNames(styles["dropdown__options"])}>
-        {isVisible && !disabled && items}
-      </div>
+      <div className={styles.options}>{isVisible && !disabled && items}</div>
     </div>
   );
 };
