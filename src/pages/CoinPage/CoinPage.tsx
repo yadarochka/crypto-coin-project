@@ -17,7 +17,7 @@ import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
 
 import Card from "components/UI/Card";
-import Chart from "components/UI/Chart/Chart";
+import Chart from "components/UI/Chart";
 import Dropdown, { Option } from "components/UI/Dropdown";
 import { Favourites } from "components/UI/Favourites";
 import { TabBar } from "components/UI/TabBar";
@@ -81,13 +81,6 @@ const CoinPage = () => {
 
   let type = "day";
 
-  const cutCoinName = (name: string) => {
-    if (name.split(" ").length > 2) {
-      return `${name.split(" ")[0]} ${name.split(" ")[1]}`;
-    }
-    return name;
-  };
-
   if (store.chartStore.time.value.key === "1") {
     type = "day";
   } else if (store.chartStore.time.value.key === "max") {
@@ -98,7 +91,7 @@ const CoinPage = () => {
     return <NotFoundPage />;
   } else
     return (
-      <div className={styles["coin-page"]}>
+      <main className={styles["coin-page"]}>
         {store.coin ? (
           <>
             <section className={styles["coin-page__header"]}>
@@ -114,7 +107,7 @@ const CoinPage = () => {
                 />
                 <div>
                   <h1 className={styles["coin-page__header__name-box__name"]}>
-                    {cutCoinName(store.coin.name)}
+                    {store.coin.name}
                   </h1>
                   {store.coin.symbol.length < 5 && (
                     <span
@@ -127,12 +120,6 @@ const CoinPage = () => {
                 <div className={styles["coin-page__header__rank"]}>
                   Rank #
                   {store.coin.marketCapRank ? store.coin.marketCapRank : "?"}
-                </div>
-                <div className={styles["ml-1"]}>
-                  <Favourites
-                    onClick={handleStarClick}
-                    active={Boolean(localStorage.getItem(store.coin.id))}
-                  />
                 </div>
               </div>
               <div className={styles["coin-page__header__price-info"]}>
@@ -316,7 +303,7 @@ const CoinPage = () => {
             <PageLoader />
           </>
         )}
-      </div>
+      </main>
     );
 };
 

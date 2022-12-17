@@ -1,3 +1,5 @@
+import { NotFound } from "widgets/NotFound";
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,12 +13,7 @@ export const NotFoundPage = () => {
 
   return (
     <div className={styles["not-found"]}>
-      <div>NOT FOUND</div>
-      <Button
-        className={styles["not-found__button"]}
-        onClick={handlerButtonClick}
-        value="Return to main page"
-      />
+      <NotFound />
     </div>
   );
 };

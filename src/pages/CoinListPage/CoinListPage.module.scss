@@ -3,7 +3,9 @@
 .coin-list-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 10px;
 
   &__title {
     display: block;
@@ -29,7 +31,6 @@
   }
 
   &__dropdown-currency {
-    position: absolute;
     z-index: 2;
     top: 92px;
     left: 90px;
@@ -37,7 +38,6 @@
   }
 
   &__dropdown-category {
-    position: absolute;
     z-index: 2;
     top: 92px;
     right: 10px;
@@ -50,12 +50,7 @@
 
   &__coin-section-title {
     display: inline;
-  }
-
-  &__coins-section {
-    &__header {
-      margin-bottom: 10px;
-    }
+    font-size: 20px;
   }
 }
 
@@ -96,8 +91,46 @@
   }
 }
 
-.reset-filters-button {
-  margin-left: 50px;
-  cursor: pointer;
-  text-decoration: underline;
+.coinList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 300px;
+  min-height: 40px;
+}
+
+.relative {
+  position: relative;
+  width: 100%;
+  height: 70%;
+}
+
+.dropdownCurrency {
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  width: 110px;
+}
+
+.dropdownCategory {
+  position: absolute;
+  z-index: 2;
+  width: 150px;
+}
+
+.marketInfo {
+  max-width: 230px;
 }

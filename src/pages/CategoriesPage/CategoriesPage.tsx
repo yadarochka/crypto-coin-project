@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { NotFound } from "widgets/NotFound";
 import { PageLoader } from "widgets/PageLoader";
 
 import React from "react";
@@ -35,17 +36,11 @@ const CategoriesPage = () => {
     <Link
       to={`/?category=${category.id}`}
       key={category.id}
-      className={classNames(
-        styles["display-flex"],
-        styles["justify-content-sb"],
-        styles["mb-2"],
-        styles["align-items-center"],
-        styles["category-item"]
-      )}
+      className={styles.categoryItem}
     >
       <span className={styles.name}>{category.name}</span>
       <span>{Math.floor(category.marketCap)}$</span>
-      <span>
+      <div className={styles.imgGroup}>
         {category.topCoins.map((imgSrc) => (
           <img
             key={imgSrc}
@@ -54,20 +49,21 @@ const CategoriesPage = () => {
             alt="Coin logo"
           />
         ))}
-      </span>
+      </div>
     </Link>
   ));
+  if (store.meta === Meta.error) {
+    return <NotFound />;
+  }
   return (
-    <div>
-      <h2 className={classNames(styles["page-title"], styles["display-block"])}>
-        Categories
-      </h2>
-      {store.meta === Meta.loading && <PageLoader />}
-      {store.meta === Meta.success && categoryItems}
-      {store.meta === Meta.error && (
-        <div className={styles["text-align-center"]}>Error</div>
+    <main className={styles.categoriesPage}>
+      <h2 className={styles.title}>Categories</h2>
+      {store.meta === Meta.success && (
+        <div className={styles.categoriesList}>{categoryItems}</div>
       )}
-    </div>
+
+      {store.meta === Meta.loading && <PageLoader />}
+    </main>
   );
 };
 

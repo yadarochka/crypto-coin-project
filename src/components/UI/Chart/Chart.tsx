@@ -40,12 +40,19 @@ const Chart = ({
   color = "rgba(0, 99, 245, 1)",
   label,
 }: ChartProps) => {
+  let labels = coinLabels,
+    datas = coinData;
+  if (!onMouseEvent) {
+    labels = coinLabels.filter((item, index) => index % 5 === 0);
+    datas = coinData.filter((item, index) => index % 5 === 0);
+  }
+
   const data = {
-    labels: coinLabels,
+    labels: labels ? labels : coinLabels,
     datasets: [
       {
         label: label,
-        data: coinData,
+        data: datas ? datas : coinData,
         borderColor: color,
         backgroundColor: "#F5F5F5",
         borderWidth: 3,
@@ -58,6 +65,7 @@ const Chart = ({
 
   const options = {
     ...(!onMouseEvent && { events: [] }),
+    responsive: true,
     plugins: {
       legend: {
         display: false,
@@ -90,7 +98,7 @@ const Chart = ({
           autoSkip: true,
           autoSkipPadding: 25,
           callback: (value: any, index: any, ticks: any) => {
-            if (type === "") return coinLabels[index];
+            if (!type) return coinLabels[index];
             const date = coinLabels[index].split(",");
             const time = date[1].split(":");
             const day = date[0].split(".");
@@ -99,7 +107,7 @@ const Chart = ({
             if (type === "week") return day[0] + "." + day[1];
           },
         },
-        ...(type === "" ? { display: false } : { display: true }),
+        ...(type ? { display: true } : { display: false }),
         gridLines: {},
       },
     },
