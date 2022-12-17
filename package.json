@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "set NODE_ENV=development && npx webpack serve --mode=development",
-    "build": "set NODE_ENV=production && npx webpack --mode=production",
+    "build": "set NODE_ENV=production && npx webpack --mode=production && cd dist && echo /* /index.html 200 > _redirects",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix",
