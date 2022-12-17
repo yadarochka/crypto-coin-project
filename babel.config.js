@@ -10,9 +10,7 @@ module.exports = (api) => {
   ];
 
   const plugins = [
-    process.env.NODE_ENV === "development" &&
-      ("react-refresh/babel",
-      ["@babel/plugin-proposal-private-methods", { loose: true }]),
+    process.env.NODE_ENV === "development" && "react-refresh/babel",
   ].filter(Boolean);
 
   return {

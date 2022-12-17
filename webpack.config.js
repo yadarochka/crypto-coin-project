@@ -2,6 +2,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const path = require("path");
 
@@ -41,7 +43,20 @@ module.exports = {
   entry: path.join(srcPath, "index.tsx"),
   output: {
     path: buildPath,
-    filename: "bundle.js",
+    filename: "[name].[hash].js",
+  },
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: "vendors",
+          test: /node_modules/,
+          chunks: "all",
+          enforce: true,
+        },
+      },
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -50,9 +65,12 @@ module.exports = {
       favicon: path.join(srcPath, "images", "Bitcoin.svg"),
     }),
     new MiniCssExtractPlugin({
-      filename: "[name]-[hash].css",
+      filename: "[name].[contenthash].css",
     }),
-    !isProd && (new ReactRefreshWebpackPlugin(), new ForkTsCheckerPlugin()),
+    !isProd &&
+      (new ReactRefreshWebpackPlugin(),
+      new ForkTsCheckerPlugin(),
+      new BundleAnalyzerPlugin()),
   ].filter(Boolean),
   module: {
     rules: [
