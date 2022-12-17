@@ -46,6 +46,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(srcPath, "index.html"),
+      title: "Coin Tracker",
+      favicon: path.join(srcPath, "images", "Bitcoin.svg"),
     }),
     new MiniCssExtractPlugin({
       filename: "[name]-[hash].css",
