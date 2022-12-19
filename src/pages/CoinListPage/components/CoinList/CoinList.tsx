@@ -32,6 +32,7 @@ const CoinList = ({
             className={styles.link}
             key={`link_${coin.id}`}
             to={`${coin.id}`}
+            data-testId={`${coin.id.toLocaleLowerCase()}-card`}
           >
             <Card
               currency={currency}

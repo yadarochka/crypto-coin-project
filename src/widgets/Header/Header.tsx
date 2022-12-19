@@ -38,6 +38,7 @@ export const Header = () => {
           <div className={styles.nav}>
             {BurgerItems.map((link) => (
               <NavLink
+                data-testId={`${link.label.toLocaleLowerCase()}-nav`}
                 key={link.label}
                 to={link.linkTo}
                 className={navLinkStyles}

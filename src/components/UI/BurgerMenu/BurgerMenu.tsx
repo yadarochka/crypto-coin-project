@@ -39,6 +39,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
         {items.map((link) => (
           <li>
             <NavLink
+              data-testId={`${link.label.toLocaleLowerCase()}-nav`}
               className={styles.item}
               to={link.linkTo}
               onClick={burgerIsVisibleChange}
@@ -62,6 +63,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
     <>
       <div
         id="burgerMenu-icon"
+        data-testId="burger-menu"
         tabIndex={0}
         className={classnames(styles.btn, isActive ? styles.btnActive : "")}
         onClick={burgerIsVisibleChange}
