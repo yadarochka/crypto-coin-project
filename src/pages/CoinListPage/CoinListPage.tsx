@@ -7,10 +7,6 @@ import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import coinListStore from "store/coinListStore";
-import {
-  defaultCategoryValue,
-  defaultCurrencyValue,
-} from "store/defaultValues";
 import { Meta } from "utils/meta";
 import { rounding } from "utils/rounding";
 import { useAsync } from "utils/useAsync";

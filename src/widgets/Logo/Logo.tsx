@@ -18,6 +18,7 @@ export const Logo = () => {
       id="logo"
       tabIndex={0}
       src={logo}
+      data-testId="logo"
       className={styles.logo}
       onClick={handlerLogoClick}
     />

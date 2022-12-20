@@ -1,4 +1,5 @@
-@import "~./../../../styles/variables.scss";
+@import "~./../../../styles/variables";
+
 .header {
   min-width: 320px;
   height: $header-height;
@@ -6,35 +7,37 @@
 }
 
 .wrapper {
+  display: flex;
   max-width: 1200px;
   height: 100%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin: auto;
 }
 
 .nav {
-  width: 450px;
   display: flex;
+  width: 450px;
   align-items: center;
   justify-content: space-around;
 }
 
 .active {
-  color: $blue-color;
   position: relative;
+  color: $blue-color;
+
   &::after {
-    content: "";
-    display: inline-block;
     position: absolute;
+    z-index: 1;
     top: 33px;
     left: 0;
+    display: inline-block;
     width: 100%;
-    z-index: 1;
     border-bottom: 2px solid $blue-color;
+    content: "";
   }
 }
+
 .link {
   color: $black-color;
   text-decoration: none;
