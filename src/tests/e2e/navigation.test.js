@@ -19,6 +19,18 @@ describe("Навигация приложения", () => {
     await page.goto(BASE_URL);
   });
 
+  it.each(["bitcoin", "dogecoin", "tether"])(
+    "Переход на страницу %s по клику на карточку",
+    async (title) => {
+      await page.waitForXPath("//h3");
+      await page.click(`[data-testId=${title}-card]`);
+
+      const url = page.url();
+
+      expect(url).toEqual(BASE_URL + title);
+    }
+  );
+
   it("Переход на Coins Page / Desktop", async () => {
     await page.click("[data-testId=categories-nav]");
     await page.click("[data-testId=coins-nav]");
@@ -72,18 +84,6 @@ describe("Навигация приложения", () => {
 
     expect(url).toEqual(BASE_URL);
   });
-
-  it.each(["bitcoin", "dogecoin", "tether"])(
-    "Переход на страницу %s по клику на карточку",
-    async (title) => {
-      await page.waitForXPath("//h3");
-      await page.click(`[data-testId=${title}-card]`);
-
-      const url = page.url();
-
-      expect(url).toEqual(BASE_URL + title);
-    }
-  );
 
   afterEach(() => {
     browser.close();
