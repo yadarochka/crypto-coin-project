@@ -1,20 +1,20 @@
 @import "~styles/variables";
 
 .categoriesPage {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 0;
   display: flex;
+  max-width: 1200px;
   flex-direction: column;
+  padding: 10px 0;
+  margin: 0 auto;
   gap: 1rem;
 }
 
 .categoriesList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
 .imgGroup {
@@ -38,9 +38,9 @@
 
 .categoryItem {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 320px;
+  align-items: center;
+  justify-content: space-between;
   padding: 10px;
   border: 1px solid $border-color;
   background: #fff;

@@ -2,10 +2,10 @@
 
 .coin-list-page {
   display: flex;
-  flex-direction: column;
   max-width: 1200px;
-  margin: 0 auto;
+  flex-direction: column;
   padding-top: 10px;
+  margin: 0 auto;
 
   &__title {
     display: block;
@@ -99,17 +99,17 @@
 
 .row {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 10px;
 }
 
 .filters {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   min-width: 300px;
   min-height: 40px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .relative {
@@ -120,8 +120,8 @@
 
 .dropdownCurrency {
   position: absolute;
-  right: 0;
   z-index: 2;
+  right: 0;
   width: 110px;
 }
 

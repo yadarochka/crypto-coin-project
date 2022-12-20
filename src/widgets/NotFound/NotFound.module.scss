@@ -1,10 +1,10 @@
 .container {
-  margin: 0 auto;
-  padding: 5vh;
   width: 8vw;
-  height: 8vw;
   min-width: 100px;
+  height: 8vw;
   min-height: 100px;
+  padding: 5vh;
+  margin: 0 auto;
 }
 
 .image {
@@ -12,10 +12,10 @@
   height: 100%;
   margin: 0 auto;
   margin-bottom: 1rem;
-  background-image: url(../../images/NotFound.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-image: url("../../images/NotFound.svg");
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .message {

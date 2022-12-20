@@ -8,9 +8,9 @@
   position: relative;
   display: flex;
   max-width: 343px;
-  padding: 15px 15px;
   align-items: center;
   justify-content: space-between;
+  padding: 15px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
@@ -30,13 +30,13 @@
 }
 
 .name {
-  text-overflow: ellipsis;
-  white-space: nowrap;
   overflow: hidden;
+  width: 100px;
   padding: 0;
   margin: 0;
-  width: 100px;
   font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .subtitle {
@@ -57,8 +57,8 @@
 }
 
 .price {
-  flex: 1 0 auto;
   width: 75px;
+  flex: 1 0 auto;
   text-align: right;
 }
 
