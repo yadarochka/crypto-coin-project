@@ -94,14 +94,15 @@
 .coinList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1.4rem;
+  padding: 1rem 0;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .filters {

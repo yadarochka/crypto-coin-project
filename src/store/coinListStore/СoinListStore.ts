@@ -40,20 +40,15 @@ export default class СoinListStore implements ILocalStore {
     meta: Meta.initial,
     isShow: undefined,
   };
-  contentPerPage = 12;
+  contentPerPage;
   page = 1;
-  observer = new IntersectionObserver(([entry], observer) => {
-    if (entry.isIntersecting) {
-      this.coinListFetch();
-      observer.unobserve(entry.target);
-    }
-  }, {});
 
-  constructor() {
+  constructor(contentPerPage: number) {
     this.searchStore = new SearchStore();
     this.dropdownStore = new DropdownStore();
     this.categoryStore = new CategoryStore();
     this.globalDataStore = new GlobalDataStore();
+    this.contentPerPage = contentPerPage;
     this._meta = Meta.initial;
 
     if (rootStore.query.getParam("category")) {
@@ -143,20 +138,6 @@ export default class СoinListStore implements ILocalStore {
     runInAction(() => {
       this.meta = Meta.success;
       this.coins = [...this.coins, ...normalizeCoinListApiModel(data)];
-      this.pageIncrement();
-
-      if (this.searchStore.search?.length === 0) {
-        this.deleteDublicateCoins();
-      }
-
-      const contentLoadTrigger = document.getElementById("loader");
-      if (
-        contentLoadTrigger &&
-        this.searchStore.search?.length === 0 &&
-        data.length > 10
-      ) {
-        this.observer.observe(contentLoadTrigger);
-      }
     });
   }
 

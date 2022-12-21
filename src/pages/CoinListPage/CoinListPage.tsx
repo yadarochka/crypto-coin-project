@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { useIsMobile } from "shared/hooks/useIsMobile";
 import { useLocalStorage } from "shared/hooks/useLocalStorage";
 import { NotFound } from "widgets/NotFound";
 import { PageLoader } from "widgets/PageLoader";
@@ -14,6 +15,7 @@ import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
 
 import CoinList from "./components/CoinList";
+import Button from "components/UI/Button";
 import Dropdown, { Option } from "components/UI/Dropdown";
 import { IncreaseOrDecrease } from "components/UI/IncreaseOrDecrease";
 import Search from "components/UI/Search";
@@ -22,7 +24,9 @@ import { Tooltip } from "components/UI/Tooltip";
 import styles from "./CoinListPage.module.scss";
 
 const CoinListPage = () => {
-  const store = useLocalStore(() => new coinListStore());
+  const isMobile = useIsMobile();
+  const contentPerPage = isMobile ? 12 : 24;
+  const store = useLocalStore(() => new coinListStore(contentPerPage));
   const navigate = useNavigate();
   useAsync(store.fetch, []);
   const [searchParams, setSearchParams] = useLocalStorage(
@@ -71,6 +75,11 @@ const CoinListPage = () => {
     [store.categoryStore.value.key]
   );
 
+  const loadMoreData = useCallback(() => {
+    store.pageIncrement();
+    store.coinListFetch();
+  }, [store.page]);
+
   const handleInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       store.searchStore.search = event.target.value;
@@ -79,11 +88,6 @@ const CoinListPage = () => {
   );
 
   const handleButtonClick: () => void = useCallback(() => {
-    if (store.searchStore.search?.length === 0) {
-      store.showFavouritesCoins();
-    } else {
-      store.hideFavouritesCoins();
-    }
     store.searchFetch();
   }, [store.searchStore.search]);
 
@@ -178,13 +182,18 @@ const CoinListPage = () => {
           searchedCoins={store.coins}
           currency={store.dropdownStore.dropdownValues.key}
         />
-        {store.meta === Meta.loading && <PageLoader loaderSize="m" />}
+        {(store.meta === Meta.loading || store.meta === Meta.initial) && (
+          <PageLoader loaderSize="m" />
+        )}
 
         {store.meta === Meta.success && store.coins.length === 0 && (
           <NotFound />
         )}
+        {store.meta === Meta.success &&
+          store.coins.length % store.contentPerPage === 0 && (
+            <Button value="Load More" onClick={loadMoreData} />
+          )}
       </section>
-      <div id="loader" />
     </main>
   );
 };
