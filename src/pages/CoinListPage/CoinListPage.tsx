@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { observer } from "mobx-react-lite";
+import { useLocalStorage } from "shared/hooks/useLocalStorage";
 import { NotFound } from "widgets/NotFound";
 import { PageLoader } from "widgets/PageLoader";
 
@@ -24,6 +25,10 @@ const CoinListPage = () => {
   const store = useLocalStore(() => new coinListStore());
   const navigate = useNavigate();
   useAsync(store.fetch, []);
+  const [searchParams, setSearchParams] = useLocalStorage(
+    "URLSearchParams",
+    ""
+  );
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -37,6 +42,7 @@ const CoinListPage = () => {
       params.append("category", store.categoryStore.value.key);
     }
     navigate({ search: params.toString() });
+    setSearchParams(params.toString());
   }, [
     store.searchStore._search,
     navigate,

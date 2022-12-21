@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
+import { useLocalStorage } from "shared/hooks/useLocalStorage";
 import { PageLoader } from "widgets/PageLoader";
 
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { NotFoundPage } from "pages/NotFoundPage";
-import rootStore from "store/RootStore/instance";
 import CoinStore from "store/coinStore/CoinStore";
 import { currencySymbol } from "store/coinStore/currencySymbol";
 import { convertTimestamp } from "utils/convertTimestamp";
@@ -16,10 +16,8 @@ import { rounding } from "utils/rounding";
 import { useAsync } from "utils/useAsync";
 import { useLocalStore } from "utils/useLocalStore";
 
-import Card from "components/UI/Card";
 import Chart from "components/UI/Chart";
 import Dropdown, { Option } from "components/UI/Dropdown";
-import { Favourites } from "components/UI/Favourites";
 import { TabBar } from "components/UI/TabBar";
 import { Tooltip, TooltipPostition } from "components/UI/Tooltip";
 
@@ -30,6 +28,13 @@ const CoinPage = () => {
   const navigate = useNavigate();
 
   const store = useLocalStore(() => new CoinStore(name));
+
+  const [searchParams, setSearchParams] = useLocalStorage(
+    "URLSearchParams",
+    ""
+  );
+
+  const navigateToPrevPage = () => navigate("/?" + searchParams);
 
   useAsync(store.fetch, [
     store.coin,
@@ -63,21 +68,9 @@ const CoinPage = () => {
     store.chartStore.time.value = value;
   };
 
-  const handleStarClick = () => {
-    if (store.coin) {
-      if (!localStorage.getItem(store.coin.id)) {
-        localStorage.setItem(store.coin.id, store.coin.id);
-        return;
-      }
-      localStorage.removeItem(store.coin.id);
-    }
-  };
-
-  const symbol: string = currencySymbol[
-    `${store.currencyStore.dropdownValues.key}`
-  ]
-    ? currencySymbol[`${store.currencyStore.dropdownValues.key}`]
-    : `${store.currencyStore.dropdownValues.key.toUpperCase()} `;
+  const symbol: string =
+    currencySymbol[store.currencyStore.dropdownValues.key] ||
+    store.currencyStore.dropdownValues.key.toUpperCase();
 
   let type = "day";
 
@@ -97,7 +90,7 @@ const CoinPage = () => {
             <section className={styles["coin-page__header"]}>
               <div className={styles["coin-page__header__name-box"]}>
                 <div
-                  onClick={() => navigate(-1)}
+                  onClick={navigateToPrevPage}
                   className={styles["coin-page__header__button"]}
                 />
                 <img
