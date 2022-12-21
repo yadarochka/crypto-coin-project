@@ -90,7 +90,10 @@ const CoinListPage = () => {
         }
       >
         Market is {store.marketCapChange > 0 ? "up " : "down "}
-        <IncreaseOrDecrease percent={rounding(store.marketCapChange, 2)} />
+        <IncreaseOrDecrease
+          percent
+          number={rounding(store.marketCapChange, 2)}
+        />
       </h2>
       <span
         className={

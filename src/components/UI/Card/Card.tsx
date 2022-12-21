@@ -70,7 +70,11 @@ export const Card: FC<CardProps> = ({
       </div>
       <div className={styles.priceBox}>
         <span className={styles.price}>{symbol + price}</span>
-        <IncreaseOrDecrease percent={priceChange} className={styles.percent} />
+        <IncreaseOrDecrease
+          number={priceChange}
+          percent
+          className={styles.percent}
+        />
       </div>
     </div>
   );
