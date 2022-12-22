@@ -1,10 +1,10 @@
-import puppeteer from "puppeteer";
+import puppeteer, { Browser, Page } from "puppeteer";
 
 const BASE_URL = "http://localhost:9000/";
 
 describe("Навигация приложения", () => {
-  let browser;
-  let page;
+  let browser: Browser;
+  let page: Page;
   const width = 1920;
   const height = 1080;
 
