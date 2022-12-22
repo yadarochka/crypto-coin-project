@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Тест BurgerMenu Snapshot-тестирование бургер-иконки 1`] = `
+<div>
+  <div
+    class=""
+    data-testid="burger-menu"
+    id="burgerMenu-icon"
+    tabindex="0"
+  >
+    <span
+      class=""
+    />
+    <span
+      class=""
+    />
+    <span
+      class=""
+    />
+  </div>
+</div>
+`;
+
+exports[`Тест BurgerMenu Snapshot-тестирование меню 1`] = `
+<div
+  data-testid="menu"
+>
+  <div />
+  <nav
+    class=""
+  >
+    <h2>
+      Pages
+    </h2>
+    <li>
+      <a
+        class=""
+        data-testid="abc-nav"
+        href="/abc"
+      >
+        <div>
+          <img
+            alt="ABC"
+            src=""
+          />
+          ABC
+        </div>
+      </a>
+    </li>
+    <li>
+      <a
+        class=""
+        data-testid="123-nav"
+        href="/123"
+      >
+        <div>
+          <img
+            alt="123"
+            src=""
+          />
+          123
+        </div>
+      </a>
+    </li>
+    <li>
+      <a
+        class=""
+        data-testid="bitcoin-nav"
+        href="/bitcoin"
+      >
+        <div>
+          <img
+            alt="Bitcoin"
+            src=""
+          />
+          Bitcoin
+        </div>
+      </a>
+    </li>
+  </nav>
+</div>
+`;
