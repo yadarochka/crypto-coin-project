@@ -27,7 +27,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
   ]);
 
   const Menu = () => (
-    <div className={styles.menu}>
+    <div className={styles.menu} data-testid="menu">
       <div className={isActive ? styles.blur : ""} />
       <nav
         className={classnames(
@@ -65,23 +65,21 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
         id="burgerMenu-icon"
         data-testId="burger-menu"
         tabIndex={0}
-        className={classnames(styles.btn, isActive ? styles.btnActive : "")}
+        className={classnames(styles.btn, { [styles.btnActive]: isActive })}
         onClick={burgerIsVisibleChange}
       >
         <span
-          className={classnames(styles.top, isActive ? styles.btnActive : "")}
+          className={classnames(styles.top, { [styles.btnActive]: isActive })}
         />
         <span
-          className={classnames(
-            styles.middle,
-            isActive ? styles.btnActive : ""
-          )}
+          className={classnames(styles.middle, {
+            [styles.btnActive]: isActive,
+          })}
         />
         <span
-          className={classnames(
-            styles.bottom,
-            isActive ? styles.btnActive : ""
-          )}
+          className={classnames(styles.bottom, {
+            [styles.btnActive]: isActive,
+          })}
         />
       </div>
       {isActive && <Menu />}
