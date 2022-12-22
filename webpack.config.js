@@ -2,8 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const path = require("path");
 const buildPath = path.resolve(__dirname, "dist");
@@ -66,7 +64,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
     }),
-    new BundleAnalyzerPlugin(),
     !isProd && (new ReactRefreshWebpackPlugin(), new ForkTsCheckerPlugin()),
   ].filter(Boolean),
   module: {
