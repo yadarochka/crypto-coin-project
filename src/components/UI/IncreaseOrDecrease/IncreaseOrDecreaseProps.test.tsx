@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom";
-import { getByText, render, screen } from "@testing-library/react";
-import "jest-styled-components";
+import { render, screen } from "@testing-library/react";
 
 import { IncreaseOrDecrease } from "./IncreaseOrDecrease";
 
