@@ -35,7 +35,7 @@ describe("Навигация приложения", () => {
     await page.click("[data-testId=categories-nav]");
     await page.click("[data-testId=coins-nav]");
 
-    const url = await page.url();
+    const url = page.url();
 
     expect(url).toEqual(BASE_URL);
   });
@@ -50,7 +50,7 @@ describe("Навигация приложения", () => {
     await page.click("[data-testId=burger-menu]");
     await page.click("[data-testId=coins-nav]");
 
-    const url = await page.url();
+    const url = page.url();
 
     expect(url).toEqual(BASE_URL);
   });
@@ -71,7 +71,7 @@ describe("Навигация приложения", () => {
     await page.click("[data-testId=burger-menu]");
     await page.click("[data-testId=categories-nav]");
 
-    const url = await page.url();
+    const url = page.url();
 
     expect(url).toEqual(BASE_URL + "categories");
   });
@@ -80,7 +80,7 @@ describe("Навигация приложения", () => {
     await page.click("[data-testId=categories-nav]");
     await page.click("[data-testId=logo]");
 
-    const url = await page.url();
+    const url = page.url();
 
     expect(url).toEqual(BASE_URL);
   });
