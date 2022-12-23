@@ -1,3 +1,5 @@
+import classnames from "classnames";
+
 import React, { memo } from "react";
 import { FC } from "react";
 
@@ -12,7 +14,7 @@ const Button: FC<ButtonProps> = ({ value, className, ...otherProps }) => {
       type="button"
       {...otherProps}
       value={value}
-      className={`${styles["button"]} ${className}`}
+      className={classnames(styles["button"], className)}
     />
   );
 };
