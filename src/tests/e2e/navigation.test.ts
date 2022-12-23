@@ -28,7 +28,8 @@ describe("Навигация приложения", () => {
       const url = page.url();
 
       expect(url).toEqual(BASE_URL + title);
-    }
+    },
+    70000
   );
 
   it("Переход на Coins Page / Desktop", async () => {
@@ -38,7 +39,7 @@ describe("Навигация приложения", () => {
     const url = page.url();
 
     expect(url).toEqual(BASE_URL);
-  });
+  }, 70000);
 
   it("Переход на Coins Page / Mobile", async () => {
     await page.setViewport({
@@ -53,7 +54,7 @@ describe("Навигация приложения", () => {
     const url = page.url();
 
     expect(url).toEqual(BASE_URL);
-  });
+  }, 70000);
 
   it("Переход на Categories Page / Desktop", async () => {
     await page.click("[data-testId=categories-nav]");
@@ -61,7 +62,7 @@ describe("Навигация приложения", () => {
     const url = await page.url();
 
     expect(url).toEqual(BASE_URL + "categories");
-  });
+  }, 70000);
 
   it("Переход на Categories Page / Mobile", async () => {
     await page.setViewport({
@@ -74,7 +75,7 @@ describe("Навигация приложения", () => {
     const url = page.url();
 
     expect(url).toEqual(BASE_URL + "categories");
-  });
+  }, 70000);
 
   it("Клик на логотип ведёт на главную страницу", async () => {
     await page.click("[data-testId=categories-nav]");
@@ -83,7 +84,7 @@ describe("Навигация приложения", () => {
     const url = page.url();
 
     expect(url).toEqual(BASE_URL);
-  });
+  }, 70000);
 
   afterEach(() => {
     browser.close();
