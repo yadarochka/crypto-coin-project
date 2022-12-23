@@ -26,6 +26,7 @@ export const TabBar: FC<TabBarProps> = ({
       {options.map((option) => (
         <div
           onClick={() => handleTabChange(option)}
+          tabIndex={0}
           key={option.key}
           className={classNames(
             styles["tab__item"],
