@@ -1,12 +1,6 @@
 import classNames from "classnames";
 
-import React, {
-  FC,
-  ReactComponentElement,
-  ReactNode,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, ReactNode, useRef, useState } from "react";
 
 import { useKeyboardEvent } from "utils/useKeyboardEvent";
 
