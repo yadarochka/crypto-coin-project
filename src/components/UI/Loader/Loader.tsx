@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classnames from "classnames";
 
 import React from "react";
 import { FC } from "react";
@@ -36,5 +36,7 @@ function getLoaderSize(size: LoaderSize) {
 
 export const Loader: FC<LoaderProps> = ({ className, size = "m" }) => {
   const style = getLoaderSize(size);
-  return <span className={styles.loader} style={style} />;
+  return (
+    <span className={classnames(styles.loader, className)} style={style} />
+  );
 };
