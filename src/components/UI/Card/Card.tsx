@@ -53,7 +53,7 @@ export const Card: FC<CardProps> = ({
   const colorChart = priceChange < 0 ? "#d90429" : "#21bf73";
   const symbol: string = currencySymbol[currency] || currency.toUpperCase();
   return (
-    <div className={`${styles.card} ${className}`}>
+    <div className={classnames(styles.card, className)}>
       <img src={image} className={styles.img} alt="Coin" />
       <div className={styles.title}>
         <h3 className={styles.name}>{name}</h3>
