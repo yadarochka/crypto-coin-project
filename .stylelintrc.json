@@ -9,6 +9,7 @@
   "plugins": ["stylelint-scss", "stylelint-order"],
   "rules": {
     "prettier/prettier": true,
-    "selector-class-pattern": ".*"
+    "selector-class-pattern": ".*",
+    "no-descending-specificity": null
   }
 }
