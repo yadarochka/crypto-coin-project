@@ -1,10 +1,13 @@
+import { ThemeContext } from "app/providers/ThemeProvider";
+import classnames from "classnames";
 import { useIsMobile } from "shared/hooks/useIsMobile";
 import { Logo } from "widgets/Logo";
 
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
 import { BurgerMenu, BurgerMenuItems } from "components/UI/BurgerMenu";
+import Button from "components/UI/Button";
 
 import coinImg from "images/Bitcoin.svg";
 import categoriesImg from "images/Categories.svg";
@@ -20,10 +23,11 @@ const BurgerItems: BurgerMenuItems[] = [
 ];
 
 export const Header = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const isMobile = useIsMobile();
   if (isMobile) {
     return (
-      <header className={styles.header}>
+      <header className={classnames(styles.header, styles[theme])}>
         <div className={styles.wrapper}>
           <Logo />
           <BurgerMenu items={BurgerItems} />
@@ -32,7 +36,7 @@ export const Header = () => {
     );
   } else
     return (
-      <header className={styles.header}>
+      <header className={classnames(styles.header, styles[theme])}>
         <div className={styles.wrapper}>
           <Logo />
           <div className={styles.nav}>
@@ -47,7 +51,7 @@ export const Header = () => {
               </NavLink>
             ))}
           </div>
-          <span>Log in</span>
+          <Button value="Toggle Theme" onClick={toggleTheme} />
         </div>
       </header>
     );
