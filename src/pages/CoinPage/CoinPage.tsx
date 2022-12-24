@@ -180,7 +180,7 @@ const CoinPage = () => {
                       <span>
                         {
                           store.coin.marketCap[
-                            `${store.currencyStore.dropdownValues.key}`
+                            store.currencyStore.dropdownValues.key
                           ]
                         }
                         {symbol}
