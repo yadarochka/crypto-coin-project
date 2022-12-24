@@ -17,9 +17,9 @@ export const IncreaseOrDecrease: FC<IncreaseOrDecreaseProps> = ({
 }) => {
   const colorStyle = number > 0 ? styles.green : styles.red;
   return (
-    <span className={classNames(colorStyle, className)}>
+    <div className={classNames(colorStyle, className, styles.container)}>
       {number}
       {percent && "%"}
-    </span>
+    </div>
   );
 };
