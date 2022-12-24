@@ -1,9 +1,10 @@
-import React from "react";
+import { ThemeContext } from "app/providers/ThemeProvider";
+import classNames from "classnames";
+
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useKeyboardEvent } from "utils/useKeyboardEvent";
-
-import logo from "images/Logo.svg";
 
 import styles from "./Logo.module.scss";
 
@@ -12,15 +13,19 @@ export const Logo = () => {
   const handlerLogoClick = () => {
     navigate("/");
   };
+
+  const { theme } = useContext(ThemeContext);
+
   useKeyboardEvent("Enter", handlerLogoClick, "logo");
   return (
-    <img
+    <div
       id="logo"
-      tabIndex={0}
-      src={logo}
       data-testId="logo"
-      className={styles.logo}
+      tabIndex={0}
+      className={classNames(styles.logo, styles[theme])}
       onClick={handlerLogoClick}
-    />
+    >
+      Coin Tracker
+    </div>
   );
 };

@@ -3,6 +3,4 @@
 
 
 
-npm run ts-check
-npm run lint:fix
-npm run stylelint:fix
+
