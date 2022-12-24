@@ -1,4 +1,8 @@
-import React, { memo, useEffect } from "react";
+import { ThemeContext } from "app/providers/ThemeProvider";
+import classNames from "classnames";
+import classnames from "classnames";
+
+import React, { memo, useContext, useEffect } from "react";
 
 import { useKeyboardEvent } from "utils/useKeyboardEvent";
 
@@ -35,9 +39,11 @@ const Search = ({
 }: SearchProps) => {
   useKeyboardEvent("Enter", buttonOnClick, "search");
 
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div className={className} id="search">
-      <div className={styles.search}>
+      <div className={classnames(styles.search, styles[theme])}>
         <input
           value={value}
           onChange={onChange}

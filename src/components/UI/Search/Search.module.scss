@@ -9,7 +9,6 @@
   min-width: 200px;
   max-width: 265px;
   padding: 12px;
-  border: 1px solid #dfe2e4;
   margin-right: 15px;
   border-radius: 4px;
 
@@ -30,5 +29,18 @@
 
   &__field:focus {
     outline: none;
+  }
+}
+
+.ligth {
+  border: 1px solid $border-color;
+}
+
+.dark {
+  border: 1px solid $dark-border-color;
+
+  input {
+    background-color: $dark-background-color;
+    color: $dark-secondary-text-color;
   }
 }
