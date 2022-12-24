@@ -1,6 +1,7 @@
+import { ThemeContext } from "app/providers/ThemeProvider";
 import classNames from "classnames";
 
-import React, { FC, ReactNode, useRef, useState } from "react";
+import React, { FC, ReactNode, useContext, useRef, useState } from "react";
 
 import { useKeyboardEvent } from "utils/useKeyboardEvent";
 
@@ -24,6 +25,7 @@ export const Tooltip: FC<TooltipProps> = ({
   children,
   position = TooltipPostition.top,
 }) => {
+  const { theme } = useContext(ThemeContext);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const targetRef = useRef<HTMLImageElement>(null);
   const handleOutsideClick = (event: any) => {
@@ -46,23 +48,21 @@ export const Tooltip: FC<TooltipProps> = ({
   useKeyboardEvent("Enter", handleClick, `tooltip${tooltipId}`);
 
   return (
-    <div className={classNames(styles.tooltip, className)}>
-      <img
+    <div className={classNames(styles.tooltip, className, styles[theme])}>
+      <span
         id={`tooltip${tooltipId}`}
         tabIndex={0}
         ref={targetRef}
         onClick={handleClick}
-        className={styles["tooltip__icon"]}
-        src={icon}
-        alt=""
-      />
+        className={styles.icon}
+      >
+        ?
+      </span>
       {isClicked && (
         <div
           className={classNames(
-            styles["tooltip__content"],
-            position === TooltipPostition.top
-              ? styles["tooltip-top"]
-              : styles["tooltip-bot"]
+            styles.content,
+            position === TooltipPostition.top ? styles.top : styles.bot
           )}
         >
           {children}
