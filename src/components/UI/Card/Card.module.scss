@@ -67,3 +67,23 @@
   font-size: 10px;
   text-align: right;
 }
+
+.dark {
+  background: $dark-card-color;
+
+  &:hover {
+    background-color: $dark-hover-color;
+  }
+
+  .name {
+    color: $dark-primary-text-color;
+  }
+
+  .subtitle {
+    color: $dark-secondary-text-color;
+  }
+
+  .price {
+    color: $dark-primary-text-color;
+  }
+}
