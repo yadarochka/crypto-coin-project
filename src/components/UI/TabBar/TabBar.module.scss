@@ -1,23 +1,37 @@
 @import "~styles/variables";
 
-$blue-color: rgb(0 99 245 / 100%);
-
 .tab {
   display: flex;
   justify-content: space-between;
+}
 
-  &__item {
-    padding: 6px 10px;
-    border: 0.5px solid #dfe2e4;
-    background: #f8f9fa;
-    border-radius: 20px;
-    color: $gray-color;
-    cursor: pointer;
-    font-size: 12px;
+.item {
+  padding: 6px 10px;
+  border: 0.5px solid #dfe2e4;
+  background: #f8f9fa;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.dark {
+  border: 0.5px solid $dark-border-color;
+  background: $dark-card-color;
+  color: $dark-secondary-text-color;
+
+  &.active {
+    border: 0.5px solid $dark-active-color;
+    color: $dark-active-color;
   }
 }
 
-.active {
-  border-color: $blue-color;
-  color: $blue-color;
+.light {
+  border: 0.5px solid #dfe2e4;
+  background: #f8f9fa;
+  color: $gray-color;
+
+  &.active {
+    border: 0.5px solid $light-active-color;
+    color: $light-active-color;
+  }
 }
