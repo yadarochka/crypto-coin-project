@@ -66,7 +66,7 @@ export const Card: FC<CardProps> = ({
         <Chart
           coinData={coinData}
           coinLabels={coinLabels}
-          onMouseEvent={false}
+          onMouseEvent={onMouseEvent}
           className={styles.chart}
           color={colorChart}
         />
