@@ -1,6 +1,6 @@
 import { useLocalStorage } from "shared/hooks/useLocalStorage";
 
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, ReactNode } from "react";
 
 import { ThemeContext, themes } from "./ThemeContext";
 
@@ -9,7 +9,7 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useLocalStorage("apptheme", "ligth");
+  const [theme, setTheme] = useLocalStorage("appTheme", themes.light);
 
   const toggleTheme = () => {
     if (theme === themes.dark) {

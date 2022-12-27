@@ -61,6 +61,7 @@
   .item {
     border-top: 0.5px solid $dark-border-color;
     background-color: $dark-card-color;
+    color: $dark-secondary-text-color;
 
     &:hover {
       background-color: $dark-hover-color;
@@ -68,7 +69,7 @@
   }
 }
 
-.ligth {
+.light {
   border: 0.5px solid $border-color;
   background-color: $white-color;
   color: $gray-color;
@@ -85,7 +86,7 @@
     color: inherit;
 
     &:hover {
-      background-color: $ligth-hover-color;
+      background-color: $light-hover-color;
     }
   }
 }

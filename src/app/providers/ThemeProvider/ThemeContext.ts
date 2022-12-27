@@ -1,7 +1,7 @@
 import React from "react";
 
 export const themes = {
-  light: "ligth",
+  light: "light",
   dark: "dark",
 };
 
