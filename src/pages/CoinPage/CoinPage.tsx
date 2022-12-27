@@ -1,10 +1,12 @@
+import { ThemeContext } from "app/providers/ThemeProvider";
+import { themes } from "app/providers/ThemeProvider/ThemeContext";
 import classNames from "classnames";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useLocalStorage } from "shared/hooks/useLocalStorage";
 import { PageLoader } from "widgets/PageLoader";
 
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { NotFoundPage } from "pages/NotFoundPage";
@@ -24,6 +26,10 @@ import { Tooltip, TooltipPostition } from "components/UI/Tooltip";
 import styles from "./CoinPage.module.scss";
 
 const CoinPage = () => {
+  const { theme } = useContext(ThemeContext);
+
+  const chartColor = theme === themes.light ? "#39f" : "#9370db";
+
   const { name } = useParams();
   const navigate = useNavigate();
 
@@ -96,7 +102,7 @@ const CoinPage = () => {
                 <img
                   className={styles["coin-page__header__img"]}
                   src={store.coin.image.large}
-                  alt={`Изображение ${store.coin.name}`}
+                  alt={store.coin.name}
                 />
                 <div>
                   <h1 className={styles["coin-page__header__name-box__name"]}>
@@ -273,6 +279,7 @@ const CoinPage = () => {
                     label={symbol}
                     className={classNames(styles["coin-page__chart"])}
                     onMouseEvent={true}
+                    color={chartColor}
                     coinData={toJS(store.chartStore.chart).map((arr) => arr[2])}
                     coinLabels={toJS(store.chartStore.chart).map((arr) =>
                       convertTimestamp(arr[0])
@@ -286,8 +293,8 @@ const CoinPage = () => {
             </section>
             <TabBar
               className={styles["coin-page__tab-bar"]}
-              options={store.chartStore.time.options}
-              value={store.chartStore.time.value}
+              options={toJS(store.chartStore.time.options)}
+              value={toJS(store.chartStore.time.value)}
               onChange={handleTabBarChange}
             />
           </>
