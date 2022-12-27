@@ -56,7 +56,7 @@ export const Dropdown: FC<MultiDropdownProps> = ({
         key={el.key}
         className={classNames(
           styles.item,
-          el.key === value.key && styles["active"]
+          el.key === value.key && styles.active
         )}
         onClick={() => itemOnClick(el)}
       >

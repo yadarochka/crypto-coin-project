@@ -59,8 +59,15 @@
   }
 }
 
-.ligth {
+.light {
   .icon {
     border: 0.5px solid $border-color;
+    color: $gray-color;
+  }
+
+  .content {
+    border: 1px solid $gray-color;
+    background-color: $white-color;
+    color: $gray-color;
   }
 }

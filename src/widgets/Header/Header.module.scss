@@ -45,7 +45,7 @@
   }
 
   .active {
-    color: $purple-color;
+    color: $dark-active-color;
 
     &::after {
       border-bottom: 2px solid $dark-active-color;
@@ -55,16 +55,16 @@
   border-bottom: 1px solid $dark-border-color;
 }
 
-.ligth {
+.light {
   .link {
     color: $black-color;
   }
 
   .active {
-    color: $blue-color;
+    color: $light-active-color;
 
     &::after {
-      border-bottom: 2px solid $blue-color;
+      border-bottom: 2px solid $light-active-color;
     }
   }
 
