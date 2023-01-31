@@ -1,15 +1,7 @@
-import {
-  action,
-  makeAutoObservable,
-  makeObservable,
-  observable,
-  override,
-  runInAction,
-} from "mobx";
+import { action, makeAutoObservable, observable, runInAction } from "mobx";
 
 import { defaultCategoryValue } from "store/defaultValues";
 import {
-  CategoryListModel,
   CategoryModel,
   normalizeCategoryModel,
 } from "store/models/coinList/category";

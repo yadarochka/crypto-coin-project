@@ -1,0 +1,27 @@
+@import "~styles/variables";
+
+.button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.light g {
+  stroke: $black-color;
+}
+
+.button:hover .light g {
+  stroke: $light-hover-color;
+}
+
+.dark g {
+  stroke: $dark-primary-text-color;
+}
+
+.button:hover .dark g {
+  stroke: $dark-hover-color;
+}

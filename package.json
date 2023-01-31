@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "set NODE_ENV=development && npx webpack serve --mode=development",
+    "dev": "set NODE_ENV=development && npx webpack serve --mode=development -open",
     "build": "set NODE_ENV=production && npx webpack --mode=production",
     "test": "jest",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",

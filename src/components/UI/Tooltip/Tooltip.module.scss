@@ -3,13 +3,6 @@
 .tooltip {
   position: relative;
   display: inline-block;
-
-  &__content > div,
-  p,
-  span,
-  a {
-    margin-bottom: 1em;
-  }
 }
 
 .content {

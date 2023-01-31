@@ -9,7 +9,7 @@ import icon from "images/Tooltip-icon.svg";
 
 import styles from "./Tooltip.module.scss";
 
-export enum TooltipPostition {
+export enum TooltipPosition {
   top = "top",
   bot = "bot",
 }
@@ -17,13 +17,13 @@ export enum TooltipPostition {
 type TooltipProps = {
   className?: string;
   children: ReactNode;
-  position?: TooltipPostition;
+  position?: TooltipPosition;
 };
 
 export const Tooltip: FC<TooltipProps> = ({
   className,
   children,
-  position = TooltipPostition.top,
+  position = TooltipPosition.top,
 }) => {
   const { theme } = useContext(ThemeContext);
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -62,7 +62,7 @@ export const Tooltip: FC<TooltipProps> = ({
         <div
           className={classNames(
             styles.content,
-            position === TooltipPostition.top ? styles.top : styles.bot
+            position === TooltipPosition.top ? styles.top : styles.bot
           )}
         >
           {children}

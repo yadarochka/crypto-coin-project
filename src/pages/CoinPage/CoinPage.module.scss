@@ -44,35 +44,6 @@
     width: 120px;
   }
 
-  &__name-box {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-
-    &__name {
-      display: inline-block;
-      margin-right: 4px;
-      margin-left: 8px;
-      font-size: 16px;
-    }
-
-    &__symbol {
-      display: inline-block;
-      font-size: 10px;
-    }
-  }
-
-  &__button {
-    width: 5px;
-    height: 10px;
-    padding: 5px;
-    margin-right: 10px;
-    background-image: url("~images/prevPage.svg");
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-  }
-
   &__price-info {
     &__price {
       margin-right: 12px;
@@ -83,38 +54,36 @@
       font-size: 16px;
     }
   }
+}
 
-  &__img {
-    width: 24px;
-    height: 24px;
+.dropdownCurrency {
+  position: absolute;
+  z-index: 2;
+  width: 150px;
+  transform: translateY(-15px);
+}
+
+.dark {
+  & span,
+  h1 {
+    color: $dark-primary-text-color;
   }
 
-  &__rank {
-    padding: 0.2em 0.4em;
-    margin-left: 5px;
-    background-color: $black-color;
-    border-radius: 5px;
-    color: white;
-    font-size: 12px;
+  & .symbol {
+    color: $dark-secondary-text-color;
   }
 }
 
-.coin-info-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid $border-color;
+.light {
+  & span {
+    color: $black-color;
+  }
 
-  &__title {
+  & .symbol {
     color: $gray-color;
   }
 }
 
-.header__tooltip {
-  margin-left: 5px;
-}
-
-.active {
-  color: red;
+.loaderWrapper {
+  height: 600px;
 }

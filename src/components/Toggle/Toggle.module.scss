@@ -1,0 +1,23 @@
+.toggle {
+  display: flex;
+  width: 60px;
+  padding: 5px;
+  background-color: gainsboro;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
+  cursor: pointer;
+  transition: all ease 0.5s;
+}
+
+.circle {
+  width: 26px;
+  height: 26px;
+  background-image: url("../../images/Sun.svg");
+  border-radius: 50%;
+  transition: all ease 0.5s;
+}
+
+.active {
+  background-image: url("../../images/Moon.svg");
+  transform: translateX(35px);
+}

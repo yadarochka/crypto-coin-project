@@ -1,9 +1,10 @@
-import classNames from "classnames";
+import { ThemeContext } from "app/providers/ThemeProvider";
+import classnames from "classnames";
 import { observer } from "mobx-react-lite";
 import { NotFound } from "widgets/NotFound";
 import { PageLoader } from "widgets/PageLoader";
 
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { CategoriesStore } from "store/categoriesStore/categoriesStore";
@@ -16,6 +17,7 @@ import { useLocalStore } from "utils/useLocalStore";
 import styles from "./CategoriesPage.module.scss";
 
 const CategoriesPage = () => {
+  const { theme } = useContext(ThemeContext);
   const store = useLocalStore(() => new CategoriesStore());
 
   const fetch = async () => {
@@ -56,7 +58,7 @@ const CategoriesPage = () => {
     return <NotFound />;
   }
   return (
-    <main className={styles.categoriesPage}>
+    <main className={classnames(styles.categoriesPage, styles[theme])}>
       <h2 className={styles.title}>Categories</h2>
       {store.meta === Meta.success && (
         <div className={styles.categoriesList}>{categoryItems}</div>

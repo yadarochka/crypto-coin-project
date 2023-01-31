@@ -6,6 +6,7 @@ import { Logo } from "widgets/Logo";
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
+import Toogle from "components/Toggle";
 import { BurgerMenu, BurgerMenuItems } from "components/UI/BurgerMenu";
 import Button from "components/UI/Button";
 
@@ -51,7 +52,7 @@ export const Header = () => {
               </NavLink>
             ))}
           </div>
-          <Button value="Toggle Theme" onClick={toggleTheme} />
+          <Toogle />
         </div>
       </header>
     );

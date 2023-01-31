@@ -8,6 +8,7 @@ import { PageLoader } from "widgets/PageLoader";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { NotFoundPage } from "pages/NotFoundPage";
 import coinListStore from "store/coinListStore";
 import { Meta } from "utils/meta";
 import { rounding } from "utils/rounding";
@@ -157,7 +158,15 @@ const CoinListPage = () => {
   );
 
   if (store.meta === Meta.error) {
-    return null;
+    return <NotFoundPage />;
+  }
+
+  if (
+    store.globalDataStore.meta !== Meta.success ||
+    store.dropdownStore.meta !== Meta.success ||
+    store.categoryStore._meta !== Meta.success
+  ) {
+    return <PageLoader />;
   }
 
   return (

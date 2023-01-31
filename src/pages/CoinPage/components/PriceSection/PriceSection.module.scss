@@ -1,0 +1,25 @@
+@import "~styles/variables";
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid $border-color;
+}
+
+.title {
+  color: $gray-color;
+}
+
+.dark {
+  &span {
+    color: $dark-secondary-text-color;
+  }
+}
+
+.light {
+  &span {
+    color: $gray-color;
+  }
+}
