@@ -25,7 +25,7 @@ export default class ChartStore implements ILocalStore {
       },
       {
         key: "30",
-        value: "1 M",
+        value: "1 H",
       },
       {
         key: "90",

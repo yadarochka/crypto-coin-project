@@ -39,6 +39,7 @@ export const BurgerMenu: FC<BurgerMenuProps> = ({ items }) => {
         {items.map((link) => (
           <li>
             <NavLink
+              key={link.label}
               data-testId={`${link.label.toLocaleLowerCase()}-nav`}
               className={styles.item}
               to={link.linkTo}

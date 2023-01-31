@@ -12,8 +12,44 @@
     <meta http-equiv="expires" content="0" />
     <link rel="preload" as="font">
     <title>Coin Tracker</title>
+    <style type="text/css" media="screen">
+      #app-loader {
+        transform: translateY(40%);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 15px;
+        margin: 0 auto;
+      } 
+      #loader{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        border: 3px solid gray;
+        border-top-color: transparent;
+        animation: loader 1s linear infinite;
+        border-radius: 50%;
+      }
+
+      @keyframes loader {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+  </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="app-loader">
+        <div id="loader"></div>
+        <span>App loading...</span>
+      </div>
+    </div>
   </body>
 </html>

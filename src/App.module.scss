@@ -1,10 +1,39 @@
 @import "~styles/fonts";
 @import "~styles/variables";
 
-.app {
-  position: relative;
-}
-
 html {
   overflow-y: scroll;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 0 1rem;
+}
+
+.light {
+  h2 {
+    color: $black-color;
+  }
+
+  span {
+    color: $gray-color;
+  }
+
+  background-color: $white-color;
+}
+
+.dark {
+  h2 {
+    color: $dark-primary-text-color;
+  }
+
+  span {
+    color: $dark-secondary-text-color;
+  }
+
+  input {
+    color: $dark-primary-text-color;
+  }
+
+  background-color: $dark-background-color;
 }

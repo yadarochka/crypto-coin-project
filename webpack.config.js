@@ -112,6 +112,7 @@ module.exports = {
       api: path.join(srcPath, "api"),
       widgets: path.join(srcPath, "widgets"),
       shared: path.join(srcPath, "shared"),
+      app: path.join(srcPath, "app"),
     },
   },
   devServer: {

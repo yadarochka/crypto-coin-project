@@ -42,11 +42,31 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  border: 1px solid $border-color;
-  background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
   color: $black-color;
   cursor: pointer;
   text-decoration: none;
+}
+
+.dark {
+  & .categoryItem {
+    border: 1px solid $dark-border-color;
+    background: $dark-card-color;
+
+    &:hover {
+      background-color: $dark-hover-color;
+    }
+  }
+}
+
+.light {
+  & .categoryItem {
+    border: 1px solid $border-color;
+    background-color: $white-color;
+
+    &:hover {
+      background-color: $light-hover-color;
+    }
+  }
 }

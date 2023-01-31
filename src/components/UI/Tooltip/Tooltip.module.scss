@@ -3,41 +3,64 @@
 .tooltip {
   position: relative;
   display: inline-block;
+}
 
-  &__icon {
-    width: 15px;
-    height: 15px;
-    margin: auto;
-    vertical-align: middle;
+.content {
+  position: absolute;
+  z-index: 50;
+  left: 100%;
+  width: max-content;
+  max-width: 200px;
+  padding: 0.4em 0.6em;
+  border: 1px solid $gray-color;
+  background-color: white;
+  border-radius: 5px;
+  color: $gray-color;
+  font-size: 14px;
+  transform: translateX(-50%);
+}
+
+.top {
+  bottom: calc(100% + 5px);
+}
+
+.bot {
+  top: calc(100% + 5px);
+}
+
+.icon {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.dark {
+  .icon {
+    border: 0.5px solid $dark-border-color;
+    background-color: $dark-card-color;
+    color: $dark-secondary-text-color;
   }
 
-  &__content {
-    position: absolute;
-    z-index: 50;
-    left: 100%;
-    width: max-content;
-    max-width: 200px;
-    padding: 0.4em 0.6em;
-    border: 1px solid $gray-color;
-    background-color: white;
-    border-radius: 5px;
+  .content {
+    border: 0.5px solid $dark-border-color;
+    background-color: $dark-card-color;
+    color: $dark-secondary-text-color;
+  }
+}
+
+.light {
+  .icon {
+    border: 0.5px solid $border-color;
     color: $gray-color;
-    font-size: 14px;
-    transform: translateX(-50%);
   }
 
-  &-top {
-    bottom: calc(100% + 5px);
-  }
-
-  &-bot {
-    top: calc(100% + 5px);
-  }
-
-  &__content > div,
-  p,
-  span,
-  a {
-    margin-bottom: 1em;
+  .content {
+    border: 1px solid $gray-color;
+    background-color: $white-color;
+    color: $gray-color;
   }
 }

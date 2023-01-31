@@ -11,14 +11,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
   cursor: pointer;
-
-  &:hover {
-    background-color: gainsboro;
-  }
 }
 
 .img {
@@ -66,4 +60,45 @@
   margin-top: 5px;
   font-size: 10px;
   text-align: right;
+}
+
+.dark {
+  background: $dark-card-color;
+
+  &:hover {
+    background-color: $dark-hover-color;
+  }
+
+  .name {
+    color: $dark-primary-text-color;
+  }
+
+  .subtitle {
+    color: $dark-secondary-text-color;
+  }
+
+  .price {
+    color: $dark-primary-text-color;
+  }
+}
+
+.light {
+  background: $white-color;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
+
+  &:hover {
+    background-color: $light-hover-color;
+  }
+
+  .name {
+    color: $black-color;
+  }
+
+  .subtitle {
+    color: $gray-color;
+  }
+
+  .price {
+    color: $black-color;
+  }
 }

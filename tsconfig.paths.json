@@ -14,7 +14,8 @@
       "fonts/*": ["fonts/*"],
       "api/*": ["api/*"],
       "widgets/*": ["widgets/*"],
-      "shared/*": ["shared/*"]
+      "shared/*": ["shared/*"],
+      "app/*": ["app/*"]
     }
   }
 }

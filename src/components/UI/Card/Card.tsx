@@ -1,6 +1,7 @@
+import { ThemeContext } from "app/providers/ThemeProvider";
 import classnames from "classnames";
 
-import { FC } from "react";
+import { FC, useContext } from "react";
 import React from "react";
 
 import { currencySymbol } from "store/coinStore/currencySymbol";
@@ -52,8 +53,10 @@ export const Card: FC<CardProps> = ({
 }) => {
   const colorChart = priceChange < 0 ? "#d90429" : "#21bf73";
   const symbol: string = currencySymbol[currency] || currency.toUpperCase();
+
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className={classnames(styles.card, className)}>
+    <div className={classnames(styles.card, styles[theme], className)}>
       <img src={image} className={styles.img} alt="Coin" />
       <div className={styles.title}>
         <h3 className={styles.name}>{name}</h3>
@@ -63,7 +66,7 @@ export const Card: FC<CardProps> = ({
         <Chart
           coinData={coinData}
           coinLabels={coinLabels}
-          onMouseEvent={false}
+          onMouseEvent={onMouseEvent}
           className={styles.chart}
           color={colorChart}
         />

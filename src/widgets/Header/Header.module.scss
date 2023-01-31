@@ -1,9 +1,8 @@
-@import "~./../../../styles/variables";
+@import "~styles/variables";
 
 .header {
   min-width: 320px;
   height: $header-height;
-  border-bottom: 1px solid $border-color;
 }
 
 .wrapper {
@@ -24,7 +23,6 @@
 
 .active {
   position: relative;
-  color: $blue-color;
 
   &::after {
     position: absolute;
@@ -33,12 +31,42 @@
     left: 0;
     display: inline-block;
     width: 100%;
-    border-bottom: 2px solid $blue-color;
     content: "";
   }
 }
 
 .link {
-  color: $black-color;
   text-decoration: none;
+}
+
+.dark {
+  .link {
+    color: $white-color;
+  }
+
+  .active {
+    color: $dark-active-color;
+
+    &::after {
+      border-bottom: 2px solid $dark-active-color;
+    }
+  }
+
+  border-bottom: 1px solid $dark-border-color;
+}
+
+.light {
+  .link {
+    color: $black-color;
+  }
+
+  .active {
+    color: $light-active-color;
+
+    &::after {
+      border-bottom: 2px solid $light-active-color;
+    }
+  }
+
+  border-bottom: 1px solid $border-color;
 }

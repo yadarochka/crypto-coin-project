@@ -1,7 +1,16 @@
+@import "~styles/variables";
+
 .logo {
-  width: 120px;
-  height: 25px;
   align-self: center;
   cursor: pointer;
+  font-size: 1.7rem;
   justify-self: center;
+}
+
+.dark {
+  color: $dark-primary-text-color;
+}
+
+.ligth {
+  color: $black-color;
 }

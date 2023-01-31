@@ -1,6 +1,7 @@
+import { ThemeContext } from "app/providers/ThemeProvider";
 import classNames from "classnames";
 
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 
 import { Option } from "../Dropdown";
 import styles from "./TabBar.module.scss";
@@ -18,6 +19,7 @@ export const TabBar: FC<TabBarProps> = ({
   onChange,
   className,
 }) => {
+  const { theme } = useContext(ThemeContext);
   const handleTabChange = (option: any) => {
     onChange(option);
   };
@@ -28,10 +30,9 @@ export const TabBar: FC<TabBarProps> = ({
           onClick={() => handleTabChange(option)}
           tabIndex={0}
           key={option.key}
-          className={classNames(
-            styles["tab__item"],
-            option.key === value.key ? styles.active : ""
-          )}
+          className={classNames(styles.item, styles[theme], {
+            [styles.active]: option.value === value.value,
+          })}
         >
           {option.value}
         </div>

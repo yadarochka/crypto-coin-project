@@ -1,6 +1,14 @@
+import { ThemeContext } from "app/providers/ThemeProvider";
 import classNames from "classnames";
 
-import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import React, {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { FC, useState } from "react";
 
 import { useKeyboardEvent } from "utils/useKeyboardEvent";
@@ -17,6 +25,7 @@ export const Dropdown: FC<MultiDropdownProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
+  const { theme } = useContext(ThemeContext);
 
   const itemOnClick = (el: Option) => {
     onChange(el);
@@ -47,7 +56,7 @@ export const Dropdown: FC<MultiDropdownProps> = ({
         key={el.key}
         className={classNames(
           styles.item,
-          el.key === value.key && styles["active"]
+          el.key === value.key && styles.active
         )}
         onClick={() => itemOnClick(el)}
       >
@@ -60,7 +69,10 @@ export const Dropdown: FC<MultiDropdownProps> = ({
 
   useKeyboardEvent("Enter", handleClick, `dropdown${dropdownId}`, [isVisible]);
   return (
-    <div id="dropdown" className={classNames(styles.dropdown, className)}>
+    <div
+      id="dropdown"
+      className={classNames(styles.dropdown, styles[theme], className)}
+    >
       <div
         id={`dropdown${dropdownId}`}
         tabIndex={0}
